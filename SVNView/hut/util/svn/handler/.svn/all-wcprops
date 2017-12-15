@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/mitani2010/!svn/ver/55/MitaniSEPlugin/SVNView/hut/util/svn/handler
+END
+StatusHandler.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/mitani2010/!svn/ver/55/MitaniSEPlugin/SVNView/hut/util/svn/handler/StatusHandler.java
+END
+UpdateEventHandler.java
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/mitani2010/!svn/ver/55/MitaniSEPlugin/SVNView/hut/util/svn/handler/UpdateEventHandler.java
+END
+CommitEventHandler.java
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/mitani2010/!svn/ver/55/MitaniSEPlugin/SVNView/hut/util/svn/handler/CommitEventHandler.java
+END
+InfoHandler.java
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/mitani2010/!svn/ver/55/MitaniSEPlugin/SVNView/hut/util/svn/handler/InfoHandler.java
+END
+WCEventHandler.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/mitani2010/!svn/ver/55/MitaniSEPlugin/SVNView/hut/util/svn/handler/WCEventHandler.java
+END

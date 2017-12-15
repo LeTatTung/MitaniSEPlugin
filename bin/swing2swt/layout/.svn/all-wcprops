@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/mitani2010/!svn/ver/39/MitaniSEPlugin/src/swing2swt/layout
+END
+GridLayout.java
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/mitani2010/!svn/ver/39/MitaniSEPlugin/src/swing2swt/layout/GridLayout.java
+END
+FlowLayout.java
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/mitani2010/!svn/ver/39/MitaniSEPlugin/src/swing2swt/layout/FlowLayout.java
+END
+AWTLayout.java
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/mitani2010/!svn/ver/39/MitaniSEPlugin/src/swing2swt/layout/AWTLayout.java
+END
+BorderLayout.java
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/mitani2010/!svn/ver/39/MitaniSEPlugin/src/swing2swt/layout/BorderLayout.java
+END

@@ -1,0 +1,273 @@
+10
+
+dir
+531
+http://svn2.xp-dev.com/svn/mitani2010/MitaniSEPlugin
+http://svn2.xp-dev.com/svn/mitani2010
+
+
+
+2010-09-19T11:01:05.426061Z
+529
+DatTT
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+db1f44d5-4a53-4427-9f32-2fae34d20d74
+
+querycreatorView
+dir
+
+notificationView
+dir
+
+controller
+dir
+
+adminView
+dir
+
+.project
+file
+
+
+
+
+2010-07-30T07:27:01.652358Z
+9463fb00f8c74a968da3b3bc5bf2c82f
+2010-03-24T07:20:19.272566Z
+1
+DatTT
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+675
+
+src
+dir
+
+documentsManagerView
+dir
+
+artifactView
+dir
+
+build.properties
+file
+
+
+
+
+2010-09-17T23:50:48.453071Z
+7618ed56df5855422608620940fbe5b3
+2010-09-17T23:56:11.241154Z
+516
+DatTT
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+3222
+
+plugin.xml
+file
+
+
+
+
+2010-09-09T05:52:49.842034Z
+44cfa0437306ed0f602dc3c5305d0efd
+2010-09-09T05:12:50.897911Z
+449
+DatTT
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+4591
+
+.classpath
+file
+
+
+
+
+2010-09-17T23:50:38.214011Z
+9af6e530e8b03fb44ca016c990fd4631
+2010-09-17T23:56:11.241154Z
+516
+DatTT
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+4212
+
+service
+dir
+
+queryView
+dir
+
+META-INF
+dir
+
+annotatorView
+dir
+
+SVNView
+dir
+
+composite
+dir
+
+assistantView
+dir
+
+projectTotalView
+dir
+
+lib
+dir
+
+manageArtifacetView
+dir
+
+ManageAtifactViewPart
+dir
+
+login
+dir
+
+testView
+dir
+
+select.properties
+file
+
+
+
+
+2010-09-03T00:54:25.485883Z
+f9ffda63b522a41e1a6d96ac6c6beca0
+2010-04-25T18:12:41.949311Z
+39
+cuongtk
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+238
+
+view
+dir
+
+icons
+dir
+
+annotationEditorView
+dir
+
+util
+dir
+
+metricView
+dir
+

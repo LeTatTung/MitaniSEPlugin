@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/mitani2010/!svn/ver/529/MitaniSEPlugin
+END
+.classpath
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/mitani2010/!svn/ver/516/MitaniSEPlugin/.classpath
+END
+.project
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/mitani2010/!svn/ver/1/MitaniSEPlugin/.project
+END
+build.properties
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/mitani2010/!svn/ver/516/MitaniSEPlugin/build.properties
+END
+select.properties
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/mitani2010/!svn/ver/39/MitaniSEPlugin/select.properties
+END
+plugin.xml
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/mitani2010/!svn/ver/449/MitaniSEPlugin/plugin.xml
+END

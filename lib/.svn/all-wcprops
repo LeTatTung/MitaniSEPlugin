@@ -1,0 +1,383 @@
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/mitani2010/!svn/ver/291/MitaniSEPlugin/lib
+END
+webservices-rt.jar
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/mitani2010/!svn/ver/9/MitaniSEPlugin/lib/webservices-rt.jar
+END
+pellet-explanation.jar
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/mitani2010/!svn/ver/1/MitaniSEPlugin/lib/pellet-explanation.jar
+END
+jgraph.jar
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/mitani2010/!svn/ver/1/MitaniSEPlugin/lib/jgraph.jar
+END
+jgraph-5.3.1.jar
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/mitani2010/!svn/ver/1/MitaniSEPlugin/lib/jgraph-5.3.1.jar
+END
+jenatest.jar
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/mitani2010/!svn/ver/1/MitaniSEPlugin/lib/jenatest.jar
+END
+pellet-datatypes.jar
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/mitani2010/!svn/ver/1/MitaniSEPlugin/lib/pellet-datatypes.jar
+END
+arq.jar
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/mitani2010/!svn/ver/1/MitaniSEPlugin/lib/arq.jar
+END
+iri.jar
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/mitani2010/!svn/ver/1/MitaniSEPlugin/lib/iri.jar
+END
+pellet-el.jar
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/mitani2010/!svn/ver/1/MitaniSEPlugin/lib/pellet-el.jar
+END
+servlet.jar
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/mitani2010/!svn/ver/1/MitaniSEPlugin/lib/servlet.jar
+END
+jgrapht-jdk1.5.jar
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/mitani2010/!svn/ver/1/MitaniSEPlugin/lib/jgrapht-jdk1.5.jar
+END
+pellet-pellint.jar
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/mitani2010/!svn/ver/1/MitaniSEPlugin/lib/pellet-pellint.jar
+END
+jpedal-1.0.jar
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/mitani2010/!svn/ver/1/MitaniSEPlugin/lib/jpedal-1.0.jar
+END
+iText-2.1.4.jar
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/mitani2010/!svn/ver/1/MitaniSEPlugin/lib/iText-2.1.4.jar
+END
+log4j-1.2.12.jar
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/mitani2010/!svn/ver/1/MitaniSEPlugin/lib/log4j-1.2.12.jar
+END
+impl.jar
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/mitani2010/!svn/ver/1/MitaniSEPlugin/lib/impl.jar
+END
+org.eclipse.jface_3.3.1.M20070910-0800b.jar
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/mitani2010/!svn/ver/1/MitaniSEPlugin/lib/org.eclipse.jface_3.3.1.M20070910-0800b.jar
+END
+BKSVNLib.jar
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/mitani2010/!svn/ver/86/MitaniSEPlugin/lib/BKSVNLib.jar
+END
+xercesImpl.jar
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/mitani2010/!svn/ver/1/MitaniSEPlugin/lib/xercesImpl.jar
+END
+pellet-core.jar
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/mitani2010/!svn/ver/1/MitaniSEPlugin/lib/pellet-core.jar
+END
+jena.jar
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/mitani2010/!svn/ver/1/MitaniSEPlugin/lib/jena.jar
+END
+org.eclipse.jdt.core_3.3.1.v_780_R33x.jar
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/mitani2010/!svn/ver/1/MitaniSEPlugin/lib/org.eclipse.jdt.core_3.3.1.v_780_R33x.jar
+END
+webservices-api.jar
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/mitani2010/!svn/ver/9/MitaniSEPlugin/lib/webservices-api.jar
+END
+rdfparser.jar
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/mitani2010/!svn/ver/1/MitaniSEPlugin/lib/rdfparser.jar
+END
+aterm-java-1.6.jar
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/mitani2010/!svn/ver/1/MitaniSEPlugin/lib/aterm-java-1.6.jar
+END
+xml-apis.jar
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/mitani2010/!svn/ver/1/MitaniSEPlugin/lib/xml-apis.jar
+END
+commons-logging-1.1.1.jar
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/mitani2010/!svn/ver/1/MitaniSEPlugin/lib/commons-logging-1.1.1.jar
+END
+relaxngDatatype.jar
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/mitani2010/!svn/ver/1/MitaniSEPlugin/lib/relaxngDatatype.jar
+END
+toolparsedoc.jar
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/mitani2010/!svn/ver/1/MitaniSEPlugin/lib/toolparsedoc.jar
+END
+pellet-jena.jar
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/mitani2010/!svn/ver/1/MitaniSEPlugin/lib/pellet-jena.jar
+END
+pellet-test.jar
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/mitani2010/!svn/ver/1/MitaniSEPlugin/lib/pellet-test.jar
+END
+arq-extra.jar
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/mitani2010/!svn/ver/1/MitaniSEPlugin/lib/arq-extra.jar
+END
+api.jar
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/mitani2010/!svn/ver/1/MitaniSEPlugin/lib/api.jar
+END
+pellet-modularity.jar
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/mitani2010/!svn/ver/1/MitaniSEPlugin/lib/pellet-modularity.jar
+END
+Hut-DocumentExtractV1.jar
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/mitani2010/!svn/ver/1/MitaniSEPlugin/lib/Hut-DocumentExtractV1.jar
+END
+pellet-owlapi.jar
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/mitani2010/!svn/ver/1/MitaniSEPlugin/lib/pellet-owlapi.jar
+END
+concurrent.jar
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/mitani2010/!svn/ver/1/MitaniSEPlugin/lib/concurrent.jar
+END
+pellet-dig.jar
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/mitani2010/!svn/ver/1/MitaniSEPlugin/lib/pellet-dig.jar
+END
+pellet-query.jar
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/mitani2010/!svn/ver/1/MitaniSEPlugin/lib/pellet-query.jar
+END
+org.eclipse.ui.workbench_3.3.1.M20070921-1200.jar
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/mitani2010/!svn/ver/1/MitaniSEPlugin/lib/org.eclipse.ui.workbench_3.3.1.M20070921-1200.jar
+END
+org.eclipse.swt.win32.win32.x86_3.3.1.v3346i.jar
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/mitani2010/!svn/ver/1/MitaniSEPlugin/lib/org.eclipse.swt.win32.win32.x86_3.3.1.v3346i.jar
+END
+jetty.jar
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/mitani2010/!svn/ver/1/MitaniSEPlugin/lib/jetty.jar
+END
+lucene-core-2.3.1.jar
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/mitani2010/!svn/ver/1/MitaniSEPlugin/lib/lucene-core-2.3.1.jar
+END
+owlapi-bin.jar
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/mitani2010/!svn/ver/1/MitaniSEPlugin/lib/owlapi-bin.jar
+END
+webservices-extra.jar
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/mitani2010/!svn/ver/9/MitaniSEPlugin/lib/webservices-extra.jar
+END
+json.jar
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/mitani2010/!svn/ver/1/MitaniSEPlugin/lib/json.jar
+END
+jgraphlayout.jar
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/mitani2010/!svn/ver/1/MitaniSEPlugin/lib/jgraphlayout.jar
+END
+webservices-extra-api.jar
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/mitani2010/!svn/ver/9/MitaniSEPlugin/lib/webservices-extra-api.jar
+END
+jai-core-1.1.3-alpha.jar
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/mitani2010/!svn/ver/1/MitaniSEPlugin/lib/jai-core-1.1.3-alpha.jar
+END
+pellet-rules.jar
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/mitani2010/!svn/ver/1/MitaniSEPlugin/lib/pellet-rules.jar
+END
+svnkit.jar
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/mitani2010/!svn/ver/56/MitaniSEPlugin/lib/svnkit.jar
+END
+wstx-asl-3.0.0.jar
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/mitani2010/!svn/ver/1/MitaniSEPlugin/lib/wstx-asl-3.0.0.jar
+END
+jai_codec-1.1.3-alpha.jar
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/mitani2010/!svn/ver/1/MitaniSEPlugin/lib/jai_codec-1.1.3-alpha.jar
+END
+stax-api-1.0.jar
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/mitani2010/!svn/ver/1/MitaniSEPlugin/lib/stax-api-1.0.jar
+END
+icu4j_3_4.jar
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/mitani2010/!svn/ver/1/MitaniSEPlugin/lib/icu4j_3_4.jar
+END
+JTattoo.jar
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/mitani2010/!svn/ver/1/MitaniSEPlugin/lib/JTattoo.jar
+END
+xsdlib.jar
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/mitani2010/!svn/ver/1/MitaniSEPlugin/lib/xsdlib.jar
+END
+antlr-2.7.5.jar
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/mitani2010/!svn/ver/1/MitaniSEPlugin/lib/antlr-2.7.5.jar
+END
+junit.jar
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/mitani2010/!svn/ver/1/MitaniSEPlugin/lib/junit.jar
+END
+pellet-cli.jar
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/mitani2010/!svn/ver/1/MitaniSEPlugin/lib/pellet-cli.jar
+END
+.properties.xml
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/mitani2010/!svn/ver/1/MitaniSEPlugin/lib/.properties.xml
+END
+jpedal.jar
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/mitani2010/!svn/ver/1/MitaniSEPlugin/lib/jpedal.jar
+END
+commentTool.jar
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/mitani2010/!svn/ver/291/MitaniSEPlugin/lib/commentTool.jar
+END

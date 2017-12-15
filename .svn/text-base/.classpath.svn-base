@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="util"/>
+	<classpathentry kind="src" path="annotatorView"/>
+	<classpathentry kind="src" path="querycreatorView"/>
+	<classpathentry kind="src" path="service"/>
+	<classpathentry kind="src" path="annotationEditorView"/>
+	<classpathentry kind="src" path="metricView"/>
+	<classpathentry kind="src" path="assistantView"/>
+	<classpathentry kind="src" path="testView"/>
+	<classpathentry kind="src" path="notificationView"/>
+	<classpathentry kind="src" path="artifactView"/>
+	<classpathentry kind="src" path="manageArtifacetView"/>
+	<classpathentry kind="src" path="SVNView"/>
+	<classpathentry kind="src" path="ManageAtifactViewPart"/>
+	<classpathentry kind="src" path="login"/>
+	<classpathentry kind="src" path="projectTotalView"/>
+	<classpathentry exported="true" kind="lib" path="bin/"/>
+	<classpathentry exported="true" kind="lib" path="lib/BKSVNLib.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/commentTool.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jena.jar"/>
+	<classpathentry kind="lib" path="lib/toolparsedoc.jar"/>
+	<classpathentry kind="lib" path="lib/webservices-api.jar"/>
+	<classpathentry kind="lib" path="lib/webservices-extra.jar"/>
+	<classpathentry kind="lib" path="lib/webservices-extra-api.jar"/>
+	<classpathentry kind="lib" path="lib/webservices-rt.jar"/>
+	<classpathentry kind="lib" path="lib/org.eclipse.ui.workbench_3.3.1.M20070921-1200.jar"/>
+	<classpathentry kind="lib" path="lib/org.eclipse.jdt.core_3.3.1.v_780_R33x.jar"/>
+	<classpathentry kind="lib" path="lib/jgraph.jar"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry kind="con" path="melibrary.com.genuitec.eclipse.ws.xfire.MYECLIPSE_METRO_IMPL"/>
+	<classpathentry kind="con" path="melibrary.com.genuitec.eclipse.ws.xfire.MYECLIPSE_JAXWS_API"/>
+	<classpathentry kind="lib" path="lib/Hut-DocumentExtractV1.jar"/>
+	<classpathentry kind="lib" path="lib/antlr-2.7.5.jar"/>
+	<classpathentry kind="lib" path="lib/api.jar"/>
+	<classpathentry kind="lib" path="lib/arq.jar"/>
+	<classpathentry kind="lib" path="lib/arq-extra.jar"/>
+	<classpathentry kind="lib" path="lib/aterm-java-1.6.jar"/>
+	<classpathentry kind="lib" path="lib/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="lib/concurrent.jar"/>
+	<classpathentry kind="lib" path="lib/icu4j_3_4.jar"/>
+	<classpathentry kind="lib" path="lib/impl.jar"/>
+	<classpathentry kind="lib" path="lib/iri.jar"/>
+	<classpathentry kind="lib" path="lib/iText-2.1.4.jar"/>
+	<classpathentry kind="lib" path="lib/jai_codec-1.1.3-alpha.jar"/>
+	<classpathentry kind="lib" path="lib/jai-core-1.1.3-alpha.jar"/>
+	<classpathentry kind="lib" path="lib/jenatest.jar"/>
+	<classpathentry kind="lib" path="lib/jetty.jar"/>
+	<classpathentry kind="lib" path="lib/json.jar"/>
+	<classpathentry kind="lib" path="lib/JTattoo.jar"/>
+	<classpathentry kind="lib" path="lib/junit.jar"/>
+	<classpathentry kind="lib" path="lib/log4j-1.2.12.jar"/>
+	<classpathentry kind="lib" path="lib/lucene-core-2.3.1.jar"/>
+	<classpathentry kind="lib" path="lib/owlapi-bin.jar"/>
+	<classpathentry kind="lib" path="lib/pellet-cli.jar"/>
+	<classpathentry kind="lib" path="lib/pellet-core.jar"/>
+	<classpathentry kind="lib" path="lib/pellet-datatypes.jar"/>
+	<classpathentry kind="lib" path="lib/pellet-dig.jar"/>
+	<classpathentry kind="lib" path="lib/pellet-el.jar"/>
+	<classpathentry kind="lib" path="lib/pellet-explanation.jar"/>
+	<classpathentry kind="lib" path="lib/pellet-jena.jar"/>
+	<classpathentry kind="lib" path="lib/pellet-modularity.jar"/>
+	<classpathentry kind="lib" path="lib/pellet-owlapi.jar"/>
+	<classpathentry kind="lib" path="lib/pellet-pellint.jar"/>
+	<classpathentry kind="lib" path="lib/pellet-query.jar"/>
+	<classpathentry kind="lib" path="lib/pellet-rules.jar"/>
+	<classpathentry kind="lib" path="lib/pellet-test.jar"/>
+	<classpathentry kind="lib" path="lib/svnkit.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

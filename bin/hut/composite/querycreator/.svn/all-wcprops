@@ -1,0 +1,89 @@
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/mitani2010/!svn/ver/488/MitaniSEPlugin/querycreatorView/hut/composite/querycreator
+END
+ComboboxDataSuper.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/mitani2010/!svn/ver/3/MitaniSEPlugin/querycreatorView/hut/composite/querycreator/ComboboxDataSuper.java
+END
+CompositeResult.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/mitani2010/!svn/ver/488/MitaniSEPlugin/querycreatorView/hut/composite/querycreator/CompositeResult.java
+END
+ComboboxSubjectData.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/mitani2010/!svn/ver/3/MitaniSEPlugin/querycreatorView/hut/composite/querycreator/ComboboxSubjectData.java
+END
+ComboboxPredicateData.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/mitani2010/!svn/ver/3/MitaniSEPlugin/querycreatorView/hut/composite/querycreator/ComboboxPredicateData.java
+END
+QueryUtil.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/mitani2010/!svn/ver/486/MitaniSEPlugin/querycreatorView/hut/composite/querycreator/QueryUtil.java
+END
+CompositePopUp.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/mitani2010/!svn/ver/54/MitaniSEPlugin/querycreatorView/hut/composite/querycreator/CompositePopUp.java
+END
+CompositeQuerySuper.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/mitani2010/!svn/ver/3/MitaniSEPlugin/querycreatorView/hut/composite/querycreator/CompositeQuerySuper.java
+END
+QueryCreatorViewPart.java
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/mitani2010/!svn/ver/168/MitaniSEPlugin/querycreatorView/hut/composite/querycreator/QueryCreatorViewPart.java
+END
+CompositeRestriction.java
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/mitani2010/!svn/ver/374/MitaniSEPlugin/querycreatorView/hut/composite/querycreator/CompositeRestriction.java
+END
+CompositeVariable.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/mitani2010/!svn/ver/365/MitaniSEPlugin/querycreatorView/hut/composite/querycreator/CompositeVariable.java
+END
+ComboboxObjectData.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/mitani2010/!svn/ver/10/MitaniSEPlugin/querycreatorView/hut/composite/querycreator/ComboboxObjectData.java
+END
+NamingNewVariable.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/mitani2010/!svn/ver/106/MitaniSEPlugin/querycreatorView/hut/composite/querycreator/NamingNewVariable.java
+END
+QueryController.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/mitani2010/!svn/ver/168/MitaniSEPlugin/querycreatorView/hut/composite/querycreator/QueryController.java
+END
+RowController.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/mitani2010/!svn/ver/374/MitaniSEPlugin/querycreatorView/hut/composite/querycreator/RowController.java
+END

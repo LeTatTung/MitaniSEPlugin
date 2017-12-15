@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+
+   <extension 
+   		point="org.eclipse.ui.perspectives">
+ 	  <perspective
+	      class="perspective.PerspectiveSESemantic"
+	      icon="icons/sample.gif"
+	      name="Sofware Engineering Development Support"
+	      id="perspective.PerspectiveSESemantic">
+      </perspective>
+   </extension>
+   
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            id="hut.SEDevelopment"
+            label="Sample Action Set"
+            visible="true">
+         <menu
+               id="SEDMenu"
+               label="SE  &amp;Development">
+            <separator
+                  name="SEDGroup">
+            </separator>
+         </menu>        
+         <action
+               class="perspective.OpenSEPerspectiveAction"
+               icon="icons/sample.gif"
+               id="perspective.OpenSEPerspectiveAction"
+               label="Open SED  &amp;Perspective"
+               menubarPath="SEDMenu/SEDGroup"
+               toolbarPath="SEDGroup"
+               tooltip="Open Sofware Engineering Development Perspective">
+         </action>         
+      </actionSet>
+   </extension>
+   
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            name="MitaniSEPlugin"
+            id="MitaniSEPlugin">
+      </category>
+      <view
+      		 class="mitaniseplugin.views.ViewDocumentAnotator"
+      		 icon="util/ontology/images/annotator.gif"
+             category="MitaniSEPlugin"
+      	 	  id="mitaniseplugin.views.ViewDocumentAnotator"
+      	 	  name=" Document And Source Code's Support">
+      </view>
+      
+      <view
+      		 class="hut.viewPart.TotalView.TotalProjectView"
+      		 icon="util/ontology/images/annotator.gif"
+             category="MitaniSEPlugin"
+      	 	  id="hut.viewPart.TotalView.TotalProjectView"
+      	 	  name=" Project's Progress Report">
+      </view>
+      
+      <!-- View sap bi bo di-->
+      <view
+            class="mintaniseplugin.views.MetricView.MetricViewer"
+             icon="icons/sample.gif"            
+            id="mintaniseplugin.views.MetricView.MetricViewer"
+            category="MitaniSEPlugin"
+            name="Mintani Metric">
+      </view>  
+       
+ 	  <!-- View sap bi bo di-->
+      <view
+            class="mintaniseplugin.views.assistantView.AssistantView"
+            id="mintaniseplugin.views.assistantView.AssistantView"
+             category="MitaniSEPlugin"
+             icon="util/ontology/images/assitance.gif"
+            name="Assistant Project View">
+      </view>
+      
+       <view
+            class="view.ManageArtifactViewPart.ManageArtifactViewPart"
+            id="view.ManageArtifactViewPart.ManageArtifactViewPart"
+             category="MitaniSEPlugin"
+             icon="util/ontology/images/assitance.gif"
+            name="Manage Software Artifact ">
+      </view>
+ 
+  	  <!-- View sap bi bo di-->
+      <view
+            class="mitaniseplugin.view.artifactView.ArtifactView"
+            id="mitaniseplugin.view.artifactView.ArtifactView"
+            category="MitaniSEPlugin"
+            icon="util/ontology/images/artifact.png"
+            name="Attifact View">
+      </view>
+      
+	   <view
+            class="hut.composite.querycreator.QueryCreatorViewPart"
+            id="hut.composite.querycreator.QueryCreatorViewPart"
+            category="MitaniSEPlugin"
+            icon="icons/sample.gif"
+            name="Semantic Search">
+      </view>
+     
+
+      <!-- View sap bi bo di-->
+      <view
+            class="mitaniseplugin.view.manageArtifactView.ManageArtifactView"
+            id="mitaniseplugin.view.manageArtifactView.ManageArtifactView"
+            category="MitaniSEPlugin"
+            icon="util/ontology/images/manage.png"
+            name="Manage Artifact View">
+      </view>  
+      
+      <view
+            class="hut.view.annotationCreatorAndEditor.ViewAnnotationCreatorAndEditor"
+            id="hut.view.annotationCreatorAndEditor.ViewAnnotationCreatorAndEditor"
+            category="MitaniSEPlugin"
+            icon="icons/sample.gif"
+            name="Semantic Annotation Editor">
+      </view>
+ 
+       <view
+             class="hut.composite.login.AccountManagementViewPart"
+             id="hut.composite.login.AccountManagementViewPart"
+             category="MitaniSEPlugin"
+             icon="icons/sample.gif"
+             name="Account Management">
+       </view>
+     
+   </extension>
+   
+</plugin>
