@@ -63,7 +63,7 @@ public class CommentContent extends SuperComposite {
 	private Logger logger = Logger.getLogger(this.getClass());
 	/**
 	 * Create the composite
-	 * 
+	 *
 	 * @param parent
 	 * @param style
 	 */
@@ -132,7 +132,7 @@ public class CommentContent extends SuperComposite {
 			}
 		};
 
-		table.addListener(SWT.MeasureItem, paintListener);		
+		table.addListener(SWT.MeasureItem, paintListener);
 
 		registerAction();
 
@@ -162,13 +162,13 @@ public class CommentContent extends SuperComposite {
 	public void addDataToComposite(String id, String typeSource,String sourceName) {
 		//khoi tao cac doi tuong
 		innitContentComposite(id,typeSource,sourceName);
-		
+
 		//Lay danh sach cac property can them vao
 		getListPropertyValue(id);
-		
+
 		//Refresh lai table,chu y co cac control ben trong no cung can dispose
 		refresh();
-		
+
 		for (int i = listPropertyName.size() - 1; i > 0; i--) {
 			addRow(id, listPropertyName.get(i));
 		}
@@ -180,15 +180,15 @@ public class CommentContent extends SuperComposite {
 		this.id = id;
 		this.typeSource = typeSource;
 		this.sourceComponentName = sourceName;
-		
-		
+
+
 		IWorkspace workspace = ResourcesPlugin.getWorkspace();
 		IWorkspaceRoot root = workspace.getRoot();
 		IPath location = root.getLocation();
 		String tempPath = Service.webServiceDelegate.getValueOfSpecificPropertyForIndividual(null, id, ConsistentOntology.FULL_PATH).get(0);
-		
+
 		fullPath = location.toString() + tempPath;
-		 
+
 		System.out.println(fullPath);
 	}
 
@@ -248,12 +248,14 @@ public class CommentContent extends SuperComposite {
 				// moi co id cu
 				for (TableItem item : table.getItems()) {
 					String  propertyName = (String) item.getData("propertyname");
+					System.out.println("HHHHHHHHHH" + propertyName);
 					RowComposite rowComposite = (RowComposite) item.getData();
 					for (String value : rowComposite.getListDataValue()) {
 						comment += standardizeComment(propertyName, value);
+//						comment += standardizeSemanticComment(propertyName, value);
 					}
 				}
-				
+				System.out.println(comment);
 				if(comment!=""){
 					CommentTool  commentTool = new CommentTool();
 					System.out.println(typeSource);
@@ -266,69 +268,68 @@ public class CommentContent extends SuperComposite {
 						commentTool.addCommentMethod(fullPath, tmpNameMethod, comment, CommentWriterType.writeOver);
 					}
 				}
-				
+
 			}
 		});
-		
-		
+
 		//Ghi va annotation
-		
+
 		saveAnnotationItem.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(final SelectionEvent e) {
 				if(check()){
 					List<InstanceData> listofAnnotation = new ArrayList<InstanceData>() ;
-					
+
 					logger.info("Luu vao annotation");
 					//Buoc 1: Tao instance cho sourece code .tuong duong voi viec them vao listAnnotation gui len
 					InstanceData sourceComponentInstance = new InstanceData();
-					
+
 					if(typeSource.equals(NodeType.CLASS.name())){
 						sourceComponentInstance.setClassName(ConsistentOntology.CLASS);
 					}
 					if(typeSource.equals(NodeType.METHOD.name())){
 						sourceComponentInstance.setClassName(ConsistentOntology.METHOD);
-					}					
-					
+					}
+
 					String idComment = id+"_comment";
 					sourceComponentInstance.setInstanceID(id);//id cua class to
 					sourceComponentInstance.setInstanceLabel(sourceComponentName);
 					InitInstance initSourceInstance = new InitInstance(sourceComponentInstance);
 					initSourceInstance.addObjectProperty(ConsistentOntology.HAS_COMMENT, idComment, ConsistentOntology.COMMENT);
-					
+
 					//Buoc 2:Luu cau truc annotation cho comment vao listAnnotation
-					
+
 					InstanceData commentInstance = new InstanceData();
 					commentInstance.setClassName(ConsistentOntology.COMMENT);
 					commentInstance.setInstanceID(idComment);
 					commentInstance.setInstanceLabel(sourceComponentName+"_comment");
 					InitInstance initcommentInstance = new InitInstance(commentInstance);
-					
+
 					for (TableItem item : table.getItems()) {
 						String  propertyName = (String) item.getData("propertyname");
 						RowComposite rowComposite = (RowComposite) item.getData();
 						for (String value : rowComposite.getListDataValue()) {
 							initcommentInstance.addDataProperty(propertyName, value);
-							
+
 						}
-						
+
 					}
-					
+
 					//Them vao theo thu tu: commment truoc, source component sau
-					
+
 					listofAnnotation.add(initcommentInstance.getPackageField());
 					listofAnnotation.add(initSourceInstance.getPackageField());
-					
+
 					Service.webServiceDelegate.removeIndividual(null, idComment);
 					Service.webServiceDelegate.saveValuesOfIndividual(null, listofAnnotation, false);
-					
+
 					System.out.println("hehe");
 				}
-				
+
 			}
 		});
-		
+
 	}
-	
+
 	/**
 	 * @return
 	 * Kiem tra chac chan la type source chi la Method hoac Classs.
@@ -337,12 +338,12 @@ public class CommentContent extends SuperComposite {
 		if((typeSource.equals(NodeType.CLASS.name()))||(typeSource.equals(NodeType.METHOD.name()))){
 			return true;
 		}
-		
+
 		return false;
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @param property
 	 * @return
 	 */
@@ -350,18 +351,27 @@ public class CommentContent extends SuperComposite {
 	{
 		//Chuan hoa thuoc tinh ontology thanh javadoc
 		String result = standardizeProperty(property);
-		
+
 		//Tra ve javadoc
 		if (result != "")
 			return "\n * @"+result+" "+value;
 		else
-			return "\n "+value;
+			return value;
 	}
 
+//	private String standardizeSemanticComment(String property, String value) {
+//		String result = standardizeProperty(property);
+//
+//		if (result != "")
+//			return "\n * @Semanticdoc\n * @"+result+" "+value;
+//		else
+//			return "\n * @Semanticdoc\n" + value;
+//	}
+//
 	private String standardizeProperty(String property)
 	{
 		//Chuan hoa thuoc tinh ontology thanh javadoc
-		String result = property.toLowerCase();		
+		String result = property.toLowerCase();
 		if (result.contains("author"))
 			result = "author";
 		else if (result.contains("exception"))
@@ -382,7 +392,7 @@ public class CommentContent extends SuperComposite {
 			result="";
 		return result;
 	}
-	
+
 	@Override
 	int updateInterface() {
 		return 0;
