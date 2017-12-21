@@ -247,7 +247,6 @@ public class CommentContent extends CompositeAnnotatorSuper {
 				// moi co id cu
 				for (TableItem item : table.getItems()) {
 					String  propertyName = (String) item.getData("propertyname");
-					System.out.println("HHHHHHHHHH" + propertyName);
 					RowComposite rowComposite = (RowComposite) item.getData();
 					for (String value : rowComposite.getListDataValue()) {
 						comment += standardizeComment(propertyName, value);
