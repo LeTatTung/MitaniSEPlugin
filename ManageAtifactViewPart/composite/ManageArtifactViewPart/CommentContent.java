@@ -171,6 +171,7 @@ public class CommentContent extends SuperComposite {
 
 		for (int i = listPropertyName.size() - 1; i > 0; i--) {
 			addRow(id, listPropertyName.get(i));
+			System.out.println("NNNNNNNN" + listPropertyName.get(i));
 		}
 
 	}
@@ -188,8 +189,6 @@ public class CommentContent extends SuperComposite {
 		String tempPath = Service.webServiceDelegate.getValueOfSpecificPropertyForIndividual(null, id, ConsistentOntology.FULL_PATH).get(0);
 
 		fullPath = location.toString() + tempPath;
-
-		System.out.println(fullPath);
 	}
 
 	/*
@@ -227,6 +226,7 @@ public class CommentContent extends SuperComposite {
 		 * test = delegate.getAllClassProperties("Comment");
 		 */
 		propertyValue = getArrayListProperty(propertyName);
+		System.out.println("PPPPPPPPPPPP" + propertyValue);
 		RowComposite rowComposite = new RowComposite(table, SWT.NONE,
 				propertyValue);
 		editor.grabHorizontal = true;
@@ -248,7 +248,6 @@ public class CommentContent extends SuperComposite {
 				// moi co id cu
 				for (TableItem item : table.getItems()) {
 					String  propertyName = (String) item.getData("propertyname");
-					System.out.println("HHHHHHHHHH" + propertyName);
 					RowComposite rowComposite = (RowComposite) item.getData();
 					for (String value : rowComposite.getListDataValue()) {
 						comment += standardizeComment(propertyName, value);
@@ -372,7 +371,7 @@ public class CommentContent extends SuperComposite {
 	{
 		//Chuan hoa thuoc tinh ontology thanh javadoc
 		String result = property.toLowerCase();
-		if (result.contains("author"))
+		if (result.contains("javadocauthor"))
 			result = "author";
 		else if (result.contains("exception"))
 			result = "exception";

@@ -6,11 +6,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.custom.SashForm;
-import org.eclipse.swt.events.DisposeEvent;
-import org.eclipse.swt.events.DisposeListener;
-import org.eclipse.swt.layout.FormAttachment;
-import org.eclipse.swt.layout.FormData;
-import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.TabFolder;
@@ -22,6 +17,7 @@ import composite.ManageArtifactViewPart.CompositeCodeChanged;
 import composite.ManageArtifactViewPart.CompositeRequirement;
 import composite.ManageArtifactViewPart.CompositeSourceCodeTree;
 import composite.ManageArtifactViewPart.CompositeTest;
+import composite.ManageArtifactViewPart.SeCommentManager;
 import controller.ManageArtifactViewPart.ControllerManageArtifactViewPart;
 import hut.composite.annotationCreatorAndEditor.CompositeListPropertiesOfInstance;
 
@@ -36,7 +32,7 @@ public class ManageArtifactViewPart extends ViewPart {
 	@Override
 	public void createPartControl(Composite parent) {
 		ControllerManageArtifactViewPart controller = new ControllerManageArtifactViewPart();
-		
+
 		FormToolkit toolkit = new FormToolkit(Display.getCurrent());
 
 		final TabFolder tabFolder = new TabFolder(parent, SWT.NONE);
@@ -59,10 +55,10 @@ public class ManageArtifactViewPart extends ViewPart {
 		toolkit.adapt(compositeViewAllRequirement);
 		tabItemViewAll.setControl(compositeViewAllRequirement);
 
-		
+
 
 		final CTabItem tabItemFinishedRequirement = new CTabItem(tabFolder_1, SWT.NONE);
-		
+
 		tabItemFinishedRequirement.setText("Finished Requirement");
 
 		final CompositeRequirement compositeViewFinishedRequirement = new CompositeRequirement(tabFolder_1, SWT.NONE, 0, 1);
@@ -77,7 +73,7 @@ public class ManageArtifactViewPart extends ViewPart {
 		tabItemProcessingRequirement.setControl(compositeViewProcessingRequirement);
 
 		tabFolder_1.setSelection(0);
-		
+
 		final TabItem tabManageTest = new TabItem(tabFolder, SWT.NONE);
 		tabManageTest.setText("Manage Tests");
 
@@ -88,7 +84,7 @@ public class ManageArtifactViewPart extends ViewPart {
 		toolkit.adapt(tabFolder_1_1, true, true);
 		tabManageTest.setControl(tabFolder_1_1);
 
-		
+
 		final CTabItem tabItemViewAllTest = new CTabItem(tabFolder_1_1, SWT.NONE);
 		tabItemViewAllTest.setText("View All");
 
@@ -97,7 +93,7 @@ public class ManageArtifactViewPart extends ViewPart {
 
 		final CTabItem tabItemProcessingTest = new CTabItem(tabFolder_1_1, SWT.NONE);
 		tabItemProcessingTest.setText("Processing Test");
-		
+
 		tabFolder_1_1.setSelection(0);
 
 		final TabItem tabManageCode = new TabItem(tabFolder, SWT.NONE);
@@ -116,17 +112,17 @@ public class ManageArtifactViewPart extends ViewPart {
 		final CompositeTest compositeTest = new CompositeTest(tabFolder_1_1, SWT.NONE, 0, 0);
 		toolkit.adapt(compositeTest);
 		tabItemViewAllTest.setControl(compositeTest);
-		
+
 		final CompositeTest compositeSuccessfulTest = new CompositeTest(tabFolder_1_1, SWT.NONE, 0, 1);
 		toolkit.adapt(compositeSuccessfulTest);
 		tabItemSuccessfulTest.setControl(compositeSuccessfulTest);
-		
+
 		final CompositeTest compositeProcessingTest = new CompositeTest(tabFolder_1_1, SWT.NONE, 0, 2);
 		toolkit.adapt(compositeProcessingTest);
 		tabItemProcessingTest.setControl(compositeProcessingTest);
-		
+
 		controller.setCompositeListPropertiesOfInstance(compositeListPropertiesOfInstance);
-		
+
 		compositeListPropertiesOfInstance.setController(controller);
 		toolkit.adapt(sashForm_1, true, true);
 		tabManageCode.setControl(sashForm_1);
@@ -144,14 +140,21 @@ public class ManageArtifactViewPart extends ViewPart {
 		final CommentManager commentManager = new CommentManager(tabFolder, SWT.NONE);
 		toolkit.adapt(commentManager);
 		tabComment.setControl(commentManager);
+
+		final TabItem tabSemanticComment = new TabItem(tabFolder, SWT.NONE);
+		tabSemanticComment.setText("Semantic Comment");
+		
+		final SeCommentManager seCommentManager = new SeCommentManager(tabFolder, SWT.NONE);
+		toolkit.adapt(seCommentManager);
+		tabSemanticComment.setControl(seCommentManager);
 		
 		sashForm_1.setWeights(new int[] {1, 1 });
 		//
 		createActions();
 		initializeToolBar();
 		initializeMenu();
-		
-		
+
+
 	}
 
 	/**
