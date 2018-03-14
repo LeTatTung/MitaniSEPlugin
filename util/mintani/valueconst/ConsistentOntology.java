@@ -3,23 +3,23 @@ package mintani.valueconst;
 public class ConsistentOntology {
 	public static final String SEC_NAMESPACE="http://hut.edu.vn/ontology/sourcecode#";
 	public static final String DOC_NAMESPACE="http://hut.edu.vn/ontology/document#";
-	
-	public static String prefix =   
+
+	public static String prefix =
 		  "\nPREFIX SEC: <"+SEC_NAMESPACE+"> "
 		+ "\nPREFIX DOC: <"+DOC_NAMESPACE+"> "
 		+ "\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> "
 		+ "\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> "
-		+ "\nPREFIX fn: <http://www.w3.org/2005/xpath-functions#> " 
+		+ "\nPREFIX fn: <http://www.w3.org/2005/xpath-functions#> "
 		+ "\nPREFIX owl: <http://www.w3.org/2002/07/owl#> "
 		+ "\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>";
-	
+
 	public static final String DOC_TYPE_CLASS=DOC_NAMESPACE+"Document";
 	public static final String DOCUMENT_ELEMENT=DOC_NAMESPACE+"DocumentElement";
 	public static final String SECTION =DOC_NAMESPACE+"Section";
 	public static final String PARAGRAPH=DOC_NAMESPACE+"Paragraph";
 	public static final String IMAGE=DOC_NAMESPACE+"Image";
-	
-	
+
+
 	public static final String PERSON=DOC_NAMESPACE+"Person";
 	public static final String HAS_FULL_NAME = DOC_NAMESPACE+ "hasFullName";
 	public static final String DEVELOPER=DOC_NAMESPACE+"Developer";
@@ -36,7 +36,7 @@ public class ConsistentOntology {
 	public static final String DEVELOPER_CODE_REQUIREMENT = DOC_NAMESPACE+  "developerCodeRequirement";
 	public static final String CODE_INSTALL_REQUIREMENT = DOC_NAMESPACE + "codeInstallRequirement";
 	public static final String PROJECT_TEAM_HAS_REQUIREMENT = DOC_NAMESPACE + "projectTeamHasRequirement";
-	
+
 	public static final String HAS_DESCRIPTION =SEC_NAMESPACE+"hasDescription";
 	public static final String HAS_DOCUMENT_ELEMENT =DOC_NAMESPACE+"hasDocumentElement";
 	public static final String SECTION_HAS_SECTION =DOC_NAMESPACE+"hasSection";
@@ -48,7 +48,7 @@ public class ConsistentOntology {
 	public static final String DOCUMENT_ELEMENT_HAS_PAGE_BEGIN = DOC_NAMESPACE+"hasBeginPage";
 	public static final String DOCUMENT_ELEMENT_HAS_PAGE_END = DOC_NAMESPACE+"hasEndPage";
 	public static final String DOCUMENT_HAS_PAGE_NUMBERS = DOC_NAMESPACE+"totalPagesOfDocument";
-	
+
 	public static final String SOFTWARE_COMPONENT  = SEC_NAMESPACE+"SoftwareComponent";
 	public static final String REQUIREMENT = SEC_NAMESPACE + "Requirement";
 	public static final String WORKSPACE = SEC_NAMESPACE + "Workspace";
@@ -72,14 +72,15 @@ public class ConsistentOntology {
 	public static final String INTERFACE = SEC_NAMESPACE + "Interface";
 	public static final String METHOD = SEC_NAMESPACE + "Method";
 	public static final String COMMENT = SEC_NAMESPACE + "Comment";
+	public static final String SEMANTIC_COMMENT = SEC_NAMESPACE + "SemanticComment";
 	public static final String TEST = SEC_NAMESPACE + "Test";
 	public static final String UNIT_TEST = SEC_NAMESPACE + "UnitTest";
 	public static final String INTERGRATION_TEST = SEC_NAMESPACE + "IntegrationTest";
-	public static final String CLASS_METRIC = SEC_NAMESPACE + "ClassMetric";	
+	public static final String CLASS_METRIC = SEC_NAMESPACE + "ClassMetric";
 	public static final String PACKAGE_METRIC = SEC_NAMESPACE + "PackageMetric";
 	public static final String LAYER_METRIC = SEC_NAMESPACE + "LayerMetric";
-	public static final String METHOD_METRIC = SEC_NAMESPACE + "MethodMetric";	
-	public static final String PROJECT_METRIC = SEC_NAMESPACE + "ProjectMetric";	
+	public static final String METHOD_METRIC = SEC_NAMESPACE + "MethodMetric";
+	public static final String PROJECT_METRIC = SEC_NAMESPACE + "ProjectMetric";
 	public static final String TESTER = DOC_NAMESPACE + "Tester";
 
 	public static final String MEMBER_OF = DOC_NAMESPACE + "memberOf";
@@ -120,8 +121,8 @@ public class ConsistentOntology {
 	public static final String TESTER_EXECUTE_TEST = DOC_NAMESPACE + "testerExecuteTest";
 	public static final String TEST_IS_SUCCESSFUL = SEC_NAMESPACE + "testIsSuccessful";
 	public static final String TEST_EXECUTE_AT = SEC_NAMESPACE + "testExecuteAt";
-	
-	
+
+
 	public static final String HAS_COMMENT = SEC_NAMESPACE + "hasComment";
 	public static final String RETURN_TYPE = SEC_NAMESPACE + "returnType";
 	public static final String HAS_PARAMATER_TYPE = SEC_NAMESPACE + "hasParameter";
@@ -129,22 +130,27 @@ public class ConsistentOntology {
 	public static final String  DESCRIPTION = SEC_NAMESPACE+"javadocDescription";
 	public static final String  PARAMS = SEC_NAMESPACE+"javadocParams";
 	public static final String  RETURN = SEC_NAMESPACE+"javadocReturn";
-	
- 
+
+	public static final String HAS_SEMANTIC_COMMENT = SEC_NAMESPACE + "hasSemanticComment";
+ 	public static final String SEMANTIC_FUNCTION = SEC_NAMESPACE + "semanticFunction";
+ 	public static final String SEMANTIC_TOPIC = SEC_NAMESPACE + "semanticTopic";
+ 	public static final String SEMANTIC_MODEL = SEC_NAMESPACE + "semanticModel";
+
+
 	public static final String HAS_TEXT_CONTENT = DOC_NAMESPACE + "hasTextContent";
-	
-	
+
+
 	public static final String IN_PAGE = DOC_NAMESPACE+"elementInPage";
 	public static final String HAS_RELATION_SOURCE = DOC_NAMESPACE+"docRelatedToCode";
 	public static final String CREATED_AT = DOC_NAMESPACE+"documentOrElementcreatedAt";
-	
+
 	//file luu select
 	public static String selectFile = "C:/workspace/MitaniSEPlugin/select.properties";
-	
-	
+
+
 	public static final String TYPE_VIEW_ALL="viewAll";
 	public static final String TYPE_VIEW_COMPONENT ="viewComponent";
-	
+
 	public static final String REQUIREMENT_DESCRIBED_IN_DOC = DOC_NAMESPACE + "requirementDescribedInDoc";
 	public static final String REQUIREMENT_CODED_BY_DEVELOPER = DOC_NAMESPACE + "requirementCodedByDeveloper";
 	public static final String REQUIREMENT_TESTED_IN = DOC_NAMESPACE + "requirementTestedIn";
@@ -152,7 +158,7 @@ public class ConsistentOntology {
 	public static final String REQUIREMENT_IS_INSTALLED_IN_CODE = SEC_NAMESPACE + "requirementInstalledInCode";
 	public static final String REQUIREMENT_START_DATE = SEC_NAMESPACE + "requirementStartDate";
 	public static final String REQUIREMENT_END_DATE = SEC_NAMESPACE + "requirementEndDate";
-	
+
 	public static final String CODE_CHANGED_BY = DOC_NAMESPACE + "codeChangedBy";
 	public static final String CODE_CHANGED_OF = DOC_NAMESPACE + "codeChangeOf";
 	public static final String CODE_CHANGED_AT = DOC_NAMESPACE + "codeChangeAt";

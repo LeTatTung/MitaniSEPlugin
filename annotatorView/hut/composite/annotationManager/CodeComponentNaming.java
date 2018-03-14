@@ -35,7 +35,10 @@ public class CodeComponentNaming {
 	private String idCommentMethodFull;
 	private String idCommentField;
 	private String idCommentFieldFull;
-	
+	private String idSemanticCommentClass;
+	private String idSemanticCommentClassFull;
+	private String idSemanticCommentMethod;
+	private String idSemanticCommentMethodFull;
 	/**
 	 * Dung khi add them code moi de quan ly
 	 * @return
@@ -43,8 +46,8 @@ public class CodeComponentNaming {
 	public void setIdWorkspaceFull(String idWorkspaceFull) {
 		this.idWorkspaceFull = idWorkspaceFull;
 	}
-	
-	
+
+
 	public String getIdMetric() {
 		return idMetric;
 	}
@@ -59,6 +62,18 @@ public class CodeComponentNaming {
 	}
 	public String getIdCommentMethodFull() {
 		return idCommentMethodFull;
+	}
+	public String getIdSemanticCommentClass() {
+		return idSemanticCommentClass;
+	}
+	public String getIdSemanticCommentClassFull() {
+		return idSemanticCommentClassFull;
+	}
+	public String getIdSemanticCommentMethod() {
+		return idSemanticCommentMethod;
+	}
+	public String getIdSemanticCommentMethodFull() {
+		return idSemanticCommentMethodFull;
 	}
 	public String getIdCommentField() {
 		return idCommentField;
@@ -113,29 +128,36 @@ public class CodeComponentNaming {
 		this.idSubClass = idSubClass;
 		this.idSubClassFull = this.idClassFull+"$"+idSubClass;
 	}
-	
+
 	public void setIdCommentClass() {
 		this.idCommentClassFull = this.idClassFull+"_comment";
+	}
+	public void setIdSemanticCommentClass() {
+		this.idSemanticCommentClassFull = this.idClassFull+"_semantic_comment";
 	}
 	public void setIdMetric() {
 		this.idMetric = this.idClass+"_Metric";
 		this.idMetricFull = this.idClassFull+"_Metric";
 	}
-	
+
 	public void setIdField(String idField) {
 		this.idField = idField;
 		this.idFieldFull = this.idClassFull+"."+idField;
 	}
-	
+
 	public void setIdCommentField() {
 		this.idCommentFieldFull = this.idFieldFull+"_comment";
 	}
+
 	public void setIdMethod(String idMethod) {
 		this.idMethod = idMethod;
 		this.idMethodFull = this.idClassFull+"/"+idMethod;
 	}
 	public void setIdCommentMethod() {
 		this.idCommentMethodFull = this.idMethodFull+"_comment";
+	}
+	public void setIdSemanticCommentMethod() {
+		this.idSemanticCommentMethodFull = this.idMethodFull+"_semantic_comment";
 	}
 	public void setIdReturnType(String idReturnType) {
 		this.idReturnType = idReturnType;
@@ -150,8 +172,8 @@ public class CodeComponentNaming {
 	}
 	public String getIdInterfaceFull() {
 		return idInterfaceFull;
-	}	
-	
+	}
+
 	public String getIdWorkspace() {
 		return idWorkspace;
 	}
@@ -206,9 +228,9 @@ public class CodeComponentNaming {
 	public String getIdVariableFull() {
 		return idVariableFull;
 	}
-	
-	
-	
-	
+
+
+
+
 }
 

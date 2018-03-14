@@ -42,6 +42,8 @@ import ws.owl.InstanceData;
 import ws.data.NodeType;
 import ws.data.MapData;
 import ws.owl.PropertyData;
+import ws.owl.WebServiceDelegate;
+import ws.owl.WebServiceService;
 import hut.annotation.InitInstance;
 import org.apache.log4j.Logger;
 
@@ -137,7 +139,7 @@ public class SeCommentContent extends SeCompositeAnnotatorSuper {
 
 
     //Lay ra thuoc tinh string
-    for (PropertyData pd : Service.webServiceDelegate.getAllClassProperties(null, ConsistentOntology.COMMENT)) {
+    for (PropertyData pd : Service.webServiceDelegate.getAllClassProperties(null, ConsistentOntology.SEMANTIC_COMMENT)) {
       String uri = pd.getPropertURI();
       String s = Service.webServiceDelegate.getPropertySpecificDataType(null, uri);
       if (s!=null && s.equals("string") && standardizeProperty(uri)!="")
@@ -196,15 +198,16 @@ public class SeCommentContent extends SeCompositeAnnotatorSuper {
    * property name do
    */
   public void getListPropertyValue(String id) {
-    id = id + "_comment";
+    id = id + "_semantic_comment";
     listMapProperty = Service.dataServiceDelegate.getValuePropertyIndividual(null, listPropertyName,id);
 
   }
 
   public List<String> getArrayListProperty(String fullPropertyName) {
-
+    System.out.println("PROPERTYNAME" + fullPropertyName);
     for (int i = 0; i < listMapProperty.size(); i++) {
       MapData mapData = listMapProperty.get(i);
+      System.out.println("MAPKEY:" + mapData.getKey() + "MAPOBJECT: " +mapData.getObject());
       if (mapData.getKey().equals(fullPropertyName)) {
         return mapData.getObject();
       }
@@ -215,16 +218,17 @@ public class SeCommentContent extends SeCompositeAnnotatorSuper {
   public void addRow(String id, String propertyName) {
     List<String> propertyValue;
     String localName = standardizeProperty(propertyName);
+    System.out.println("LOCALNAME " + localName);
     TableItem item;
     item = new TableItem(table, SWT.NONE, 0);
     item.setText(1, localName);
     TableEditor editor = new TableEditor(table);
     // Test goi webservice
-    /*
-     * WebServiceService service = new WebServiceService();
-     * WebServiceDelegate delegate =service.getWebServicePort(); List<PropertyData>
-     * test = delegate.getAllClassProperties("Comment");
-     */
+//    WebServiceService service = new WebServiceService();
+//    WebServiceDelegate delegate =service.getWebServicePort(); 
+//    List<PropertyData> test = delegate.getAllClassProperties("Comment", localName);
+//    System.out.println("TESTTEST" + test.toString());
+    
     propertyValue = getArrayListProperty(propertyName);
     RowComposite rowComposite = new RowComposite(table, SWT.NONE,
         propertyValue);
@@ -289,18 +293,18 @@ public class SeCommentContent extends SeCompositeAnnotatorSuper {
             sourceComponentInstance.setClassName(ConsistentOntology.METHOD);
           }
 
-          String idComment = id+"_comment";
+          String idComment = id+"_semantic_comment";
           sourceComponentInstance.setInstanceID(id);//id cua class to
           sourceComponentInstance.setInstanceLabel(sourceComponentName);
           InitInstance initSourceInstance = new InitInstance(sourceComponentInstance);
-          initSourceInstance.addObjectProperty(ConsistentOntology.HAS_COMMENT, idComment, ConsistentOntology.COMMENT);
+          initSourceInstance.addObjectProperty(ConsistentOntology.HAS_SEMANTIC_COMMENT, idComment, ConsistentOntology.SEMANTIC_COMMENT);
 
           //Buoc 2:Luu cau truc annotation cho comment vao listAnnotation
 
           InstanceData commentInstance = new InstanceData();
-          commentInstance.setClassName(ConsistentOntology.COMMENT);
+          commentInstance.setClassName(ConsistentOntology.SEMANTIC_COMMENT);
           commentInstance.setInstanceID(idComment);
-          commentInstance.setInstanceLabel(sourceComponentName+"_comment");
+          commentInstance.setInstanceLabel(sourceComponentName+"_semantic_comment");
           InitInstance initcommentInstance = new InitInstance(commentInstance);
 
           for (TableItem item : table.getItems()) {
