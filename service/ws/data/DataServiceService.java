@@ -23,7 +23,7 @@ import javax.xml.ws.WebServiceClient;
  * </p>
  * 
  */
-@WebServiceClient(name = "DataServiceService", targetNamespace = "http://data.ws/", wsdlLocation = "http://dattt-pc:8080/SEService/DataServicePort?WSDL")
+@WebServiceClient(name = "DataServiceService", targetNamespace = "http://data.ws/", wsdlLocation = "http://localhost:8080/SEService/DataServicePort?WSDL")
 public class DataServiceService extends Service {
 
 	private final static URL DATASERVICESERVICE_WSDL_LOCATION;
@@ -36,10 +36,10 @@ public class DataServiceService extends Service {
 			URL baseUrl;
 			baseUrl = ws.data.DataServiceService.class.getResource(".");
 			url = new URL(baseUrl,
-					"http://dattt-pc:8080/SEService/DataServicePort?WSDL");
+					"http://localhost:8080/SEService/DataServicePort?WSDL");
 		} catch (MalformedURLException e) {
 			logger
-					.warning("Failed to create URL for the wsdl Location: 'http://dattt-pc:8080/SEService/DataServicePort?WSDL', retrying as a local file");
+					.warning("Failed to create URL for the wsdl Location: 'http://localhost:8080/SEService/DataServicePort?WSDL', retrying as a local file");
 			logger.warning(e.getMessage());
 		}
 		DATASERVICESERVICE_WSDL_LOCATION = url;

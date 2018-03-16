@@ -23,7 +23,7 @@ import javax.xml.ws.WebServiceClient;
  * </p>
  * 
  */
-@WebServiceClient(name = "WebServiceService", targetNamespace = "http://owl.ws/", wsdlLocation = "http://dattt-pc:8080/SEService/WebServicePort?WSDL")
+@WebServiceClient(name = "WebServiceService", targetNamespace = "http://owl.ws/", wsdlLocation = "http://localhost:8080/SEService/WebServicePort?WSDL")
 public class WebServiceService extends Service {
 
 	private final static URL WEBSERVICESERVICE_WSDL_LOCATION;
@@ -36,10 +36,10 @@ public class WebServiceService extends Service {
 			URL baseUrl;
 			baseUrl = ws.owl.WebServiceService.class.getResource(".");
 			url = new URL(baseUrl,
-					"http://dattt-pc:8080/SEService/WebServicePort?WSDL");
+					"http://localhost:8080/SEService/WebServicePort?WSDL");
 		} catch (MalformedURLException e) {
 			logger
-					.warning("Failed to create URL for the wsdl Location: 'http://dattt-pc:8080/SEService/WebServicePort?WSDL', retrying as a local file");
+					.warning("Failed to create URL for the wsdl Location: 'http://localhost:8080/SEService/WebServicePort?WSDL', retrying as a local file");
 			logger.warning(e.getMessage());
 		}
 		WEBSERVICESERVICE_WSDL_LOCATION = url;

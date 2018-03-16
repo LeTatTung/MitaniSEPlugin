@@ -137,12 +137,14 @@ public class SeCommentContent extends SeSuperComposite {
 
 
     //Lay ra thuoc tinh string
-    for (PropertyData pd : Service.webServiceDelegate.getAllClassProperties(null, ConsistentOntology.COMMENT)) {
+    for (PropertyData pd : Service.webServiceDelegate.getAllClassProperties(null, ConsistentOntology.SEMANTIC_COMMENT)) {
       String uri = pd.getPropertURI();
-      System.out.println("UUUUUUUUU" + uri);
+      System.out.println("URI1: " + uri);
       String s = Service.webServiceDelegate.getPropertySpecificDataType(null, uri);
-      if (s!=null && s.equals("string") && standardizeProperty(uri)!="")
+      if (s!=null && s.equals("string") && standardizeProperty(uri)!="") {
         listPropertyName.add(uri);
+        System.out.println("URI2: " + uri);
+      }
     }
 
   }
@@ -171,7 +173,7 @@ public class SeCommentContent extends SeSuperComposite {
 
     for (int i = listPropertyName.size() - 1; i > 0; i--) {
       addRow(id, listPropertyName.get(i));
-      System.out.println("NNNNNNNN" + listPropertyName.get(i));
+      System.out.println("PROPERTYNAME" + listPropertyName.get(i));
     }
 
   }
@@ -197,16 +199,24 @@ public class SeCommentContent extends SeSuperComposite {
    * property name do
    */
   public void getListPropertyValue(String id) {
-    id = id + "_comment";
+    id = id + "_semantic_comment";
+    System.out.println("ID " + id);
+    for (int i = 0; i < listPropertyName.size(); i++) {
+    	System.out.println("LIST PROPERTY NAME: " + listPropertyName.get(i));
+    }
     listMapProperty = Service.dataServiceDelegate.getValuePropertyIndividual(null, listPropertyName,id);
-
   }
 
   public List<String> getArrayListProperty(String fullPropertyName) {
-
+    System.out.println("PROPERTYNAME " + fullPropertyName);
     for (int i = 0; i < listMapProperty.size(); i++) {
       MapData mapData = listMapProperty.get(i);
+      if (mapData.getObject().isEmpty()){
+         System.out.println("MAPDATA NULL NULL");
+      }
+      System.out.println("MAPKEY1:" + mapData.getKey() + " MAPOBJECT1: " +mapData.getObject());
       if (mapData.getKey().equals(fullPropertyName)) {
+    	System.out.println("MAPKEY2:" + mapData.getKey() + " MAPOBJECT2: " +mapData.getObject());
         return mapData.getObject();
       }
     }
@@ -216,18 +226,20 @@ public class SeCommentContent extends SeSuperComposite {
   public void addRow(String id, String propertyName) {
     List<String> propertyValue;
     String localName = standardizeProperty(propertyName);
+    System.out.println("LOCALNAME " + localName);
     TableItem item;
     item = new TableItem(table, SWT.NONE, 0);
     item.setText(1, localName);
     TableEditor editor = new TableEditor(table);
     // Test goi webservice
-    /*
-     * WebServiceService service = new WebServiceService();
-     * WebServiceDelegate delegate =service.getWebServicePort(); List<PropertyData>
-     * test = delegate.getAllClassProperties("Comment");
-     */
+
+//    WebServiceService service = new WebServiceService();
+//    WebServiceDelegate delegate =service.getWebServicePort();
+//    List<PropertyData> test = delegate.getAllClassProperties("Comment", localName);
+//    System.out.println("TESTTEST" + test.toString());
+
     propertyValue = getArrayListProperty(propertyName);
-    System.out.println("PPPPPPPPPPPP" + propertyValue);
+//    System.out.println("PPPPPPPPPPPP" + propertyValue);
     RowComposite rowComposite = new RowComposite(table, SWT.NONE,
         propertyValue);
     editor.grabHorizontal = true;
@@ -290,18 +302,18 @@ public class SeCommentContent extends SeSuperComposite {
             sourceComponentInstance.setClassName(ConsistentOntology.METHOD);
           }
 
-          String idComment = id+"_comment";
+          String idComment = id+"_semantic_comment";
           sourceComponentInstance.setInstanceID(id);//id cua class to
           sourceComponentInstance.setInstanceLabel(sourceComponentName);
           InitInstance initSourceInstance = new InitInstance(sourceComponentInstance);
-          initSourceInstance.addObjectProperty(ConsistentOntology.HAS_COMMENT, idComment, ConsistentOntology.COMMENT);
+          initSourceInstance.addObjectProperty(ConsistentOntology.HAS_SEMANTIC_COMMENT, idComment, ConsistentOntology.SEMANTIC_COMMENT);
 
           //Buoc 2:Luu cau truc annotation cho comment vao listAnnotation
 
           InstanceData commentInstance = new InstanceData();
-          commentInstance.setClassName(ConsistentOntology.COMMENT);
+          commentInstance.setClassName(ConsistentOntology.SEMANTIC_COMMENT);
           commentInstance.setInstanceID(idComment);
-          commentInstance.setInstanceLabel(sourceComponentName+"_comment");
+          commentInstance.setInstanceLabel(sourceComponentName+"_semantic_comment");
           InitInstance initcommentInstance = new InitInstance(commentInstance);
 
           for (TableItem item : table.getItems()) {
@@ -309,7 +321,7 @@ public class SeCommentContent extends SeSuperComposite {
             RowComposite rowComposite = (RowComposite) item.getData();
             for (String value : rowComposite.getListDataValue()) {
               initcommentInstance.addDataProperty(propertyName, value);
-
+              System.out.println("VALUE: " +value);
             }
 
           }
