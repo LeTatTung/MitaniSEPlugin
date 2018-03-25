@@ -46,23 +46,23 @@ public class CommentManager extends SuperComposite {
 	private Logger logger = Logger.getLogger(this.getClass());
 	private CommentContent commentContent;
 	private ToolItem refreshItemToolItem;
-	
+
 	public String getTypeSource() {
 		return typeSource;
 	}
 	public void setTypeSource(String typeSource) {
 		this.typeSource = typeSource;
 	}
-	
+
 	public String getSourceComponentName() {
 		return sourceComponentName;
 	}
 	public void setSourceComponentName(String sourceComponentName) {
 		this.sourceComponentName = sourceComponentName;
 	}
-	
-	
-	
+
+
+
 	/**
 	 * Create the composite
 	 * @param parent
@@ -215,7 +215,7 @@ public class CommentManager extends SuperComposite {
 			}
 		};
 		registerDoubleClickAction(action);
-		
+
 		//refresh lai cay
 		refreshItemToolItem.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(final SelectionEvent e) {

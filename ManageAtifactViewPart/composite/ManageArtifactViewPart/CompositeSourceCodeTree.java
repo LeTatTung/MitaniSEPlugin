@@ -53,7 +53,7 @@ public class CompositeSourceCodeTree extends SuperComposite {
 	private final FormToolkit toolkit = new FormToolkit(Display.getCurrent());
 	private Logger logger = Logger.getLogger(this.getClass());
 	private ToolItem refreshItemToolItem;
-	
+
 	public CompositeSourceCodeTree(Composite parent, int style) {
 		super(parent, style);
 		setLayout(new FillLayout());
@@ -113,7 +113,7 @@ public class CompositeSourceCodeTree extends SuperComposite {
 				addCodeChange();
 			}
 
-			
+
 		});
 		toolItemAddCodeChange.setText("Add Code Change");
 		toolItemAddCodeChange.setImage(Images.imageRegistry.get(Images.ADD));
@@ -146,7 +146,7 @@ public class CompositeSourceCodeTree extends SuperComposite {
 		toolkit.adapt(tree, true, true);
 
 		toolkit.adapt(sashForm, true, true);
-		
+
 		//-- compositeRight  ---------------------
 		sashForm.setWeights(new int[] {162 });
 
@@ -158,15 +158,15 @@ public class CompositeSourceCodeTree extends SuperComposite {
 		//Ham goi su kien
 		registerAction();
 	}
-	
+
 	protected void deleteCodeComponent() {
 		DataInstance dataInstance = (DataInstance)CompositeSourceCodeTree.this.getOutputData();
 		String instanceFullName = dataInstance.getInstanceFullName();
 		Service.webServiceDelegate.removeCodeIndividual(null, instanceFullName, true);
 		creatTree();
 		MessageDialog.openInformation(new Shell(), "Success", "Delete successfully !");
-		
-		
+
+
 	}
 
 	public void creatTree() {
@@ -174,59 +174,59 @@ public class CompositeSourceCodeTree extends SuperComposite {
 		jobBuildSourceCode.setUser(true);
 		jobBuildSourceCode.schedule();
 	}
-	
+
 	private void addCodeChange() {
 		Shell shell = new Shell(refreshItemToolItem.getDisplay());
 		shell.setText("Add new Code Change !");
 		shell.setImage(Images.imageRegistry.get(Images.BOOKMARK));
 		shell.setLayout(new FillLayout());
 		shell.setSize(510, 680);
-		
-		
+
+
 		DataInstance dataInstance = new DataInstance();
 		dataInstance = (DataInstance)CompositeSourceCodeTree.this.getOutputData();
 		dataInstance.setNewInstance(true);
-		
+
 		ClassData classData = Service.webServiceDelegate.getClassByName(null, ConsistentOntology.CODE_CHANGE);
 		dataInstance.setClassData(classData);
-		
+
 		//-- xu ly instanceFullName va fullURI cua SourceCodeComponent
 		DateFormat dateFormat = new SimpleDateFormat("dd_MM_yyyy.HH_mm_ss");
         Date date = new Date();
 		String classFullName = classData.getClassURI();
 		String ID=dateFormat.format(date);
 		String instanceFullName = classFullName + "-" + ID;
-		
+
 		String sourceCodeURI = dataInstance.getInstanceFullName();
-		
+
 		dataInstance.setInstanceFullName(instanceFullName + "::::" + sourceCodeURI);//-- cong 2 thanh phan lai voi nhau
-		
+
 		CompositeSourceCodeTree.this.setOutputData(dataInstance);
-		
+
 		CompositeAddNewCodeChange compositeNewCodeChange = new CompositeAddNewCodeChange(shell, SWT.NONE);
 		compositeNewCodeChange.setInputData(CompositeSourceCodeTree.this.getOutputData());
 		compositeNewCodeChange.updateInterface();
-		
+
 		shell.setVisible(true);
-		
+
 	}
-	
-	
+
+
 	private void addSelectedCode() {
 	    IStructuredSelection selection = (IStructuredSelection) treeViewer.getSelection();
 		TreeObject obj = (TreeObject) selection.getFirstElement();
 		TreeNodeData data = (TreeNodeData) obj.getData();
-		
+
 		DataInstance dataInstance = new DataInstance();
 		dataInstance.setNewInstance(true);
 		ClassData classData = Service.webServiceDelegate.getClassByName(null, ConsistentOntology.CODE_CHANGE);
 		dataInstance.setClassData(classData);
-		
+
 		CompositeSourceCodeTree.this.setOutputData(dataInstance);
 		dataInstance.setInstanceFullName(data.getId());
-		
+
 	}
-	
+
 	public void registerAction() {
 		Action action;
 		action = new Action() {
@@ -235,25 +235,25 @@ public class CompositeSourceCodeTree extends SuperComposite {
 				TreeObject obj = (TreeObject) selection.getFirstElement();
 				TreeNodeData data = (TreeNodeData) obj.getData();
 				logger.info(data.getName());
-				
+
 				DataInstance dataInstance = new DataInstance();
 				dataInstance.setNewInstance(false);
 				dataInstance.setInstanceFullName(data.getId());
-				
+
 				String classURI = service.Service.webServiceDelegate.getClassOfIndividual(null, data.getId());
 				ClassData classData = new ClassData();
 				classData.setClassURI(classURI);
-				
+
 				dataInstance.setClassData(classData);
-				
+
 				CompositeSourceCodeTree.this.setOutputData(dataInstance);
 				CompositeSourceCodeTree.this.getController().updateChoosenSourceCode();
-				
+
 				logger.info("Lay tu cay thanh phan co id:" + data.getId());
 			}
 		};
 		registerDoubleClickAction(action);
-		
+
 		//refresh lai cay
 		refreshItemToolItem.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(final SelectionEvent e) {
@@ -261,10 +261,10 @@ public class CompositeSourceCodeTree extends SuperComposite {
 			}
 		});
 	}
-	
+
 	private void showRowItem( ){
 		clearTable();
-		
+
 		for (int i=0; i< 2 ; i++) {
 	    	TableColumn column = new TableColumn(table, SWT.CENTER);
 	    	if(i==0){
@@ -275,15 +275,15 @@ public class CompositeSourceCodeTree extends SuperComposite {
 	    		column.setText("Overview");
 	    		column.setWidth(500);
 	    	}
-	    	
-			
+
+
 		}
 	    for (int loopIndex = 0; loopIndex < 2; loopIndex++) {
 	        table.getColumn(loopIndex).pack();
 	        table.getColumn(loopIndex).setWidth(300);
 	      }
 	}
-	
+
 	public void registerDoubleClickAction(final Action action) {
 		treeViewer.addDoubleClickListener(new IDoubleClickListener() {
 			public void doubleClick(final DoubleClickEvent arg0) {
@@ -291,17 +291,17 @@ public class CompositeSourceCodeTree extends SuperComposite {
 			}
 		});
 	}
-	
+
 	private void clearTable()
 	{
 		table.removeAll();
 		for (TableColumn column : table.getColumns()) {
 			column.dispose();
 		}
-		
-		
+
+
 	}
-	
+
 	@Override
 	int updateInterface() {
 		// TODO Auto-generated method stub
