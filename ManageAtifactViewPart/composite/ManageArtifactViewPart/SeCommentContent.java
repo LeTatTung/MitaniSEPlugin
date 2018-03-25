@@ -118,7 +118,7 @@ public class SeCommentContent extends SeSuperComposite {
 
     valueColumn = new TableColumn(table, SWT.NONE);
     valueColumn.setText("Value");
-    valueColumn.setWidth(400);
+    valueColumn.setWidth(344);
 
     final Listener paintListener = new Listener() {
       public void handleEvent(Event event) {
@@ -169,9 +169,9 @@ public class SeCommentContent extends SeSuperComposite {
     //Refresh lai table,chu y co cac control ben trong no cung can dispose
     refresh();
 
-    for (int i = listPropertyName.size() - 1; i > 0; i--) {
-      addRow(id, listPropertyName.get(i));
-      System.out.println("NNNNNNNN" + listPropertyName.get(i));
+    for (String propertyName : listPropertyName) {
+      addRow(id, propertyName);
+      System.out.println("PROPERTY NAME" + propertyName);
     }
 
   }
@@ -203,10 +203,12 @@ public class SeCommentContent extends SeSuperComposite {
   }
 
   public List<String> getArrayListProperty(String fullPropertyName) {
-
+	 System.out.println("FULL PROPERTY NAME: " +fullPropertyName);
     for (int i = 0; i < listMapProperty.size(); i++) {
       MapData mapData = listMapProperty.get(i);
+     System.out.println("LIST MAP PROPERTY1: " +mapData.getKey()+ " MAP OBJECT1: " +mapData.getObject());
       if (mapData.getKey().equals(fullPropertyName)) {
+    	System.out.println("LIST MAP PROPERTY2: " +mapData.getKey()+ " MAP OBJECT2: " +mapData.getObject());
         return mapData.getObject();
       }
     }
@@ -216,6 +218,7 @@ public class SeCommentContent extends SeSuperComposite {
   public void addRow(String id, String propertyName) {
     List<String> propertyValue;
     String localName = standardizeProperty(propertyName);
+    System.out.println("LOCAL NAME: " +localName);
     TableItem item;
     item = new TableItem(table, SWT.NONE, 0);
     item.setText(1, localName);
@@ -227,7 +230,7 @@ public class SeCommentContent extends SeSuperComposite {
      * test = delegate.getAllClassProperties("Comment");
      */
     propertyValue = getArrayListProperty(propertyName);
-    System.out.println("PPPPPPPPPPPP" + propertyValue);
+    System.out.println("PROPERTY VALUE" + propertyValue);
     RowComposite rowComposite = new RowComposite(table, SWT.NONE,
         propertyValue);
     editor.grabHorizontal = true;
@@ -257,6 +260,7 @@ public class SeCommentContent extends SeSuperComposite {
         }
         System.out.println(comment);
         if(comment!=""){
+          System.out.println("COMMENT: " +comment);
           CommentTool  commentTool = new CommentTool();
           System.out.println(typeSource);
           if(typeSource.equals("CLASS"))
@@ -372,17 +376,13 @@ public class SeCommentContent extends SeSuperComposite {
   {
     //Chuan hoa thuoc tinh ontology thanh semanticdoc
     String result = property.toLowerCase();
-    if (result.contains("semanticdocauthor"))
-        result = "author";
-    else if (result.contains("semanticdoctopic"))
-      result = "topic";
-    else if (result.contains("semanticdocmodel"))
-      result = "model";
-    else if (result.contains("semanticdocfunction"))
-        result = "function";
-    else
-      result="";
-    return result;
+    if (result.contains("javadoctopic"))
+      return "topic";
+    if (result.contains("javadocmodel"))
+      return "model";
+    if (result.contains("javadocfunction"))
+        return "function";
+    return "";
   }
 
   @Override

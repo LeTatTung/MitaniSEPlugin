@@ -26,16 +26,16 @@ import org.eclipse.swt.widgets.Display;
 import ws.owl.InstanceData;
 
 public class BKASTVisitor extends ASTVisitor {
-	
+
 	Display display;
-	
+
 	public List<InstanceData> listofAnnotation = new ArrayList<InstanceData>() ;
 	private CodeComponentNaming  codeComponentNaming = new CodeComponentNaming();
 	/**
 	 * Thay the nhung text bat dau bang @ ket thuc bang dau xuong dong, doi voi xu ly comment
 	 */
 	private Pattern replaceCommentPattern = Pattern.compile("@a*[ \\w]*[\\s]");
-	
+
 
 	public void setCodeComponentNaming(CodeComponentNaming codeComponentNaming) {
 		this.codeComponentNaming = codeComponentNaming;
@@ -60,17 +60,17 @@ public class BKASTVisitor extends ASTVisitor {
 		workspacename=workspace.toString();
 		standardize(workspacename);
 		codeComponentNaming.setIdWorkspace(workspacename.replace("/", "" ));
-		
+
 		InstanceData workspaceInstance = new InstanceData();
 		workspaceInstance.setClassName(ConsistentOntology.WORKSPACE);
 		workspaceInstance.setInstanceID(codeComponentNaming.getIdWorkspaceFull());
 		workspaceInstance.setInstanceLabel(codeComponentNaming.getIdWorkspace());
-		
+
 		InitInstance initWorkspaceInstance = new InitInstance(workspaceInstance);
 		initWorkspaceInstance.addDataProperty(ConsistentOntology.HAS_NAME, workspacename);
-		
+
 		IProject[] projects = workspace.getProjects();
-		
+
 		for (IProject project : projects) {
 			if (project.isOpen()) {
 				codeComponentNaming.setIdProject(project.getName());
@@ -78,22 +78,22 @@ public class BKASTVisitor extends ASTVisitor {
 				parseProject(project);
 			}
 		}
-		
+
 		listofAnnotation.add(initWorkspaceInstance.getPackageField());
-		
+
 
 		System.out.println(listofAnnotation);
 		System.out.println("AAA");
 	}
 
 	public void parseProject(IProject project) {
-		InstanceData projectInstance = new InstanceData();		
+		InstanceData projectInstance = new InstanceData();
 		projectInstance.setClassName(ConsistentOntology.PROJECT);
 		projectInstance.setInstanceID(codeComponentNaming.getIdProjectFull());
 		projectInstance.setInstanceLabel(codeComponentNaming.getIdProject());
 		InitInstance initPackageInstance = new InitInstance(projectInstance);
 		initPackageInstance.addDataProperty(ConsistentOntology.HAS_NAME, project.getName());
-		
+
 		IJavaProject javaProject = JavaCore.create(project);
 		try {
 			IPackageFragmentRoot[] roots = javaProject.getPackageFragmentRoots();
@@ -102,33 +102,33 @@ public class BKASTVisitor extends ASTVisitor {
 					codeComponentNaming.setIdSourceFolder(root.getElementName());
 					initPackageInstance.addObjectProperty(ConsistentOntology.HAS_FOLDER_SOURCE,codeComponentNaming.getIdSourceFolderFull(),ConsistentOntology.FOLDERSOURCECODE);
 					parseSourceFolder(root);
-					
+
 				}
 			}
-			
+
 			listofAnnotation.add(initPackageInstance.getPackageField());
 
-		
+
 		} catch (JavaModelException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
+
 	/*
 	 * Phan tich cac source folder
 	 */
 	public void parseSourceFolder(IPackageFragmentRoot sourceFolder){
 		IJavaElement[] childs;
-		
+
 		InstanceData sourceFolderInstance = new InstanceData();
 		sourceFolderInstance.setClassName(ConsistentOntology.FOLDERSOURCECODE);
 		sourceFolderInstance.setInstanceID(codeComponentNaming.getIdSourceFolderFull());
 		sourceFolderInstance.setInstanceLabel(codeComponentNaming.getIdSourceFolder());
-		
+
 		InitInstance initSourceInstance = new InitInstance(sourceFolderInstance);
 		initSourceInstance.addDataProperty(ConsistentOntology.HAS_NAME, sourceFolder.getElementName());
-		
+
 		try {
 			childs = sourceFolder.getChildren();
 			for (IJavaElement child : childs) {
@@ -139,16 +139,16 @@ public class BKASTVisitor extends ASTVisitor {
 					parseIPackageFragment(p);
 				}
 			}
-						
+
 			//Them vao annotation cho Source File
 			listofAnnotation.add(initSourceInstance.getPackageField());
-			
-			
+
+
 		} catch (JavaModelException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	/*
@@ -156,70 +156,70 @@ public class BKASTVisitor extends ASTVisitor {
 	 */
 	@SuppressWarnings("unchecked")
 	public void parseIPackageFragment(IPackageFragment pack) throws JavaModelException {
-		InstanceData packageInstance = new InstanceData();		
-		
+		InstanceData packageInstance = new InstanceData();
+
 		packageInstance.setClassName(ConsistentOntology.PACKAGE);
 		packageInstance.setInstanceLabel(codeComponentNaming.getIdPackage());
 		packageInstance.setInstanceID(codeComponentNaming.getIdPackageFull());
 
 		InitInstance initPackageInstance = new InitInstance(packageInstance);
 		initPackageInstance.addDataProperty(ConsistentOntology.HAS_NAME, pack.getElementName());
-		
+
 		ICompilationUnit[] javaFiles = pack.getCompilationUnits();
 		//Phan tich file theo ast
-		for (ICompilationUnit unit : javaFiles) {			
+		for (ICompilationUnit unit : javaFiles) {
 			codeComponentNaming.setIdSourceFile(unit.getElementName());
 			initPackageInstance.addObjectProperty(ConsistentOntology.HAS_SOURCE,codeComponentNaming.getIdSourceFileFull(), ConsistentOntology.SOURCEFILE);
-			
+
 			parseSourceFile(unit);
 		}
 		//Them vao package co bao nhieu class
 		initPackageInstance.addDataProperty( ConsistentOntology.NUM_CLASSES, new Integer(javaFiles.length).toString());
 		listofAnnotation.add(initPackageInstance.getPackageField());
 	}
-	
+
 	public void parseSourceFile(ICompilationUnit unit)
 	{
 		ASTParser parser = ASTParser.newParser(AST.JLS3);
 		parser.setKind(ASTParser.K_COMPILATION_UNIT);
-		parser.setResolveBindings(true);    	
+		parser.setResolveBindings(true);
 		parser.setSource(unit);
-		CompilationUnit compilationUnit = (CompilationUnit) parser.createAST(null); 
-		
+		CompilationUnit compilationUnit = (CompilationUnit) parser.createAST(null);
+
 		//Them vao list phant tu trong annotation la source file thuoc tinh hasClass cho package
-		
-		InstanceData sourcefileInstance = new InstanceData();			
+
+		InstanceData sourcefileInstance = new InstanceData();
 		sourcefileInstance.setClassName(ConsistentOntology.SOURCEFILE);
 		sourcefileInstance.setInstanceLabel(unit.getElementName());
 		sourcefileInstance.setInstanceID(codeComponentNaming.getIdSourceFileFull());
 		InitInstance initSourceInstance = new InitInstance(sourcefileInstance);
 		initSourceInstance.addDataProperty(ConsistentOntology.HAS_NAME, unit.getElementName());
-		
+
 		initSourceInstance.addDataProperty(ConsistentOntology.FULL_PATH, unit.getPath().toString());
-		
+
 		List<AbstractTypeDeclaration> abstractTypes = compilationUnit.types();
 		for (AbstractTypeDeclaration abstractType : abstractTypes) {
 			if (abstractType instanceof TypeDeclaration) {
 				TypeDeclaration type = (TypeDeclaration) abstractType;
 				codeComponentNaming.setIdClass(type.getName().toString());
-				
+
 				initSourceInstance.addObjectProperty(ConsistentOntology.HAS_CLASS,codeComponentNaming.getIdClassFull() ,ConsistentOntology.CLASS);
 				initSourceInstance.addObjectProperty(ConsistentOntology.HAS_CLASS,codeComponentNaming.getIdClassFull(),ConsistentOntology.CLASS);
 				if(type.isInterface()) // interface
 		    	{
 					initSourceInstance.addObjectProperty(ConsistentOntology.HAS_INTERFACE,codeComponentNaming.getIdClassFull() ,ConsistentOntology.CLASS);
 					initSourceInstance.addObjectProperty(ConsistentOntology.HAS_INTERFACE,codeComponentNaming.getIdClassFull(),ConsistentOntology.CLASS);
-					
+
 		    	}
 				visitClass(type,unit.getPath().toString());
 			}
 		}
-		
-		
-		
+
+
+
 		//Them vao listofAnnoation sourcefile truoc
 		listofAnnotation.add(initSourceInstance.getPackageField());
-		
+
 		//Them quan he goi ham chi trong mot source folder
 		compilationUnit.accept(this);
 	}
@@ -227,24 +227,24 @@ public class BKASTVisitor extends ASTVisitor {
 	@SuppressWarnings("unchecked")
 	public boolean visitClass(TypeDeclaration type,String fullPath)
     {
-		
-    	
+
+
     	List superInterfaceTypes = type.superInterfaceTypes();
 		if(type.isInterface()) // interface
     	{
-    		
+
     		InstanceData interfaceInstance = new InstanceData();
     		codeComponentNaming.setIdInterface(type.getName().toString());
-    		
+
     		interfaceInstance.setClassName(ConsistentOntology.INTERFACE);
     		interfaceInstance.setInstanceLabel(codeComponentNaming.getIdInterface());
     		interfaceInstance.setInstanceID(codeComponentNaming.getIdInterfaceFull());
     		InitInstance initInterfaceInstance = new InitInstance(interfaceInstance);
     		initInterfaceInstance.addDataProperty(ConsistentOntology.HAS_NAME, type.getName().toString());
-    		
+
     		MethodDeclaration[] methods = type.getMethods();
-    		for (MethodDeclaration method : methods) {    			
-    							
+    		for (MethodDeclaration method : methods) {
+
 					codeComponentNaming.setIdMethod(method.getName().toString());
 					initInterfaceInstance.addObjectProperty(ConsistentOntology.HAS_METHOD, codeComponentNaming.getIdMethodFull(),ConsistentOntology.METHOD);
 					try {
@@ -254,9 +254,9 @@ public class BKASTVisitor extends ASTVisitor {
 						e.printStackTrace();
 					}
     		}
-    		
-    		
-    		
+
+
+
     		List<Type> superInterfaces = superInterfaceTypes;//  type.getSuperclassType();
     		Iterator<Type> i = superInterfaces.iterator();
     		while(i.hasNext())
@@ -266,40 +266,40 @@ public class BKASTVisitor extends ASTVisitor {
     			ITypeBinding binding = superInterface.resolveBinding();
     			if(binding != null)
     				interfaceID = codeComponentNaming.getIdSourceFolderFull()+"."+binding.getBinaryName();
-    			
-    			
+
+
     			InstanceData interfaceInstanceExtend = new InstanceData();
     			interfaceInstanceExtend.setClassName(ConsistentOntology.INTERFACE);
     			interfaceInstanceExtend.setInstanceID(interfaceID);
     			if(binding != null)
     				interfaceInstanceExtend.setInstanceLabel(binding.getName().toString());
-    			else    				
+    			else
     				interfaceInstanceExtend.setInstanceLabel(superInterface.toString());
     			InitInstance initInterfaceInstanceExtend = new InitInstance(interfaceInstanceExtend);
     			listofAnnotation.add(initInterfaceInstanceExtend.getPackageField());
-    			//Add node interface for list   			
+    			//Add node interface for list
     			initInterfaceInstance.addDataProperty(ConsistentOntology.FULL_PATH, fullPath);
     			initInterfaceInstance.addObjectProperty( ConsistentOntology.IMPLEMENTS_INTERFACE,interfaceID,ConsistentOntology.INTERFACE);
     		}
-    		
-    		
+
+
     		listofAnnotation.add(initInterfaceInstance.getPackageField());
     	}
-    	else // class 
+    	else // class
     	{
     		InstanceData classInstance = new InstanceData();
 			classInstance.setClassName(ConsistentOntology.CLASS);
 			classInstance.setInstanceLabel(codeComponentNaming.getIdClass());
 			classInstance.setInstanceID(codeComponentNaming.getIdClassFull());
-			InitInstance initClassInstance = new InitInstance(classInstance);	
+			InitInstance initClassInstance = new InitInstance(classInstance);
 			initClassInstance.addDataProperty(ConsistentOntology.HAS_NAME, type.getName().toString());
-			
+
 			//Method
-    		
-			
+
+
 			MethodDeclaration[] methods = type.getMethods();
     		for (MethodDeclaration method : methods) {
-    		
+
 					codeComponentNaming.setIdMethod(method.getName().toString());
 					initClassInstance.addObjectProperty(ConsistentOntology.HAS_METHOD, codeComponentNaming.getIdMethodFull(), ConsistentOntology.METHOD);
 					try {
@@ -309,18 +309,18 @@ public class BKASTVisitor extends ASTVisitor {
 						e.printStackTrace();
 					}
 					// Add individual tuong ung voi viec add vao list truoc
-					
+
 					if (method.isConstructor()) {
 						initClassInstance.addObjectProperty(ConsistentOntology.HAS_CONSTRUCTOR,codeComponentNaming.getIdMethodFull()+"_Constructor",ConsistentOntology.CONSTRUCTOR);
 					}
     		}
-    		
+
     		//Field
     		//Parse field
     		FieldDeclaration[] fields = type.getFields();
     		for (FieldDeclaration field : fields) {
     			String name = field.fragments().get(0).toString();
-    			name = name.contains("=") ? name.substring(0, name.indexOf('=')): name;	
+    			name = name.contains("=") ? name.substring(0, name.indexOf('=')): name;
     			name=standardize(name);
     			codeComponentNaming.setIdField(name);
     			initClassInstance.addObjectProperty(ConsistentOntology.HAS_FIELD,codeComponentNaming.getIdFieldFull(),ConsistentOntology.FIELD);
@@ -331,72 +331,72 @@ public class BKASTVisitor extends ASTVisitor {
 					e.printStackTrace();
 				}
     		}
-    			
-    		
+
+
     		List<Type> superInterfaces = superInterfaceTypes;//  type.getSuperclassType();
     		Iterator<Type> i = superInterfaces.iterator();
     		while(i.hasNext())
     		{
     			Type superInterface = i.next();
-    			String interfaceID = codeComponentNaming.getIdSourceFolderFull()+"."+superInterface.toString();    			
-    			ITypeBinding binding = superInterface.resolveBinding();    			
+    			String interfaceID = codeComponentNaming.getIdSourceFolderFull()+"."+superInterface.toString();
+    			ITypeBinding binding = superInterface.resolveBinding();
     			if(binding != null)
     				interfaceID = codeComponentNaming.getIdSourceFolderFull()+"."+binding.getBinaryName();
-    			
+
     			//Them vao list cai interface nay truoc
     			InstanceData interfaceInstanceExtend = new InstanceData();
     			interfaceInstanceExtend.setClassName(ConsistentOntology.INTERFACE);
     			interfaceInstanceExtend.setInstanceID(interfaceID);
     			if(binding != null)
     				interfaceInstanceExtend.setInstanceLabel(binding.getName().toString());
-    			else    				
+    			else
     				interfaceInstanceExtend.setInstanceLabel(superInterface.toString());
     			InitInstance initInterfaceInstanceExtend = new InitInstance(interfaceInstanceExtend);
     			listofAnnotation.add(initInterfaceInstanceExtend.getPackageField());
-    			   			
+
     			initClassInstance.addObjectProperty(ConsistentOntology.IMPLEMENTS_INTERFACE, interfaceID, ConsistentOntology.INTERFACE);
-    			
-    			
+
+
     		}
-    		
+
     		Type superClass = type.getSuperclassType();
     		if(superClass != null)
     		{
     			String superID =codeComponentNaming.getIdSourceFolderFull()+"."+superClass.toString();
     			ITypeBinding binding = superClass.resolveBinding();
     			if(binding != null)
-    				superID = codeComponentNaming.getIdSourceFolderFull()+"."+ binding.getBinaryName();    			
-    			
-    			
+    				superID = codeComponentNaming.getIdSourceFolderFull()+"."+ binding.getBinaryName();
+
+
     			//Them vao list cai class nay truoc
     			InstanceData superclassInstanceExtend = new InstanceData();
     			superclassInstanceExtend.setClassName(ConsistentOntology.CLASS);
     			superclassInstanceExtend.setInstanceID(superID);
     			if(binding != null)
     				superclassInstanceExtend.setInstanceLabel(binding.getName().toString());
-    			else    				
+    			else
     				superclassInstanceExtend.setInstanceLabel(superClass.toString());
     			InitInstance initInterfaceInstanceExtend = new InitInstance(superclassInstanceExtend);
     			listofAnnotation.add(initInterfaceInstanceExtend.getPackageField());
-    			
-    			
+
+
     			initClassInstance.addObjectProperty(ConsistentOntology.EXTENDS, superID, ConsistentOntology.CLASS);
-    			
+
     		}
     		//Tao metric cho class
     		codeComponentNaming.setIdMetric();
     		initClassInstance.addObjectProperty(ConsistentOntology.HAS_METRIC, codeComponentNaming.getIdMetricFull(), ConsistentOntology.CLASS_METRIC);
-			
+
     		genClassMetric(type);
-    		
-    		
+
+
     		//Tao comment
     		if(type.getJavadoc()!=null){
     			codeComponentNaming.setIdCommentClass();
     			initClassInstance.addObjectProperty(ConsistentOntology.HAS_COMMENT, codeComponentNaming.getIdCommentClassFull(),ConsistentOntology.COMMENT);
     			visitComment(type.getJavadoc(),codeComponentNaming.getIdCommentClassFull());
     		}
-    		
+
     		//Ghe tham nhung class ben trong class nay
     		for (TypeDeclaration subType:type.getTypes())
     		{
@@ -404,17 +404,17 @@ public class BKASTVisitor extends ASTVisitor {
     			initClassInstance.addObjectProperty(ConsistentOntology.HAS_CLASS, codeComponentNaming.getIdClassFull(),ConsistentOntology.CLASS);
     			visitClass(subType,fullPath);
     		}
-    		
-    		
-    		
+
+
+
     		//add fullpath for this class
-    		
+
     		initClassInstance.addDataProperty(ConsistentOntology.FULL_PATH, fullPath);
     		listofAnnotation.add(initClassInstance.getPackageField());
-    	}    	
+    	}
     	return true;
-    }   
-	
+    }
+
 	public ArrayList<String>  addPrimaryType(){
 		ArrayList<String> primaryTypeArray =new ArrayList<String>();
 		primaryTypeArray.add("void");
@@ -435,38 +435,38 @@ public class BKASTVisitor extends ASTVisitor {
 	 */
 	@SuppressWarnings("unchecked")
 	public boolean visitMethod(MethodDeclaration method) throws Exception {
-		
-		
-		ArrayList<String> primaryTypeArray =  addPrimaryType();		
+
+
+		ArrayList<String> primaryTypeArray =  addPrimaryType();
 		InstanceData instanceMethod = new InstanceData();
 		String nameMethod = method.getName().toString();
-		
+
 		//codeComponentNaming.setIdMethod(nameMethod);
 		instanceMethod.setClassName(ConsistentOntology.METHOD);
-		
+
 		instanceMethod.setInstanceID(codeComponentNaming.getIdMethodFull());
-		
+
 		InitInstance initMethodInstance = new InitInstance(instanceMethod);
 		initMethodInstance.addDataProperty(ConsistentOntology.HAS_NAME, nameMethod);
-		
+
 		InstanceData instanceConstructor = new InstanceData();
-		if (method.isConstructor()) {	
-			
+		if (method.isConstructor()) {
+
 			//add node Constructor in list
-			
+
 			//codeComponentNaming.setIdMethod(nameMethod);
 			instanceConstructor.setClassName(ConsistentOntology.CONSTRUCTOR);
 			instanceConstructor.setInstanceLabel(nameMethod);
-			instanceConstructor.setInstanceID(codeComponentNaming.getIdMethodFull()+"_Constructor");			
+			instanceConstructor.setInstanceID(codeComponentNaming.getIdMethodFull()+"_Constructor");
 			initMethodInstance.addObjectProperty(ConsistentOntology.HAS_CONSTRUCTOR, codeComponentNaming.getIdMethodFull()+"_Constructor", ConsistentOntology.CONSTRUCTOR);
 		} else {
-			
+
 
 		}
 		//Kiem tra la kieu method gi: final,private ??....
 		List<Object>  modifier = method.modifiers();
 		addModifierRelation(modifier,initMethodInstance);
-		
+
 		if (method.getJavadoc()!=null){
 			//initMethodInstance.addObjectProperty("hasComment", method.getJavadoc().toString(),"Comment");
 			codeComponentNaming.setIdCommentMethod();
@@ -474,21 +474,21 @@ public class BKASTVisitor extends ASTVisitor {
 			visitComment(method.getJavadoc(),codeComponentNaming.getIdCommentMethodFull());
 		}
 		if (method.resolveBinding().getReturnType()!=null){
-			
-			
+
+
 			if(primaryTypeArray.contains(method.resolveBinding().getReturnType().getName())){
 				//chu y addobject ca 3 thanh phan phai day du
 				initMethodInstance.addObjectProperty(ConsistentOntology.RETURN_TYPE,ConsistentOntology.SEC_NAMESPACE+method.resolveBinding().getReturnType().getName(),ConsistentOntology.JAVAPRIMARYTYPE);
-			}else{				
+			}else{
 				codeComponentNaming.setIdReturnType(method.resolveBinding().getReturnType().getBinaryName());
-				
+
 				initMethodInstance.addObjectProperty(ConsistentOntology.RETURN_TYPE,standardize(codeComponentNaming.getIdReturnTypeFull()),ConsistentOntology.CLASS);
 				//Chua check dc interface.
 			}
-			
-			
+
+
 		}
-		
+
 		ITypeBinding[] typeBidings=method.resolveBinding().getParameterTypes();
 		String paramsName="";
 		String seperator=", ";
@@ -500,17 +500,17 @@ public class BKASTVisitor extends ASTVisitor {
 		}
 		if (typeBidings.length>0){
 			paramsName=paramsName.substring(0, paramsName.length()-seperator.length());
-		
+
 		}
 		nameMethod = nameMethod+"("+paramsName+")";
 		instanceMethod.setInstanceLabel(nameMethod);
 		instanceConstructor.setInstanceLabel(nameMethod);
 		listofAnnotation.add(instanceConstructor);
 		listofAnnotation.add(initMethodInstance.getPackageField());
-		
+
 		return true;
 	}
-	
+
 	public static String standardize(String URI)//Cac ten uri phai chuan tac
 	{
 		URI=URI.replace("[", "");
@@ -531,17 +531,17 @@ public class BKASTVisitor extends ASTVisitor {
 		{
 			initInstance.addObjectProperty(ConsistentOntology.HAS_MODIFIER, ConsistentOntology.SEC_NAMESPACE+"Protected",  ConsistentOntology.JAVAMODIFIER);
 		}
-		
+
 		if (containtModifier(list,"private"))
 		{
 			initInstance.addObjectProperty(ConsistentOntology.HAS_MODIFIER, ConsistentOntology.SEC_NAMESPACE+"Private", ConsistentOntology.JAVAMODIFIER);
 		}
-		
+
 		if (containtModifier(list,"public"))
 		{
 			initInstance.addObjectProperty(ConsistentOntology.HAS_MODIFIER, ConsistentOntology.SEC_NAMESPACE+"Public",ConsistentOntology.JAVAMODIFIER);
 		}
-		
+
 		if (containtModifier(list,"final"))
 		{
 			initInstance.addObjectProperty(ConsistentOntology.HAS_MODIFIER, ConsistentOntology.SEC_NAMESPACE+"Final", ConsistentOntology.JAVAMODIFIER);
@@ -551,8 +551,8 @@ public class BKASTVisitor extends ASTVisitor {
 			initInstance.addObjectProperty(ConsistentOntology.HAS_MODIFIER, ConsistentOntology.SEC_NAMESPACE+"Static", ConsistentOntology.JAVAMODIFIER);
 		}
 	}
-	
-	
+
+
 	@SuppressWarnings("unchecked")
 	public boolean visitField(FieldDeclaration field) throws Exception {
 		InstanceData instanceField = new InstanceData();
@@ -564,7 +564,7 @@ public class BKASTVisitor extends ASTVisitor {
 
 		InitInstance initFieldInstance = new InitInstance(instanceField);
 		initFieldInstance.addDataProperty(ConsistentOntology.HAS_NAME, name);
-		
+
 		if (field.getJavadoc() != null) {
 			codeComponentNaming.setIdCommentField();
 			initFieldInstance.addObjectProperty(ConsistentOntology.HAS_COMMENT, codeComponentNaming.getIdCommentFieldFull(),ConsistentOntology.COMMENT);
@@ -574,10 +574,10 @@ public class BKASTVisitor extends ASTVisitor {
 		List<Object> modifiers = field.modifiers();
 		addModifierRelation(modifiers,initFieldInstance);
 		listofAnnotation.add(initFieldInstance.getPackageField());
-		
+
 		return true;
 	}
-	
+
 	private void genClassMetric(TypeDeclaration type)
     {
     	int numMethods = type.getMethods().length;
@@ -589,7 +589,7 @@ public class BKASTVisitor extends ASTVisitor {
 		instanceMetricClass.setInstanceID(codeComponentNaming.getIdMetricFull());
 
 		InitInstance initMetricClassInstance = new InitInstance(instanceMetricClass);
-    	/*Individual metric = loader.getModel().getIndividual(namespace+this.theClassFull + "_metric");		
+    	/*Individual metric = loader.getModel().getIndividual(namespace+this.theClassFull + "_metric");
 		if(metric != null)
 			return;
     	   metric = createIndividual(CLASS_METRIC, this.theClassFull + "_metric");
@@ -600,32 +600,32 @@ public class BKASTVisitor extends ASTVisitor {
 		initMetricClassInstance.addDataProperty( ConsistentOntology.NUM_ATTRIBUTES, new Integer(numAttributes).toString());
 		initMetricClassInstance.addDataProperty(ConsistentOntology.NUM_METHODS, new Integer(numMethods).toString());
 		initMetricClassInstance.addDataProperty(ConsistentOntology.NUM_INTERFACES, new Integer(numInterfaces).toString());
-		
+
 		listofAnnotation.add(initMetricClassInstance.getPackageField());
-		
-    
+
+
     }
-	
+
 	   public boolean visit(MethodInvocation method) {
 		   String cls ;
 		   String pack ="";
 		   String idMethod="";
 		   String idMethodParent   ="";
-			
+
 		   //B1: Khoi tao 1 doi tuong de bind du lieu vao cho method
 		   //Them cac loi goi ham vao khi da co annotation san cua method nay roi
-		   
+
 		    /* StringBuffer methodURI = new StringBuffer(this.theClassFull).append("/");
 	    	String methodFullName = methodURI.append(method.getName()).append("()").toString();
 	    	*/
-		   
-		    
+
+
 		    IMethodBinding methodBinding = method.resolveMethodBinding();
-	    	
+
 	    	System.out.println("Dang ghe tham method:"+ method.getName());
 	    	if(methodBinding != null){
 	    		ITypeBinding declaringClass = methodBinding.getDeclaringClass();
-	    		
+
 	    		StringBuffer buff = new StringBuffer(declaringClass.getBinaryName());
 		    	if(buff.indexOf("org")==-1){
 		    		cls =   codeComponentNaming.getIdWorkspaceFull()+"."+buff.toString();
@@ -635,7 +635,7 @@ public class BKASTVisitor extends ASTVisitor {
 		    	pack =  new StringBuffer(declaringClass.getPackage().getName()).toString();
 		    	System.out.println("Class cha:"+ cls );
 		    	System.out.println("Package cha : "+pack);
-		    	
+
 		    	InstanceData instanceMethod = new InstanceData();
 				String nameMethod = method.getName().toString();
 				//Xet 2 truong hop: neu no la subclass: ttt.views.Sample$SubAction thi minh chi lay ten SubAction, truong hop2: neu no la class cha: ttt.views.Sample thi minh lay Sample
@@ -646,17 +646,17 @@ public class BKASTVisitor extends ASTVisitor {
 					cls= buff.toString().substring(buff.indexOf("$")+1);
 				}
 				if((buff.indexOf("org")==-1)&&(buff.indexOf("java")==-1)){
-					
-					
+
+
 				idMethod   = codeComponentNaming.getIdSourceFolderFull()+"."+pack+"."+cls+"/"+nameMethod;
 				}else{
-					idMethod   = ConsistentOntology.SEC_NAMESPACE+pack+"."+nameMethod;	
+					idMethod   = ConsistentOntology.SEC_NAMESPACE+pack+"."+nameMethod;
 				}
-					
+
 				//codeComponentNaming.setIdMethod(nameMethod);
-				instanceMethod.setClassName(ConsistentOntology.METHOD);				
+				instanceMethod.setClassName(ConsistentOntology.METHOD);
 				instanceMethod.setInstanceID(idMethod);
-				
+
 	    	//Kiem tra nhung method nao ma no dc su dung-- hay  method cha su dung method con
 	    	ASTNode parent = method.getParent();
 	    	while(true)
@@ -664,63 +664,60 @@ public class BKASTVisitor extends ASTVisitor {
 	    		if (parent instanceof MethodDeclaration) {
 					MethodDeclaration methodParent = (MethodDeclaration) parent;
 					//tao instan tuong ung voi viec aad vao listannotation
-					
+
 					/*MethodInvocation methodParentInvocation = (MethodInvocation) parent;
 					methodBinding = methodParentInvocation.resolveMethodBinding();
-			    	
+
 			    	if(methodBinding != null){
-			    		declaringClass = methodBinding.getDeclaringClass();			    		
+			    		declaringClass = methodBinding.getDeclaringClass();
 			    		buff = new StringBuffer(declaringClass.getBinaryName());
 				    	if(buff.indexOf("org")==-1){
 				    		cls =   codeComponentNaming.getIdWorkspaceFull()+"."+buff.toString();
 				    	}else{
 				    		cls =	buff.toString();
 				    	}
-				    	pack =  new StringBuffer(declaringClass.getPackage().getName()).toString();				    	
+				    	pack =  new StringBuffer(declaringClass.getPackage().getName()).toString();
 				    	if(buff.indexOf("$")==-1){
 							cls= buff.toString().substring(buff.indexOf(".")+1);
 						}else{
 							cls= buff.toString().substring(buff.indexOf("$")+1);
 						}
 			    	}*/
-					
-					
+
+
 					InstanceData instanceMethodParent = new InstanceData();
 					String nameMethodParent = methodParent.getName().toString();
 					if((buff.indexOf("org")==-1)&&(buff.indexOf("java")==-1)){
 						idMethodParent   = codeComponentNaming.getIdSourceFolderFull()+"."+pack+"."+cls+"/"+nameMethodParent;
 					}else{
-						idMethodParent   = ConsistentOntology.SEC_NAMESPACE+pack+"."+nameMethodParent;	
+						idMethodParent   = ConsistentOntology.SEC_NAMESPACE+pack+"."+nameMethodParent;
 					}
 					//codeComponentNaming.setIdMethod(nameMethod);
-					instanceMethodParent.setClassName(ConsistentOntology.METHOD);				
+					instanceMethodParent.setClassName(ConsistentOntology.METHOD);
 					instanceMethodParent.setInstanceID(idMethodParent);
 					instanceMethodParent.setInstanceLabel(nameMethodParent);
 					InitInstance initMethodInstance = new InitInstance(instanceMethodParent);
 					initMethodInstance.addObjectProperty(ConsistentOntology.USES_METHOD, idMethod, ConsistentOntology.METHOD);
-					
+
 					//Add vao list gui len server.
 					listofAnnotation.add(initMethodInstance.getPackageField());
 					break;
 	    		}
 	    		else if(parent == null)
-	   				break;   			
+	   				break;
 	    		else
 	    			parent = parent.getParent();
-	    	
+
 	    	}
 	    	}
 			return true;
 	   }
 	  /**
-	   * 
-	   * dsaf
-	   dsafa vvv
 	   * @param javadoc
 	   * @param idComment
 	   * @return
-	   */ 
-	
+	   */
+
 	   public boolean visitComment(Javadoc javadoc, String idComment){
 		   InstanceData instanceComment = new InstanceData();
 		   instanceComment.setClassName(ConsistentOntology.COMMENT);
@@ -728,12 +725,13 @@ public class BKASTVisitor extends ASTVisitor {
 		   instanceComment.setInstanceLabel("Comment");
 		   InitInstance initCommentInstance = new InitInstance(instanceComment);
 		   String description =removeAllTagInComment(javadoc.toString());
+       System.out.println("DESCRIPTION: " +description);
 		   description = description.replace("*", "");
 		   description = description.replace("/", "");
 		   description = description.replace("\\", "");
 		   if((description!=null)&&(description!=""))
 		   initCommentInstance.addDataProperty(ConsistentOntology.DESCRIPTION,description);
-		  
+
 		   List commenttags = javadoc.tags();
 		   for (int k = 0; k < commenttags.size(); k++) {
 			   TagElement newtags = (TagElement) commenttags.get(k);
@@ -760,65 +758,86 @@ public class BKASTVisitor extends ASTVisitor {
 							initCommentInstance.addDataProperty(ConsistentOntology.RETURN, array_tags.get(j).toString());
 						}
 					}
+					if (newtags.getTagName().equals("@topic")) {
+						List array_tags = newtags.fragments();
+						//check ?
+						for (int j = 0; j < array_tags.size(); j++) {
+							initCommentInstance.addDataProperty(ConsistentOntology.TOPIC, array_tags.get(j).toString());
+						}
+					}
+					if (newtags.getTagName().equals("@model")) {
+						List array_tags = newtags.fragments();
+						//check ?
+						for (int j = 0; j < array_tags.size(); j++) {
+							initCommentInstance.addDataProperty(ConsistentOntology.MODEL, array_tags.get(j).toString());
+						}
+					}
+					if (newtags.getTagName().equals("@function")) {
+						List array_tags = newtags.fragments();
+						//check ?
+						for (int j = 0; j < array_tags.size(); j++) {
+							initCommentInstance.addDataProperty(ConsistentOntology.FUNCTION, array_tags.get(j).toString());
+						}
+					}
 				}
 		   }
-		   
+
 		   listofAnnotation.add(initCommentInstance.getPackageField());
 		   return true;
 	   }
-	   
-	   
+
+
 	   public String removeAllTagInComment(String comment){
 			Matcher match = replaceCommentPattern.matcher(comment);
 			return match.replaceAll("");
 		}
-	    
+
 	 /*@Override
    public boolean visit(MethodInvocation method) // cac loi goi ham
-    {	
+    {
     	Expression exp = method.getExpression();
     	codeComponentNaming.setIdMethod(method.getName().toString());
-    	
+
     	InstanceData methodInstance = new InstanceData();
 		codeComponentNaming.setIdInterface(codeComponentNaming.getIdMethodFull());
-		
+
 		methodInstance.setClassName("Method");
 		methodInstance.setInstanceLabel(codeComponentNaming.getIdMethodFull());
 		methodInstance.setInstanceID(codeComponentNaming.getIdMethod());
 		InitInstance initMethodInstance = new InitInstance(methodInstance);
-    		
-    	if (exp instanceof SimpleName) // --> neu != null khi do method duoc goi (invocation la method cua chinh lop nay 
-    	{    		
+
+    	if (exp instanceof SimpleName) // --> neu != null khi do method duoc goi (invocation la method cua chinh lop nay
+    	{
 	    	SimpleName name = (SimpleName) exp;
 	    	IBinding binding = name.resolveBinding();
-	    	
+
 	    	//Kiem tra goi ham chinh trong lop=======Cai nay chua kiem tra( cuongtk)
-	    	if (binding != null && binding instanceof IVariableBinding) 
+	    	if (binding != null && binding instanceof IVariableBinding)
 	    	{
 		    	IVariableBinding varBinding = (IVariableBinding) binding;
-		    	ITypeBinding invocationType = varBinding.getType();		  
+		    	ITypeBinding invocationType = varBinding.getType();
 		    	// TODO: o day chua xac dinh duoc su lien ket giua cac project
 		    	// do do neu ko thuoc project hien tai --> coi project = null
 		    	StringBuffer buff = new StringBuffer("/src/").append(invocationType.getBinaryName());
 		    	String cls = buff.toString();
 		    	String pack = new StringBuffer("/src/").append(invocationType.getPackage().getName()).toString();
-		    	
-		    	
-		    	
-		    	createIndividual(CLASS, cls); 
+
+
+
+		    	createIndividual(CLASS, cls);
 		    	createIndividual(PACKAGE, pack);
-		    	
-		    	
-		    	methodFullName = buff.append("/").append(method.getName()).toString();		    	
-		    			    	
+
+
+		    	methodFullName = buff.append("/").append(method.getName()).toString();
+
 		    	Individual indiMethodInvo = createIndividual(METHOD, methodFullName);
 		    		addLabel(indiMethodInvo, method.getName().toString());
 		    		addObjectProperty(indiMethodInvo, PACKAGE_MEMBER_OF, pack);
 		    		addObjectProperty(indiMethodInvo, METHOD_OF, cls);
 		    	// vi du: /java.lang.Object/getClass
 	    	}
-	    	
-	    	if (method.isConstructor()) {			
+
+	    	if (method.isConstructor()) {
 				initMethodInstance.addObjectProperty("hasModifier", "constructor","Modifier");
 			} else {
 
@@ -829,12 +848,12 @@ public class BKASTVisitor extends ASTVisitor {
 			}
 			if (method.resolveBinding().getReturnType()!=null){
 				initMethodInstance.addObjectProperty("returnType", method.resolveBinding().getReturnType().getName(),"Type");
-				
+
 			}
-	    	
-	    	
+
+
     	}
-    	
+
 //    	Utils.print("Method Invocation: " + methodFullName);
     	ASTNode parent = method.getParent();
     	while(true)
@@ -859,6 +878,6 @@ public class BKASTVisitor extends ASTVisitor {
     	return false;
     }
     */
-	
-	
+
+
 }
