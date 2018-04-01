@@ -111,7 +111,7 @@ public class SeCommentManager extends SeSuperComposite {
 
     refreshItemToolItem = new ToolItem(toolBar, SWT.PUSH);
     refreshItemToolItem.setImage(Images.imageRegistry.get(Images.REFRESH));
-    sashForm_2.setWeights(new int[] {122, 28 });
+    sashForm_2.setWeights(new int[] {75, 28 });
 
     final Composite compositeTree = new Composite(compositeSourceTree,
         SWT.BORDER);

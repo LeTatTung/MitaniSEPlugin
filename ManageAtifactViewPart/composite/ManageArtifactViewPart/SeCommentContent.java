@@ -1,7 +1,12 @@
 package composite.ManageArtifactViewPart;
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
 
 import hut.composite.assistant.RowComposite;
 
@@ -52,6 +57,7 @@ public class SeCommentContent extends SeSuperComposite {
   private TableColumn valueColumn;
   private ToolItem saveAnnotationItem;
   private ToolItem saveCommentItem;
+  private ToolItem saveCommentRdfItem;
   private final FormToolkit toolkit = new FormToolkit(Display.getCurrent());
   private List<String> listPropertyName = new ArrayList<String>();
   private List<MapData> listMapProperty;
@@ -96,7 +102,14 @@ public class SeCommentContent extends SeSuperComposite {
     saveCommentItem = new ToolItem(toolBar, SWT.PUSH);
     saveCommentItem.setText("Save Comment");
     saveCommentItem.setImage(Images.imageRegistry.get(Images.SAVECOMMENT));
-
+    
+    
+    // Item save comment rdf file
+    saveCommentRdfItem = new ToolItem(toolBar, SWT.PUSH);
+    saveCommentRdfItem.setText("Save Comment RDF");
+    saveCommentRdfItem.setImage(Images.imageRegistry
+            .get(Images.SAVEANNOTATION));
+    
     final Composite composite = new Composite(this, SWT.BORDER);
     composite.setLayout(new FillLayout());
     toolkit.adapt(composite);
@@ -114,17 +127,18 @@ public class SeCommentContent extends SeSuperComposite {
 
     propertyColumn = new TableColumn(table, SWT.NONE);
     propertyColumn.setText("Property");
-    propertyColumn.setWidth(138);
+    propertyColumn.setWidth(100);
 
     valueColumn = new TableColumn(table, SWT.NONE);
     valueColumn.setText("Value");
-    valueColumn.setWidth(344);
+    valueColumn.setWidth(225);
 
+    propertyColumn = new TableColumn(table, SWT.NONE);
     final Listener paintListener = new Listener() {
       public void handleEvent(Event event) {
         switch (event.type) {
         case SWT.MeasureItem:
-          event.width = 344;
+          event.width = 225;
           event.height = 120;
           break;
         }
@@ -331,9 +345,96 @@ public class SeCommentContent extends SeSuperComposite {
 
       }
     });
+    // Ghi comment ra RDF file
+    saveCommentRdfItem.addSelectionListener(new SelectionAdapter() {
+        public void widgetSelected(final SelectionEvent e) {
+          logger.info("Ghi comment ra RDF file");
+          String comment = writeRdf(id);
+          // Truong hop modifie, xoa tat removeAll cac relation,annotation
+          // lien quan den individual do xong tao ra mot cai individual
+          // moi co id cu
+          for (TableItem item : table.getItems()) {
+            String  propertyName = (String) item.getData("propertyname");
+            RowComposite rowComposite = (RowComposite) item.getData();
+            for (String value : rowComposite.getListDataValue()) {
+              comment += addPropertyComment(propertyName, value);
+            }
+          }
+          comment += "\n" + 
+          		"    </swrl:body>\n" + 
+          		"  </swrl:Imp>\n" + 
+          		"\n" + 
+          		"</rdf:RDF>\n" + 
+          		"";
+          System.out.println(comment);
+//          rdfFile.setWidth(300);
+//          rdfFile.setText(comment);
+          JFrame myFrame = new JFrame("RDF Comment");
+          myFrame.setLocation(new Point(100, 100));
+          myFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+          JPanel mainPanel = new JPanel();
+          myFrame.getContentPane().add(mainPanel);
+          JTextArea text = new JTextArea();
+          text.setText(comment);
+          mainPanel.add(text);
+          myFrame.pack();
+          myFrame.setLocationByPlatform(true);
+          myFrame.setVisible(true);
+        }
+      });
 
   }
-
+  
+  public String writeRdf(String id) {
+	  String commentRdf = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" + 
+	  		"<!DOCTYPE rdf:RDF [\n" + 
+	  		"  <!ENTITY swrl  \"http://www.w3.org/2003/11/swrl#\" >\n" + 
+	  		"  <!ENTITY owl \"http://www.w3.org/2002/07/owl#\">\n" + 
+	  		"  <!ENTITY rdf \"http://www.w3.org/1999/02/22-rdf-syntax-ns#\">\n" + 
+	  		"  <!ENTITY rdfs \"http://www.w3.org/2000/01/rdf-schema#\">\n" + 
+	  		"  <!ENTITY xsd \"http://www.w3.org/2001/XMLSchema#\">\n" + 
+	  		"  <!ENTITY sourcecode \"http://hut.edu.vn/ontology/sourcecode#\" >\n" + 
+	  		"  <!ENTITY document \"http://hut.edu.vn/ontology/document#\" >\n" + 
+	  		"  <!ENTITY ruleml  \"http://www.w3.org/2003/11/ruleml#\" >\n" + 
+	  		"]>\n" + 
+	  		"<rdf:RDF\n" + 
+	  		"  xmlns:owl=\"http://www.w3.org/2002/07/owl#\"\n" + 
+	  		"  xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"\n" + 
+	  		"            xmlns:semanticdoc=\"http://hut.edu.vn/ontology/semanticdoc\"\n" + 
+	  		"  xmlns:rdfs=\"http://www.w3.org/2000/01/rdf-schema#\"\n" + 
+	  		"  xmlns:swrl=\"http://www.w3.org/2003/11/swrl#\"\n" + 
+	  		"  xmlns:ruleml=\"http://www.w3.org/2003/11/ruleml#\">\n" + 
+	  		"\n" + 
+	  		"  <swrl:Variable rdf:about=\"#javadocTopic\"/>\n" + 
+	  		"  <swrl:Variable rdf:about=\"#javadocModel\"/>\n" + 
+	  		"  <swrl:Variable rdf:about=\"#javadocFunction\"/>\n" + 
+	  		"\n" + 
+	  		"  <swrl:Imp rdf:about=\"#semanticdoc\">\n" + 
+	  		"    <swrl:head rdf:parseType=\"Collection\">\n" + 
+	  		"      <swrl:IndividualPropertyAtom>\n" + 
+	  		"        <swrl:propertyPredicate rdf:resource=\"";
+	  commentRdf= commentRdf + id+ "\"/>\n" + 
+	  		"        <swrl:argument1 rdf:resource=\"#javadocTopic\"/>\n" + 
+	  		"        <swrl:argument2 rdf:resource=\"#javadocModel\"/>\n" + 
+	  		"        <swrl:argument3 rdf:resource=\"#javadocFunction\"/>\n" + 
+	  		"      </swrl:IndividualPropertyAtom>\n" + 
+	  		"    </swrl:head>\n" + 
+	  		"\n" + 
+	  		"    <swrl:body rdf:parseType=\"Collection\">\n" + 
+	  		"      ";
+	  
+	  return commentRdf;
+  }
+  public String addPropertyComment(String propertyName, String value) {
+		String commentContent = "";
+		commentContent += "<rdf:Description rdf:about=\"" + propertyName + "\">\n" + 
+						"        <semanticdoc:value>" + value + "</semanticdoc:value>\n" + 
+								"      </rdf:Description>\n" + 
+								"\n" + 
+								"      ";
+		return commentContent;
+	}
   /**
    * @return
    * Kiem tra chac chan la type source chi la Method hoac Classs.
