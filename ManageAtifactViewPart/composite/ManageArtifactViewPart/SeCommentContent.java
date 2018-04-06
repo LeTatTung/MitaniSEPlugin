@@ -1,12 +1,7 @@
 package composite.ManageArtifactViewPart;
 
-import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
 
 import hut.composite.assistant.RowComposite;
 
@@ -58,6 +53,7 @@ public class SeCommentContent extends SeSuperComposite {
   private ToolItem saveAnnotationItem;
   private ToolItem saveCommentItem;
   private ToolItem saveCommentRdfItem;
+  private ToolItem viewHTMLItem;
   private final FormToolkit toolkit = new FormToolkit(Display.getCurrent());
   private List<String> listPropertyName = new ArrayList<String>();
   private List<MapData> listMapProperty;
@@ -109,6 +105,11 @@ public class SeCommentContent extends SeSuperComposite {
     saveCommentRdfItem.setText("Save Comment RDF");
     saveCommentRdfItem.setImage(Images.imageRegistry
             .get(Images.SAVEANNOTATION));
+    
+    // call browser 
+    viewHTMLItem = new ToolItem(toolBar, SWT.PUSH);
+    viewHTMLItem.setText("View HTML");
+    viewHTMLItem.setImage(Images.imageRegistry.get(Images.SAVECOMMENT));
     
     final Composite composite = new Composite(this, SWT.BORDER);
     composite.setLayout(new FillLayout());
@@ -349,44 +350,19 @@ public class SeCommentContent extends SeSuperComposite {
     saveCommentRdfItem.addSelectionListener(new SelectionAdapter() {
         public void widgetSelected(final SelectionEvent e) {
           logger.info("Ghi comment ra RDF file");
-          String comment = writeRdf(id);
-          // Truong hop modifie, xoa tat removeAll cac relation,annotation
-          // lien quan den individual do xong tao ra mot cai individual
-          // moi co id cu
-          for (TableItem item : table.getItems()) {
-            String  propertyName = (String) item.getData("propertyname");
-            RowComposite rowComposite = (RowComposite) item.getData();
-            for (String value : rowComposite.getListDataValue()) {
-              comment += addPropertyComment(propertyName, value);
-            }
-          }
-          comment += "\n" + 
-          		"    </swrl:body>\n" + 
-          		"  </swrl:Imp>\n" + 
-          		"\n" + 
-          		"</rdf:RDF>\n" + 
-          		"";
-          System.out.println(comment);
-//          rdfFile.setWidth(300);
-//          rdfFile.setText(comment);
-          JFrame myFrame = new JFrame("RDF Comment");
-          myFrame.setLocation(new Point(100, 100));
-          myFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
-          JPanel mainPanel = new JPanel();
-          myFrame.getContentPane().add(mainPanel);
-          JTextArea text = new JTextArea();
-          text.setText(comment);
-          mainPanel.add(text);
-          myFrame.pack();
-          myFrame.setLocationByPlatform(true);
-          myFrame.setVisible(true);
+          RDFComment rdfComment = new RDFComment(generateRDFCommentFinal());
         }
       });
-
+    
+    viewHTMLItem.addSelectionListener(new SelectionAdapter() {
+        public void widgetSelected(final SelectionEvent e) {
+            logger.info("Call browser render RDF2HTML");
+            CallBrowser browser = new CallBrowser("http://localhost:8080/redefer-rdf2html/");
+          }
+        });
   }
   
-  public String writeRdf(String id) {
+  private String writeRdf(String id_comment) {
 	  String commentRdf = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" + 
 	  		"<!DOCTYPE rdf:RDF [\n" + 
 	  		"  <!ENTITY swrl  \"http://www.w3.org/2003/11/swrl#\" >\n" + 
@@ -414,7 +390,7 @@ public class SeCommentContent extends SeSuperComposite {
 	  		"    <swrl:head rdf:parseType=\"Collection\">\n" + 
 	  		"      <swrl:IndividualPropertyAtom>\n" + 
 	  		"        <swrl:propertyPredicate rdf:resource=\"";
-	  commentRdf= commentRdf + id+ "\"/>\n" + 
+	  commentRdf= commentRdf + id_comment + "\"/>\n" + 
 	  		"        <swrl:argument1 rdf:resource=\"#javadocTopic\"/>\n" + 
 	  		"        <swrl:argument2 rdf:resource=\"#javadocModel\"/>\n" + 
 	  		"        <swrl:argument3 rdf:resource=\"#javadocFunction\"/>\n" + 
@@ -426,7 +402,8 @@ public class SeCommentContent extends SeSuperComposite {
 	  
 	  return commentRdf;
   }
-  public String addPropertyComment(String propertyName, String value) {
+  
+  private String addPropertyComment(String propertyName, String value) {
 		String commentContent = "";
 		commentContent += "<rdf:Description rdf:about=\"" + propertyName + "\">\n" + 
 						"        <semanticdoc:value>" + value + "</semanticdoc:value>\n" + 
@@ -435,6 +412,27 @@ public class SeCommentContent extends SeSuperComposite {
 								"      ";
 		return commentContent;
 	}
+  
+  private String generateRDFCommentFinal() {
+	  String comment = writeRdf(id);
+      // Truong hop modifie, xoa tat removeAll cac relation,annotation
+      // lien quan den individual do xong tao ra mot cai individual
+      // moi co id cu
+      for (TableItem item : table.getItems()) {
+        String  propertyName = (String) item.getData("propertyname");
+        RowComposite rowComposite = (RowComposite) item.getData();
+        for (String value : rowComposite.getListDataValue()) {
+          comment += addPropertyComment(propertyName, value);
+        }
+      }
+      comment += "\n" + 
+      		"    </swrl:body>\n" + 
+      		"  </swrl:Imp>\n" + 
+      		"\n" + 
+      		"</rdf:RDF>\n" + 
+      		"";
+      return comment;
+  }
   /**
    * @return
    * Kiem tra chac chan la type source chi la Method hoac Classs.
