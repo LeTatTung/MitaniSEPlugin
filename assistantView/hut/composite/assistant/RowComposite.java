@@ -174,7 +174,6 @@ public class RowComposite extends Composite {
 				dataTypeComposite.dispose();
 			}
 		});
-		
 		shell.open();
 	}
 	

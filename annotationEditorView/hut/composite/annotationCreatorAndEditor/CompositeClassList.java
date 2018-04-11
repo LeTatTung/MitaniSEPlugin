@@ -1,11 +1,9 @@
 package hut.composite.annotationCreatorAndEditor;
 
-
 import java.util.ArrayList;
 
 import ontology.images.Images;
 
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ILabelProvider;
@@ -16,31 +14,21 @@ import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.CTabFolder;
-import org.eclipse.swt.custom.CTabItem;
-import org.eclipse.swt.events.MouseAdapter;
-import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.List;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Tree;
-import org.eclipse.swt.widgets.TreeItem;
 
 import ws.owl.ClassData;
 import ws.owl.PropertyData;
-import ws.owl.WebServiceDelegate;
-import ws.owl.WebServiceService;
 
 public class CompositeClassList extends	SuperCompositeAnnotationCreatorAndEditor {
 
@@ -154,6 +142,11 @@ public class CompositeClassList extends	SuperCompositeAnnotationCreatorAndEditor
 	 */
 	public Object[] getChildren(Object ParentNode) {
 		System.out.println("Su dung ham GetElements()");
+//		String testURI = "http://hut.edu.vn/ontology/document#Topic";
+//		java.util.List<ClassData> listSubClassTest = service.Service.webServiceDelegate.getSubClasses(null, testURI, true);
+//		for (ClassData classtest: listSubClassTest) {
+//			System.out.println("AAAAAAAAAAA: " +classtest.getClassName());
+//		}
 		if (ParentNode instanceof ClassData && hasChildren(ParentNode))
 		
 		{
