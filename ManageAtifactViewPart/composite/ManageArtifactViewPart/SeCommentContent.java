@@ -3,8 +3,6 @@ package composite.ManageArtifactViewPart;
 import java.util.ArrayList;
 import java.util.List;
 
-import hut.composite.assistant.RowComposite;
-
 import mintani.valueconst.ConsistentOntology;
 import ontology.images.Images;
 
@@ -43,6 +41,8 @@ import ws.data.NodeType;
 import ws.data.MapData;
 import ws.owl.PropertyData;
 import hut.annotation.InitInstance;
+import hut.composite.assistant.MyComposite;
+
 import org.apache.log4j.Logger;
 
 public class SeCommentContent extends SeSuperComposite {
@@ -246,13 +246,13 @@ public class SeCommentContent extends SeSuperComposite {
      */
     propertyValue = getArrayListProperty(propertyName);
     System.out.println("PROPERTY VALUE" + propertyValue);
-    RowComposite rowComposite = new RowComposite(table, SWT.NONE,
-        propertyValue);
+    MyComposite myComposite = new MyComposite(table, SWT.NONE,
+            propertyValue);
     editor.grabHorizontal = true;
 
-    editor.setEditor(rowComposite, item, 2);
+    editor.setEditor(myComposite, item, 2);
 
-    item.setData(rowComposite);
+    item.setData(myComposite);
     item.setData("propertyname",propertyName);//ten cua property duoc truyen vao
   }
 
@@ -267,8 +267,8 @@ public class SeCommentContent extends SeSuperComposite {
         // moi co id cu
         for (TableItem item : table.getItems()) {
           String  propertyName = (String) item.getData("propertyname");
-          RowComposite rowComposite = (RowComposite) item.getData();
-          for (String value : rowComposite.getListDataValue()) {
+          MyComposite myComposite = (MyComposite) item.getData();
+          for (String value : myComposite.getListDataValue()) {
             comment += standardizeComment(propertyName, value);
 //            comment += standardizeSemanticComment(propertyName, value);
           }
@@ -325,8 +325,8 @@ public class SeCommentContent extends SeSuperComposite {
 
           for (TableItem item : table.getItems()) {
             String  propertyName = (String) item.getData("propertyname");
-            RowComposite rowComposite = (RowComposite) item.getData();
-            for (String value : rowComposite.getListDataValue()) {
+            MyComposite myComposite = (MyComposite) item.getData();
+            for (String value : myComposite.getListDataValue()) {
               initcommentInstance.addDataProperty(propertyName, value);
 
             }
@@ -420,8 +420,8 @@ public class SeCommentContent extends SeSuperComposite {
       // moi co id cu
       for (TableItem item : table.getItems()) {
         String  propertyName = (String) item.getData("propertyname");
-        RowComposite rowComposite = (RowComposite) item.getData();
-        for (String value : rowComposite.getListDataValue()) {
+        MyComposite myComposite = (MyComposite) item.getData();
+        for (String value : myComposite.getListDataValue()) {
           comment += addPropertyComment(propertyName, value);
         }
       }
