@@ -1,13 +1,12 @@
 package hut.viewer.tree;
 
 import java.util.ArrayList;
-@SuppressWarnings("unchecked")
 public class TreeParent extends TreeObject {
-	private ArrayList children;
+	private ArrayList<TreeObject> children;
 
 	public TreeParent(Object data, TreeParent parent) {
 		super(data,parent);
-		children = new ArrayList();
+		children = new ArrayList<TreeObject>();
 	}
 	public void addChild(TreeObject child) {
 		children.add(child);
