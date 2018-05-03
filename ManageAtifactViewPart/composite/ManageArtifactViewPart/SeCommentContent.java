@@ -1,9 +1,11 @@
 package composite.ManageArtifactViewPart;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import mintani.valueconst.ConsistentOntology;
+import net.redefer.rdf2html.RDF2HTML;
 import ontology.images.Images;
 
 import org.eclipse.core.resources.IWorkspace;
@@ -357,7 +359,15 @@ public class SeCommentContent extends SeSuperComposite {
     viewHTMLItem.addSelectionListener(new SelectionAdapter() {
         public void widgetSelected(final SelectionEvent e) {
             logger.info("Call browser render RDF2HTML");
-            CallBrowser browser = new CallBrowser("http://localhost:8080/redefer-rdf2html/");
+            String input = generateRDFCommentFinal();
+            RDF2HTML redefer = new RDF2HTML(input);
+            try {
+				redefer.performTask(input);
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+//            CallBrowser browser = new CallBrowser("http://localhost:8080/redefer-rdf2html/");
           }
         });
   }
