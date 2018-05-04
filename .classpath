@@ -74,5 +74,6 @@
 	</classpathentry>
 	<classpathentry kind="con" path="com.genuitec.runtime.library/com.genuitec.jaxws_2.1"/>
 	<classpathentry kind="lib" path="/home/tung/Downloads/xercesImpl.jar"/>
+	<classpathentry kind="lib" path="/home/tung/lib SE/Redefer.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
