@@ -367,7 +367,7 @@ public class SeCommentContent extends SeSuperComposite {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-//            CallBrowser browser = new CallBrowser("http://localhost:8080/redefer-rdf2html/");
+//            CallBrowser browser = new CallBrowser("file:///home/tung/Data/result.html");
           }
         });
   }

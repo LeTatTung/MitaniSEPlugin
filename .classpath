@@ -16,6 +16,9 @@
 	<classpathentry kind="src" path="ManageAtifactViewPart"/>
 	<classpathentry kind="src" path="login"/>
 	<classpathentry kind="src" path="projectTotalView"/>
+	<classpathentry exported="true" kind="lib" path="lib/Redefer.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/com.ibm.icu_3.4.4.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/xerces-2.7.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="bin/"/>
 	<classpathentry exported="true" kind="lib" path="lib/BKSVNLib.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/commentTool.jar"/>
@@ -74,6 +77,5 @@
 	</classpathentry>
 	<classpathentry kind="con" path="com.genuitec.runtime.library/com.genuitec.jaxws_2.1"/>
 	<classpathentry kind="lib" path="/home/tung/Downloads/xercesImpl.jar"/>
-	<classpathentry kind="lib" path="/home/tung/lib SE/Redefer.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
