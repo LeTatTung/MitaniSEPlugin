@@ -8,14 +8,23 @@ import org.eclipse.core.runtime.IAdaptable;
  * Class lien quan toi cay thu muc, can viet tach roi ra
  */
 public class TreeObject implements IAdaptable {
-	private String name;
 	private Object data;
 	private TreeParent parent;
+	private Object ast;
 
 	public TreeObject(Object data, TreeParent parent) {
 		this.data = data;
 		this.parent = parent;
 	}
+	
+	public Object getAst() {
+		return ast;
+	}
+
+	public void setAst(Object ast) {
+		this.ast = ast;
+	}
+
 
 	public Object getData() {
 		return data;
@@ -40,4 +49,5 @@ public class TreeObject implements IAdaptable {
 	public Object getAdapter(Class key) {
 		return null;
 	}
+	
 }

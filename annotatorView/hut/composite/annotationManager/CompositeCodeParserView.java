@@ -56,12 +56,12 @@ public class CompositeCodeParserView extends Composite implements IObjectExecute
 	 */
 	private BKJob job;
 	private Boolean newParse;
-	
+
 	/**
 	 * Phan tu code được select trên cây
 	 */
 	private TreeObject obj;
-	
+
 	public CompositeCodeParserView(Composite parent, int style) {
 		super(parent, style);
 		setLayout(new BorderLayout(0, 0));
@@ -108,7 +108,7 @@ public class CompositeCodeParserView extends Composite implements IObjectExecute
 
 	private void createActions() {
 		parseButton.addMouseListener(new MouseAdapter() {
-			public void mouseDown(MouseEvent e) {	
+			public void mouseDown(MouseEvent e) {
 				newParse(true);
 			}
 		});
@@ -131,7 +131,7 @@ public class CompositeCodeParserView extends Composite implements IObjectExecute
 				if (sel.isEmpty())
 					return;
 				TreeObject obj = ((TreeObject) sel.getFirstElement());
-				
+
 				PackageTreeNodeData node = (PackageTreeNodeData) obj.getData();
 				if (node.getType().equals(Images.PROJECT)) {
 					root.removeChild(obj);
@@ -168,17 +168,17 @@ public class CompositeCodeParserView extends Composite implements IObjectExecute
 				return;
 			}
 		}
-		
+
 		// phan tich workspace de lay ve cay phan cap class
 		ASTParseProject ast = new ASTParseProject(projectName);
 		ast.run();
-		
+
 		// them project vao cay quan ly project
 		root.addChild(ast.Root);
 		treeViewer.expandToLevel(4);
 		treeViewer.refresh();
 	}
-	
+
 	private void newParse(Boolean newParse)
 	{
 		this.newParse = newParse;
@@ -187,12 +187,12 @@ public class CompositeCodeParserView extends Composite implements IObjectExecute
 		job.setUser(true);
 		job.schedule();
 	}
-	
+
 	public void jobExecute(final IProgressMonitor monitor)
 	{
 		String uriProjectTeam = Service.uriProjectTeam;
 		String uriWorkspace = "";
-		
+
 		/**
 		 * Phai login, chon Du an dang lam, Du an phai tao workspace truoc
 		 */
@@ -215,7 +215,7 @@ public class CompositeCodeParserView extends Composite implements IObjectExecute
 				return;
 			}
 		}
-		
+
 		/**
 		 * Phai chon 1 phan tu code de phan tich
 		 */
@@ -237,13 +237,13 @@ public class CompositeCodeParserView extends Composite implements IObjectExecute
 		});
 		if (obj == null)
 			return;
-		
+
 		/**
 		 * Neu tat ca thoa man, bat dau phan tich
 		 */
 		PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
 			public void run() {
-				try {	
+				try {
 					/**
 					 * Set disabled
 					 */
@@ -257,12 +257,12 @@ public class CompositeCodeParserView extends Composite implements IObjectExecute
 		monitor.beginTask("Changing Code ...", 3);
 		monitor.subTask("Preparing ...");
 		monitor.worked(2);
-		
-		monitor.subTask("AST Parsing ...");		
+
+		monitor.subTask("AST Parsing ...");
 		CodeComponentNaming codeComponentNaming = new CodeComponentNaming();
 		codeComponentNaming.setIdWorkspaceFull(uriWorkspace);
 		BKASTVisitor bkVisitor = new BKASTVisitor(codeComponentNaming);
-		
+
 		Object ast = obj.getAst();
 		Boolean willParse = false;
 		if (ast instanceof IProject)//Project
@@ -270,10 +270,10 @@ public class CompositeCodeParserView extends Composite implements IObjectExecute
 			System.out.println("Project");
 			IProject project = (IProject)ast;
 			codeComponentNaming.setIdProject(project.getName());
-			
+
 			//Kiem tra da ton tai instance tuong ung chua
 			Boolean exist = Service.webServiceDelegate.checkExistIndividual(null, codeComponentNaming.getIdProjectFull());
-			
+
 			if (newParse)
 			{
 				if (exist)
@@ -305,7 +305,7 @@ public class CompositeCodeParserView extends Composite implements IObjectExecute
 			IProject project = (IProject)obj.getParent().getAst();
 			codeComponentNaming.setIdProject(project.getName());
 			codeComponentNaming.setIdSourceFolder(src.getElementName());
-			
+
 			if (Service.webServiceDelegate.checkExistIndividual(null, codeComponentNaming.getIdProjectFull()))
 			{
 				Boolean exist = Service.webServiceDelegate.checkExistIndividual(null, codeComponentNaming.getIdSourceFolderFull());
@@ -345,7 +345,7 @@ public class CompositeCodeParserView extends Composite implements IObjectExecute
 			codeComponentNaming.setIdProject(project.getName());
 			codeComponentNaming.setIdSourceFolder(src.getElementName());
 			codeComponentNaming.setIdPackage(pack.getElementName());
-		
+
 			if (Service.webServiceDelegate.checkExistIndividual(null, codeComponentNaming.getIdSourceFolderFull()))
 			{
 				Boolean exist = Service.webServiceDelegate.checkExistIndividual(null, codeComponentNaming.getIdPackageFull());
@@ -370,7 +370,7 @@ public class CompositeCodeParserView extends Composite implements IObjectExecute
 						willParse = true;
 					}
 				}
-				
+
 				try {
 					if (willParse)
 						bkVisitor.parseIPackageFragment(pack);
@@ -384,7 +384,7 @@ public class CompositeCodeParserView extends Composite implements IObjectExecute
 		else if (ast instanceof ICompilationUnit)//Java src file
 		{
 			System.out.println("Java src file");
-			
+
 			ICompilationUnit unit = (ICompilationUnit) ast;
 			IPackageFragment pack = (IPackageFragment)obj.getParent().getAst();
 			IPackageFragmentRoot src = (IPackageFragmentRoot)obj.getParent().getParent().getAst();
@@ -393,7 +393,7 @@ public class CompositeCodeParserView extends Composite implements IObjectExecute
 			codeComponentNaming.setIdSourceFolder(src.getElementName());
 			codeComponentNaming.setIdPackage(pack.getElementName());
 			codeComponentNaming.setIdSourceFile(unit.getElementName());
-			
+
 			if (Service.webServiceDelegate.checkExistIndividual(null, codeComponentNaming.getIdPackageFull()))
 			{
 				Boolean exist = Service.webServiceDelegate.checkExistIndividual(null, codeComponentNaming.getIdSourceFileFull());
@@ -427,7 +427,7 @@ public class CompositeCodeParserView extends Composite implements IObjectExecute
 		else if (ast instanceof TypeDeclaration)//Class & Interface
 		{
 			System.out.println("Class & Interface");
-			
+
 			TypeDeclaration type =(TypeDeclaration) ast;
 			ICompilationUnit unit = (ICompilationUnit) obj.getParent().getAst();
 			IPackageFragment pack = (IPackageFragment) obj.getParent().getParent().getAst();
@@ -437,7 +437,7 @@ public class CompositeCodeParserView extends Composite implements IObjectExecute
 			codeComponentNaming.setIdSourceFolder(src.getElementName());
 			codeComponentNaming.setIdPackage(pack.getElementName());
 			codeComponentNaming.setIdSourceFile(unit.getElementName());
-			
+
 			String relation = "";
 			String idFullCI = "";
 			String owlClass = "";
@@ -455,9 +455,9 @@ public class CompositeCodeParserView extends Composite implements IObjectExecute
 				idFullCI = codeComponentNaming.getIdClassFull();
 				owlClass = ConsistentOntology.CLASS;
 			}
-			
+
 			String fullPath = unit.getPath().toString();
-			
+
 			if (Service.webServiceDelegate.checkExistIndividual(null, codeComponentNaming.getIdSourceFileFull()))
 			{
 				Boolean exist = Service.webServiceDelegate.checkExistIndividual(null, idFullCI);
@@ -491,7 +491,7 @@ public class CompositeCodeParserView extends Composite implements IObjectExecute
 		else if (ast instanceof MethodDeclaration)//Method
 		{
 			System.out.println("Method");
-			
+
 			MethodDeclaration method =(MethodDeclaration) ast;
 			TypeDeclaration type =(TypeDeclaration) obj.getParent().getAst();;
 			ICompilationUnit unit = (ICompilationUnit) obj.getParent().getParent().getAst();
@@ -501,9 +501,9 @@ public class CompositeCodeParserView extends Composite implements IObjectExecute
 			codeComponentNaming.setIdProject(project.getName());
 			codeComponentNaming.setIdSourceFolder(src.getElementName());
 			codeComponentNaming.setIdPackage(pack.getElementName());
-			codeComponentNaming.setIdSourceFile(unit.getElementName());	
-			
-			String idType= "";			
+			codeComponentNaming.setIdSourceFile(unit.getElementName());
+
+			String idType= "";
 			if (type.isInterface())
 			{
 				codeComponentNaming.setIdInterface(type.getName().toString());
@@ -514,9 +514,9 @@ public class CompositeCodeParserView extends Composite implements IObjectExecute
 				codeComponentNaming.setIdClass(type.getName().toString());
 				idType = codeComponentNaming.getIdClassFull();
 			}
-			
+
 			codeComponentNaming.setIdMethod(type.getName().toString());
-			
+
 			if (Service.webServiceDelegate.checkExistIndividual(null, idType))
 			{
 				Boolean exist = Service.webServiceDelegate.checkExistIndividual(null, codeComponentNaming.getIdMethodFull());
@@ -550,12 +550,12 @@ public class CompositeCodeParserView extends Composite implements IObjectExecute
 			}
 			else
 				messageError("Error", "The Corresponding Class/Interface still not added!");
-				
+
 		}
 		else if (ast instanceof FieldDeclaration)//Field
 		{
 			System.out.println("Field");
-			
+
 			FieldDeclaration field =(FieldDeclaration) ast;
 			TypeDeclaration type =(TypeDeclaration) obj.getParent().getAst();;
 			ICompilationUnit unit = (ICompilationUnit) obj.getParent().getParent().getAst();
@@ -565,8 +565,8 @@ public class CompositeCodeParserView extends Composite implements IObjectExecute
 			codeComponentNaming.setIdProject(project.getName());
 			codeComponentNaming.setIdSourceFolder(src.getElementName());
 			codeComponentNaming.setIdPackage(pack.getElementName());
-			codeComponentNaming.setIdSourceFile(unit.getElementName());			
-			
+			codeComponentNaming.setIdSourceFile(unit.getElementName());
+
 			String idType= "";
 			if (type.isInterface())
 			{
@@ -578,12 +578,12 @@ public class CompositeCodeParserView extends Composite implements IObjectExecute
 				codeComponentNaming.setIdClass(type.getName().toString());
 				idType = codeComponentNaming.getIdClassFull();
 			}
-			
+
 			String name = field.fragments().get(0).toString();
-			name = name.contains("=") ? name.substring(0, name.indexOf('=')): name;	
+			name = name.contains("=") ? name.substring(0, name.indexOf('=')): name;
 			name = BKASTVisitor.standardize(name);
 			codeComponentNaming.setIdField(name);
-			
+
 			if (Service.webServiceDelegate.checkExistIndividual(null, idType))
 			{
 				Boolean exist = Service.webServiceDelegate.checkExistIndividual(null, codeComponentNaming.getIdFieldFull());
@@ -617,12 +617,12 @@ public class CompositeCodeParserView extends Composite implements IObjectExecute
 			}
 			else
 				messageError("Error", "The Corresponding Class/Interface still not added!");
-				
+
 		}
-		
+
 		monitor.worked(1);
 		listofAnnotation = bkVisitor.getListofAnnotation();
-		
+
 		monitor.beginTask("Sending list to server: ("+listofAnnotation.size()+") ...", listofAnnotation.size());
 		int GAP = 100;
 		for (int i=0; i<listofAnnotation.size(); i += GAP)
@@ -632,10 +632,10 @@ public class CompositeCodeParserView extends Composite implements IObjectExecute
 			Service.webServiceDelegate.saveValuesOfIndividual(null, listofAnnotation.subList(i, min), true);
 			monitor.worked(min-i);
 		}
-		
+
 		PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
 			public void run() {
-				try {			
+				try {
 					parseAgainButton.setEnabled(true);
 					parseButton.setEnabled(true);
 				} catch (Exception e) {
@@ -643,19 +643,19 @@ public class CompositeCodeParserView extends Composite implements IObjectExecute
 				}
 			}
 		});
-		
+
 	}
 
 
 	@Override
 	protected void checkSubclass() {
 	}
-	
+
 	private void messageError(final String title, final String message)
 	{
 		PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
 			public void run() {
-				try {	
+				try {
 					MessageDialog.openError(parseButton.getShell(), title, message);
 				} catch (Exception e) {
 					e.printStackTrace();
