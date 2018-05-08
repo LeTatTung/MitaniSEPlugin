@@ -1,4 +1,4 @@
-package composite.ManageArtifactViewPart;
+package com.hust.topic;
 
 import java.util.ArrayList;
 import java.util.List;

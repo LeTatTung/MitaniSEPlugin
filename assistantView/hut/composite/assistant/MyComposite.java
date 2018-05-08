@@ -26,8 +26,9 @@ import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 
-import composite.ManageArtifactViewPart.CompareTopic;
-import composite.ManageArtifactViewPart.DialogCommand;
+import com.hust.topic.CompareTopic;
+import com.hust.topic.DialogCommand;
+
 
 public class MyComposite extends Composite {
 	private Table table;
@@ -36,7 +37,6 @@ public class MyComposite extends Composite {
 	private ToolItem editItemToolBar;
 	private ToolItem deleteItemToolBar;
 	private final FormToolkit toolkit = new FormToolkit(Display.getCurrent());
-	private String textItem = "";
 	/**
 	 * Create the composite
 	 * @param parent
@@ -142,7 +142,7 @@ public class MyComposite extends Composite {
 	
 	public void removeItemProcess(){
 		int selected=table.getSelectionIndex();
-		TableItem item=table.getItem(selected);
+//		TableItem item=table.getItem(selected);
 		//Note: co the remove thuoc tinh o day cung duoc,hoac sau nay ta update lai tat cho individual do
 		table.remove(selected);
 		
@@ -219,7 +219,7 @@ public class MyComposite extends Composite {
 	
 	public List<String> getListDataValue()
 	{
-		List<String> result=new ArrayList();
+		List<String> result= new ArrayList<String>();
 		for (TableItem item: table.getItems())
 		{
 			result.add(item.getText());
