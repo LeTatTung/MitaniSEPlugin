@@ -1,4 +1,4 @@
-package composite.ManageArtifactViewPart;
+package com.hust.topic;
 
 import java.awt.BorderLayout;
 import java.util.ArrayList;
