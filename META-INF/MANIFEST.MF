@@ -56,4 +56,4 @@ Bundle-ClassPath: .,
  lib/iri.jar,
  lib/com.ibm.icu_3.4.4.1.jar,
  lib/Redefer.jar,
- reoder/
+ suggestTopic/
