@@ -1,4 +1,4 @@
-package reorder;
+package suggestTopic;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -25,10 +25,6 @@ import org.eclipse.jdt.internal.ui.javaeditor.JavaEditor;
 import org.eclipse.jdt.ui.JavaUI;
 import org.eclipse.jdt.ui.SharedASTProvider;
 import org.eclipse.jface.text.BadLocationException;
-import org.eclipse.jface.text.BadPositionCategoryException;
-import org.eclipse.jface.text.IPositionUpdater;
-import org.eclipse.jface.text.Position;
-import org.eclipse.jface.text.link.InclusivePositionUpdater;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Display;
@@ -38,10 +34,7 @@ import com.hust.topic.CompareTopic;
 import mitani.activator.Activator;
 
 @SuppressWarnings("restriction")
-public class SwapOperations {
-	enum Bias {
-		BACKWARD, FORWARD
-	};
+public class SuggestTopicOperations {
 
 	static String simpleDialogDesc = "Simple topic dialogs";
 
@@ -64,7 +57,7 @@ public class SwapOperations {
 		return pane;
 	}
 
-	static void swap(JavaEditor editor, Bias bias){
+	static void suggestTopic(JavaEditor editor){
 		// Editor not editable...bail out
 		if (!editor.isEditable()) {
 			Display.getCurrent().beep();
@@ -124,7 +117,7 @@ public class SwapOperations {
 					viewer.getDocument().replace(firstStart, comment.length() -addLength, comment);
 				} catch (BadLocationException e) {
 					Activator.getDefault().getLog()
-							.log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, "Could not swap items."));
+							.log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, "Could not suggest topic items."));
 					return;
 				}
 			} else {
@@ -177,7 +170,7 @@ public class SwapOperations {
 							viewer.getDocument().replace(firstStart, comment_new.length() - addLength, comment_new);
 						} catch (BadLocationException e1) {
 							Activator.getDefault().getLog()
-									.log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, "Could not swap items."));
+									.log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, "Could not suggest topic items."));
 							return;
 						}
 						frame.dispose();

@@ -133,41 +133,28 @@
    <extension
          point="org.eclipse.ui.editorActions">
       <editorContribution
-            id="Reorder.editorContribution"
+            id="SuggestTopic.editorContribution"
             targetID="org.eclipse.jdt.ui.CompilationUnitEditor">
          <action
-               class="reorder.SwapForwardAction"
-               definitionId="Reorder.swapForwardCommand"
-               icon="icons/swapforward.png"
-               id="Reorder.swapForwardAction"
-               label="Swap Forward"
-               style="push"
-               toolbarPath="Normal/additions">
-         </action>
-         <action
-               class="reorder.SwapBackwardAction"
-               definitionId="Reorder.swapBackwardCommand"
-               icon="icons/swapbackward.png"
-               id="Reorder.swapBackwardAction"
-               label="Swap Backward"
+               class="suggestTopic.SuggestTopicAction"
+               definitionId="SuggestTopic.suggestTopicCommand"
+               icon="icons/suggest.png"
+               id="SuggestTopic.suggestTopicAction"
+               label="Suggest Topic"
                style="push"
                toolbarPath="Normal/additions">
          </action>
       </editorContribution>
    </extension>
+   
    <extension
-         id="Reorder.swapCommands"
-         name="Swap Commands"
+         id="suggestTopic.suggestToipcCommands"
+         name="Suggest Topic Commands"
          point="org.eclipse.ui.commands">
       <command
             categoryId="org.eclipse.jdt.ui.category.source"
-            id="Reorder.swapForwardCommand"
-            name="Swap Forward">
-      </command>
-      <command
-            categoryId="org.eclipse.jdt.ui.category.source"
-            id="Reorder.swapBackwardCommand"
-            name="Swap Backward">
+            id="suggestTopic.suggestTopicCommand"
+            name="Suggest Topic">
       </command>
    </extension>
    
@@ -180,12 +167,7 @@
       <key
             sequence="M1+,"
             contextId="org.eclipse.jdt.ui.javaEditorScope"
-            commandId="Reorder.swapBackwardCommand"
-            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
-      <key
-            sequence="M1+."
-            contextId="org.eclipse.jdt.ui.javaEditorScope"
-            commandId="Reorder.swapForwardCommand"
+            commandId="suggestTopic.suggestTopicCommand"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
    </extension>
 </plugin>
