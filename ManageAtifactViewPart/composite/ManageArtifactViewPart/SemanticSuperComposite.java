@@ -6,25 +6,25 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 
-import controller.ManageArtifactViewPart.SeControllerArtifactViewPart;
+import controller.ManageArtifactViewPart.SemanticControllerManageArtifactViewPart;
 
-public abstract class SeSuperComposite extends Composite {
+public abstract class SemanticSuperComposite extends Composite {
 
   private final FormToolkit toolkit = new FormToolkit(Display.getCurrent());
   private Object outputData;
   private Object inputData;
-  private SeControllerArtifactViewPart controller;
+  private SemanticControllerManageArtifactViewPart controller;
 
 
 
-  public SeControllerArtifactViewPart getController() {
+  public SemanticControllerManageArtifactViewPart getController() {
     return controller;
   }
 
 
 
 
-  public void setController(SeControllerArtifactViewPart controller) {
+  public void setController(SemanticControllerManageArtifactViewPart controller) {
     this.controller = controller;
   }
 
@@ -36,7 +36,7 @@ public abstract class SeSuperComposite extends Composite {
    * @param parent
    * @param style
    */
-  public SeSuperComposite(Composite parent, int style) {
+  public SemanticSuperComposite(Composite parent, int style) {
     super(parent, style);
     toolkit.adapt(this);
     toolkit.paintBordersFor(this);

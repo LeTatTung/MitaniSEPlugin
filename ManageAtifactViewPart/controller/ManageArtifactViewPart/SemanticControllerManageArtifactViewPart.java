@@ -3,13 +3,13 @@ package controller.ManageArtifactViewPart;
 import org.apache.log4j.Logger;
 
 import composite.ManageArtifactViewPart.CompositeSourceCodeTree;
-import composite.ManageArtifactViewPart.SeCommentContent;
-import composite.ManageArtifactViewPart.SeCommentManager;
+import composite.ManageArtifactViewPart.SemanticCommentContent;
+import composite.ManageArtifactViewPart.SemanticCommentManager;
 import hut.composite.annotationCreatorAndEditor.CompositeListPropertiesOfInstance;
 import hut.controller.annotationCreatorAndEditor.ControllerAnnotationCreatorAndEditor;
 
 
-public class SeControllerArtifactViewPart extends ControllerAnnotationCreatorAndEditor{
+public class SemanticControllerManageArtifactViewPart extends ControllerAnnotationCreatorAndEditor{
 
 
   private CompositeListPropertiesOfInstance compositeListPropertiesOfInstance;
@@ -41,15 +41,15 @@ public class SeControllerArtifactViewPart extends ControllerAnnotationCreatorAnd
   /**
    * Controller cho Comment
    */
-  private SeCommentManager seCommentManager;
-  private SeCommentContent seCommentContent;
+  private SemanticCommentManager seCommentManager;
+  private SemanticCommentContent seCommentContent;
   private Logger logger = Logger.getLogger(this.getClass());
 
-  public void setCommentManager(SeCommentManager seCommentManager) {
+  public void setCommentManager(SemanticCommentManager seCommentManager) {
     this.seCommentManager = seCommentManager;
   }
 
-  public void setCommentContent(SeCommentContent seCommentContent) {
+  public void setCommentContent(SemanticCommentContent seCommentContent) {
     this.seCommentContent = seCommentContent;
   }
 

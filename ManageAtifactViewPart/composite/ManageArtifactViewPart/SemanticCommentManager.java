@@ -33,18 +33,18 @@ import swing2swt.layout.BorderLayout;
 
 import org.apache.log4j.Logger;
 
-import controller.ManageArtifactViewPart.SeControllerArtifactViewPart;
+import controller.ManageArtifactViewPart.SemanticControllerManageArtifactViewPart;
 
-public class SeCommentManager extends SeSuperComposite {
+public class SemanticCommentManager extends SemanticSuperComposite {
   private String typeSource;//Truyen vao xem no loai gi--Method,Class,..
   private String sourceComponentName;//Ten cua source component
 
   private Tree tree;
   private TreeViewer treeViewer;
-  private SeControllerArtifactViewPart seControllerArtifactViewPart;
+  private SemanticControllerManageArtifactViewPart seControllerArtifactViewPart;
   private final FormToolkit toolkit = new FormToolkit(Display.getCurrent());
   private Logger logger = Logger.getLogger(this.getClass());
-  private SeCommentContent seCommentContent;
+  private SemanticCommentContent seCommentContent;
   private ToolItem refreshItemToolItem;
 
   public String getTypeSource() {
@@ -68,7 +68,7 @@ public class SeCommentManager extends SeSuperComposite {
    * @param parent
    * @param style
    */
-  public SeCommentManager(Composite parent, int style) {
+  public SemanticCommentManager(Composite parent, int style) {
     super(parent, style);
     setLayout(new FillLayout());
     toolkit.adapt(this);
@@ -148,7 +148,7 @@ public class SeCommentManager extends SeSuperComposite {
     toolkit.adapt(methodCallFlowLabel, true, true);
     methodCallFlowLabel.setText("Manage Semantic Comment");
 
-    seCommentContent = new SeCommentContent(compositeContentComment, SWT.NONE);
+    seCommentContent = new SemanticCommentContent(compositeContentComment, SWT.NONE);
     seCommentContent.setLayout(new BorderLayout(0, 0));
     toolkit.adapt(seCommentContent);
     seCommentContent.setLayoutData(BorderLayout.CENTER);
@@ -167,7 +167,7 @@ public class SeCommentManager extends SeSuperComposite {
   }
 
   public void setController() {
-	seControllerArtifactViewPart = new SeControllerArtifactViewPart();
+	seControllerArtifactViewPart = new SemanticControllerManageArtifactViewPart();
 	seControllerArtifactViewPart.setCommentContent(seCommentContent);
 	seControllerArtifactViewPart.setCommentManager(this);
 
@@ -207,10 +207,10 @@ public class SeCommentManager extends SeSuperComposite {
         TreeObject obj = (TreeObject) selection.getFirstElement();
         TreeNodeData data = (TreeNodeData) obj.getData();
         logger.info(data.getName());
-        SeCommentManager.this.setOutputData(data.getId());
-        SeCommentManager.this.setTypeSource(data.getTypeSource());
-        SeCommentManager.this.setSourceComponentName(data.getName());
-        SeCommentManager.this.getController().bindIdToRightComposite();
+        SemanticCommentManager.this.setOutputData(data.getId());
+        SemanticCommentManager.this.setTypeSource(data.getTypeSource());
+        SemanticCommentManager.this.setSourceComponentName(data.getName());
+        SemanticCommentManager.this.getController().bindIdToRightComposite();
         logger.info("Lay tu cay thanh phan co id:" + data.getId());
       }
     };
