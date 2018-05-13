@@ -17,7 +17,7 @@ import composite.ManageArtifactViewPart.CompositeCodeChanged;
 import composite.ManageArtifactViewPart.CompositeRequirement;
 import composite.ManageArtifactViewPart.CompositeSourceCodeTree;
 import composite.ManageArtifactViewPart.CompositeTest;
-import composite.ManageArtifactViewPart.SeCommentManager;
+import composite.ManageArtifactViewPart.SemanticCommentManager;
 import controller.ManageArtifactViewPart.ControllerManageArtifactViewPart;
 import hut.composite.annotationCreatorAndEditor.CompositeListPropertiesOfInstance;
 
@@ -144,7 +144,7 @@ public class ManageArtifactViewPart extends ViewPart {
 		final TabItem tabSemanticComment = new TabItem(tabFolder, SWT.NONE);
 		tabSemanticComment.setText("Semantic Comment");
 		
-		final SeCommentManager seCommentManager = new SeCommentManager(tabFolder, SWT.NONE);
+		final SemanticCommentManager seCommentManager = new SemanticCommentManager(tabFolder, SWT.NONE);
 		toolkit.adapt(seCommentManager);
 		tabSemanticComment.setControl(seCommentManager);
 		

@@ -49,7 +49,7 @@ import hut.composite.assistant.MyComposite;
 
 import org.apache.log4j.Logger;
 
-public class SeCommentContent extends SeSuperComposite {
+public class SemanticCommentContent extends SemanticSuperComposite {
 
 	private Table table;
 	private TableColumn propertyColumn;
@@ -73,7 +73,7 @@ public class SeCommentContent extends SeSuperComposite {
 	 * @param parent
 	 * @param style
 	 */
-	public SeCommentContent(Composite parent, int style) {
+	public SemanticCommentContent(Composite parent, int style) {
 		super(parent, style);
 		setLayout(new BorderLayout(0, 0));
 		toolkit.adapt(this);
