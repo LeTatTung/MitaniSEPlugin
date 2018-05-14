@@ -18,6 +18,7 @@ import javax.swing.border.Border;
 
 import hut.composite.assistant.DataTypeComposite;
 import ontology.images.Images;
+import suggestTopic.CompareTopic;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -36,8 +37,6 @@ import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.ui.forms.widgets.FormToolkit;
-
-import com.hust.topic.CompareTopic;
 
 public class MyComposite extends Composite {
 	private Table table;

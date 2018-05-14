@@ -1,4 +1,4 @@
-package com.hust.browser;
+package hust.composite.browser;
 
 import java.io.IOException;
 import java.net.URL;

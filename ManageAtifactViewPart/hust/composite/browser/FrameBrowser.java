@@ -1,4 +1,4 @@
-package com.hust.browser;
+package hust.composite.browser;
 
 import java.io.IOException;
 
@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.event.HyperlinkListener;
 
+import hust.composite.browser.ActivatedHyperlinkListener;
 
 public class FrameBrowser {
 
