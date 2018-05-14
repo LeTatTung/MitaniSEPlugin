@@ -1,4 +1,4 @@
-package com.hust.topic;
+package suggestTopic;
 
 import java.util.ArrayList;
 import java.util.List;

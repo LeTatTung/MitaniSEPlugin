@@ -29,8 +29,6 @@ import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Display;
 
-import com.hust.topic.CompareTopic;
-
 import mitani.activator.Activator;
 
 @SuppressWarnings("restriction")

@@ -34,8 +34,7 @@ import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 
-import com.hust.browser.FrameBrowser;
-
+import hust.composite.browser.FrameBrowser;
 import processcomment.CommentTool;
 import processcomment.CommentWriterType;
 
