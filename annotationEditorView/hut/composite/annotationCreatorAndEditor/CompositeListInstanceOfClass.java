@@ -82,14 +82,14 @@ public class CompositeListInstanceOfClass extends SuperCompositeAnnotationCreato
 		OptionToolItem.setText("Option");
 		OptionToolItem.setToolTipText("Option");
 		OptionToolItem.setImage(Images.imageRegistry.get(Images.DESCRIBE));
-		
+
 		final ToolItem newIstanceToolItem = new ToolItem(toolBar, SWT.PUSH);
 		newIstanceToolItem.setText("Add");
 		//--------------------------  button Add: Click Event -----------------------------------------------------------------
 		//---------------------------------------------------------------------------------------------------------------------
 		newIstanceToolItem.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(final SelectionEvent e) {
-				
+
 				DataInstance dataInstanceOutput = new DataInstance();
 				dataInstanceOutput.setNewInstance(true);
 				// chak chan la cho nay chua co OutputData o compositeClassList.
@@ -97,7 +97,7 @@ public class CompositeListInstanceOfClass extends SuperCompositeAnnotationCreato
 				{
 					if(getController().getCompositeLeftPopUp().getOutputData() == null )
 					{
-						MessageDialog.openInformation(new Shell(), "Notice", "Please chose a class !");
+						MessageDialog.openInformation(null, "Notice", "Please chose a class !");
 					}
 					else
 					{
@@ -108,35 +108,35 @@ public class CompositeListInstanceOfClass extends SuperCompositeAnnotationCreato
 				{
 					if(getController().getCompositeClassList().getOutputData() == null )
 					{
-						MessageDialog.openInformation(new Shell(), "Notice", "Please chose a class !");
+						MessageDialog.openInformation(null, "Notice", "Please chose a class !");
 					}
 					else
 					{
 						dataInstanceOutput.setClassData((ClassData)getController().getCompositeClassList().getOutputData());
 					}
 				}
-				
-				
-				//Phai xem lai dat ten instanceFullName sao cho no la duy nhat 
+
+
+				//Phai xem lai dat ten instanceFullName sao cho no la duy nhat
 				//-------Tao 1 doi tuong moi --------
 
-				
-				String className = dataInstanceOutput.getClassData().getClassName() ; 
+
+				String className = dataInstanceOutput.getClassData().getClassName() ;
 
 				String classFullName = dataInstanceOutput.getClassData().getClassURI();
-				
+
 				DateFormat dateFormat = new SimpleDateFormat("dd_MM_yyyy.HH_mm_ss");
 		        Date date = new Date();
 		        String ID=dateFormat.format(date);
 				String instanceFullName = classFullName + "-" + ID;
-					
+
 					dataInstanceOutput.setInstanceFullName(instanceFullName);
 					setOutputData(dataInstanceOutput);
-					
+
 					System.out.println("dataInstanceOutput : instanceFullName - " + dataInstanceOutput.getInstanceFullName() + " ; className" + dataInstanceOutput.getClassData().getClassName() + " ; ClassURI" + dataInstanceOutput.getClassData().getClassURI());
-					
+
 					getController().updateChosenInstance();
-					 
+
 			}
 		});
 		//---------------------------------------------------------------------------------------------------------------------
@@ -151,7 +151,7 @@ public class CompositeListInstanceOfClass extends SuperCompositeAnnotationCreato
 		fd_labelNotification.top = new FormAttachment(0, 45);
 		fd_labelNotification.left = new FormAttachment(0, 0);
 		labelNotification.setLayoutData(fd_labelNotification);
-		
+
 		final ToolItem deleteInstanceToolItem = new ToolItem(toolBar, SWT.PUSH);
 		deleteInstanceToolItem.setText("Delete");
 		//--------------------------- deleteInstanceToolItem: add Selection Listener  -------------------------------------------------------------
@@ -163,7 +163,7 @@ public class CompositeListInstanceOfClass extends SuperCompositeAnnotationCreato
 				TableItem[] tblItem = tableListInstance.getSelection();
 				TableItem item = tblItem[0];
 				CompositeListInstanceOfClass.this.instanceFullName = (String)item.getData();
-				
+
 				service.Service.webServiceDelegate.removeIndividual(null, CompositeListInstanceOfClass.this.instanceFullName);
 				MessageDialog.openInformation(CompositeListInstanceOfClass.this.getShell(), "Delete successfully!", "The instance has been removed!");
 				CompositeListInstanceOfClass.this.labelNotification.setText("");
@@ -182,12 +182,12 @@ public class CompositeListInstanceOfClass extends SuperCompositeAnnotationCreato
 		 		if(Service.isAdmin){
 		 			Message message = service.Service.webServiceDelegate.backupOWL(null);
 		 			if (message.isSuccess())
-		 				MessageDialog.openInformation(new Shell(), "Save successful!", message.getMessage());
+		 				MessageDialog.openInformation(null, "Save successful!", message.getMessage());
 		 			else
-		 				MessageDialog.openError(new Shell(), "Error!", message.getMessage());
+		 				MessageDialog.openError(null, "Error!", message.getMessage());
 		 		}
 		 		else{
-		 			MessageDialog.openInformation(new Shell(), "Notification", "Only admin can backup data to OWL!");
+		 			MessageDialog.openInformation(null, "Notification", "Only admin can backup data to OWL!");
 		 		}
 		 	}
 		 });
@@ -213,7 +213,7 @@ public class CompositeListInstanceOfClass extends SuperCompositeAnnotationCreato
 					}
 				}
 				bindDataToTable(tempList);
-				
+
 			}
 		});
 
@@ -225,8 +225,8 @@ public class CompositeListInstanceOfClass extends SuperCompositeAnnotationCreato
 		fd_filterByNameLabel.left = new FormAttachment(0, 0);
 		filterByNameLabel.setLayoutData(fd_filterByNameLabel);
 		filterByNameLabel.setText("Filter by Name ");
-		
-	
+
+
 
 		tableListInstance = new Table(this, SWT.BORDER);
 		//--------------------------- tableListInstance: Mouse Double Click event  ----------------------------------------------------------------
@@ -235,12 +235,12 @@ public class CompositeListInstanceOfClass extends SuperCompositeAnnotationCreato
 			public void mouseDoubleClick(final MouseEvent e) {
 				TableItem item = tableListInstance.getItem(tableListInstance.getSelectionIndex());
 				String fullURI = (String) item.getData();
-				
+
 				System.out.println("fullURI: "+ fullURI);
-				
+
 				if(fullURI != null){
 					labelNotification.setText(item.getText());
-					
+
 					DataInstance dataInstanceOutput = new DataInstance();
 					if(getController().getCompositeClassList() != null ){
 						dataInstanceOutput.setClassData((ClassData)getController().getCompositeClassList().getOutputData());
@@ -249,10 +249,10 @@ public class CompositeListInstanceOfClass extends SuperCompositeAnnotationCreato
 						dataInstanceOutput.setClassData((ClassData)getController().getCompositeLeftPopUp().getOutputData());
 					}
 					dataInstanceOutput.setInstanceFullName(fullURI);
-					
+
 					setOutputData(dataInstanceOutput);
 					getController().updateChosenInstance();
-					
+
 				}
 			}
 		});
@@ -267,8 +267,8 @@ public class CompositeListInstanceOfClass extends SuperCompositeAnnotationCreato
 		fd_tableListInstance.left = new FormAttachment(0, 0);
 		tableListInstance.setLayoutData(fd_tableListInstance);
 		tableListInstance.setHeaderVisible(false);
-		
-		
+
+
 		// TODO Auto-generated constructor stub
 	}
 
@@ -283,58 +283,58 @@ public class CompositeListInstanceOfClass extends SuperCompositeAnnotationCreato
 			public void widgetSelected(final SelectionEvent e) {
 				System.out.println("Chay vao trong Selected Event ");
 				isSelect=true;
-				
+
 				int index = tableListInstance.getSelectionIndex();
 				System.out.println("index "+ index);
 				TableItem item = tableListInstance.getItem(index);
-				
+
 				DataInstance instanceData = new DataInstance();
 				instanceData.setInstanceFullName((String)item.getData());
 				//-- chua xet den classData cho instanceData --
-				
+
 				System.out.println("instance Full Name : "+ instanceData.getInstanceFullName() );
-				
+
 				setOutputData(instanceData);
 				System.out.println("Chay den truoc updateForPopUp");
 				getController().updateForPopUp();
 				System.out.println("Chay duoc den sau updateChosenInstance() + truoc close()");
-				
+
 				toolBar.getShell().close();
 			}
 		});
 
 	}
-	
+
 	@Override
 	public int updateInterface() {
 		cleanTable();
-		
+
 		ClassData classData = (ClassData)getInputData();
 
 		String classFullName = classData.getClassURI();
 
 		System.out.println("classFullName" + classFullName + " - Class Name : " + classData.getClassName());
-		
+
 		java.util.List<String> listInst = service.Service.webServiceDelegate.listAllRelatedInstance(null, classFullName);
 		listInstanceName = listInst;
 		int quantityOfInstance = listInst.size();
-		
+
 		if(quantityOfInstance < 1 ){
 			labelNotification.setText("There is no instance of class : " + classData.getClassName());
 		}
-		else 
+		else
 			if(quantityOfInstance == 1 ){
 				labelNotification.setText("There is one instance of class : " + classData.getClassName());
 			}
 			else{
 				labelNotification.setText("There are "+ quantityOfInstance +" instances of class : " + classData.getClassName());
 			}
-		
+
 		bindDataToTable(listInst);
-		
+
 		return 0;
 	}
-	
+
 	public void cleanTable(){
 		for (TableItem item : tableListInstance.getItems())
 		{
@@ -353,12 +353,12 @@ public class CompositeListInstanceOfClass extends SuperCompositeAnnotationCreato
 			item.setData(instanceName);
 			item.setText(localName);
 			System.out.println(" instance Name : " + instanceName);
-			
+
 			}
 	}
 	// Insert instances to table
 	//public void addInstanceToTable() {
-		
+
 	//}
 
 }

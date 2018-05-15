@@ -62,7 +62,7 @@ public class CompositeCodeChanged extends SuperComposite {
 	private String[] columnNames = { "Delete","Name", "Description", "Changed By", "Change Of", "Changed At", "Is Discarded", "Related Document" };
 	private List<List> listFullData;
 	List<List> listOfList = new ArrayList<List>();
-	
+
 	public CompositeCodeChanged(Composite parent, int style) {
 
 
@@ -73,7 +73,7 @@ public class CompositeCodeChanged extends SuperComposite {
 
 		final SashForm sashForm = new SashForm(this, SWT.NONE);
 		sashForm.setOrientation(SWT.VERTICAL);
-		
+
 		final Composite composite_1 = new Composite(sashForm, SWT.NONE);
 		toolkit.adapt(composite_1);
 
@@ -96,7 +96,7 @@ public class CompositeCodeChanged extends SuperComposite {
 				deleteCodeChange();
 			}
 
-			
+
 		});
 		toolItemDelete.setText("Delete");
 		toolItemDelete.setImage(Images.imageRegistry.get(Images.DELETE));
@@ -105,7 +105,7 @@ public class CompositeCodeChanged extends SuperComposite {
 		composite.setLayout(new FillLayout());
 		toolkit.adapt(composite);
 		toolkit.adapt(sashForm, true, true);
-		
+
 		composite_2 = new Composite(composite, SWT.EMBEDDED);
 		final FillLayout fillLayout_1 = new FillLayout();
 		fillLayout_1.marginHeight = 3;
@@ -146,12 +146,12 @@ public class CompositeCodeChanged extends SuperComposite {
 	public void innitData(boolean choseDicardedCodeToDisplay){
 
 		List<List> listOfResult = new ArrayList<List>();
-		
-	    
+
+
 	    List<String> listCodeChange = Service.webServiceDelegate.listClassInstance(null, ConsistentOntology.CODE_CHANGE);
 	    for(String codeChangeURI: listCodeChange){
 	    	List<String> subList = new ArrayList<String>();
-	    	
+
 	    	String  codeChangeName = "";
 	    	List<String> listCodeName = Service.webServiceDelegate.getValueOfSpecificPropertyForIndividual(null, codeChangeURI, ConsistentOntology.HAS_NAME);
 	    	if(listCodeName.size()==0){
@@ -162,13 +162,13 @@ public class CompositeCodeChanged extends SuperComposite {
 		    		codeChangeName += " "+s +"\n";
 		    	}
 	    	}
-	    	
-	    	
+
+
 	    	String  description = "";
 	    	for(String s:Service.webServiceDelegate.getValueOfSpecificPropertyForIndividual(null, codeChangeURI, ConsistentOntology.HAS_DESCRIPTION)){
 	    		description += " "+s +"\n";
 	    	}
-	    	
+
 	    	String  developer = "";
 	    	String  developerURI = "";
 	    	List<String> listDeveloper = Service.webServiceDelegate.getValueOfSpecificPropertyForIndividual(null, codeChangeURI, ConsistentOntology.CODE_CHANGED_BY);
@@ -178,7 +178,7 @@ public class CompositeCodeChanged extends SuperComposite {
 	    	}
 	    	for(String s:listDeveloper){
 	    		List<String> listName = Service.webServiceDelegate.getValueOfSpecificPropertyForIndividual(null, s, ConsistentOntology.HAS_NAME);
-	    		
+
 	    		if(listName.size()==0){
 	    			developer += " "+ s.substring(s.lastIndexOf("#")+1) + "\n";
 	    			// Neu khong co ten thi kiem tra co Full Name khong
@@ -190,14 +190,14 @@ public class CompositeCodeChanged extends SuperComposite {
 	    		}
 	    		developerURI += s + "\n";
 	    	}
-	    	
+
 	    	String  componentChanged = "";
 	    	String  componentURI = "";
 	    	List<String> listcomponent = Service.webServiceDelegate.getValueOfSpecificPropertyForIndividual(null, codeChangeURI, ConsistentOntology.CODE_CHANGED_OF);
-	    	
+
 	    	for(String s:listcomponent){
 	    		List<String> listName = Service.webServiceDelegate.getValueOfSpecificPropertyForIndividual(null, s, ConsistentOntology.HAS_NAME);
-	    		
+
 	    		if(listName.size()==0){
 	    			componentChanged += " "+ s.substring(s.lastIndexOf("#")+1) + "\n";
 	    		}
@@ -209,20 +209,20 @@ public class CompositeCodeChanged extends SuperComposite {
 	    	// Document lien quan den Code Component cua Code Change
 	    	// String  relatedDocument = ""; Tam thoi chua dung vi document it co ten
 	    	String  relatedDocumentURI = "";
-	    	
+
 	    	for(String s:listcomponent){
 	    		List<String> listRelatedDocument = Service.webServiceDelegate.getValueOfSpecificPropertyForIndividual(null, s, ConsistentOntology.CODE_RELATED_TO_DOC);
-	    		
+
 	    		for(String r:listRelatedDocument){
-		    		
+
 		    		relatedDocumentURI += r + "\n";
 		    	}
-	    			    	
+
 	    	}
 
-	    	
-	    	
-	    	
+
+
+
 	    	String  changedAt = "";
 	    	for(String s:Service.webServiceDelegate.getValueOfSpecificPropertyForIndividual(null, codeChangeURI, ConsistentOntology.CODE_CHANGED_AT)){
 	    		changedAt += " "+s +"\n";
@@ -243,7 +243,7 @@ public class CompositeCodeChanged extends SuperComposite {
 		    		isDiscarded = "No";
 		    	}
 	    	}
-	    	
+
 	    	if(isBooleanDiscarded == choseDicardedCodeToDisplay){
 		    	subList.add(codeChangeName);
 		    	subList.add(description);
@@ -254,16 +254,16 @@ public class CompositeCodeChanged extends SuperComposite {
 		    	subList.add(relatedDocumentURI);
 		    	subList.add(codeChangeURI);
 		    	subList.add(developerURI);
-		    	
+
 		    	listOfResult.add(subList);
 	    	}
-	    	
-	    	
+
+
 	    }
 	    this.listOfList = listOfResult;
 	    bindDataListTable(listOfResult);
 	}
-	
+
 	/**
 	 * @param listOfLists
 	 * Do du lieu vao Jtable
@@ -275,11 +275,11 @@ public class CompositeCodeChanged extends SuperComposite {
 
 		this.listFullData = listOfLists;
 		frame.add(new JScrollPane(table));
-		//this.creatAction();	=> thay khong can thiet tao ham nay	
+		//this.creatAction();	=> thay khong can thiet tao ham nay
 		frame.setVisible(true);
 
 	}
-	
+
 	/**
 	 * @param listOfLists
 	 * @return
@@ -300,7 +300,7 @@ public class CompositeCodeChanged extends SuperComposite {
         for(int i=1; i< tableTemp.getColumnCount(); i++){
         	tableTemp.getColumnModel().getColumn(i).setCellRenderer(new TextAreaRenderer());
         }
-		
+
 		//Set lai do rong cho Jtable
 		setWidth(0, 20, tableTemp);
 		setWidth(1, 50, tableTemp);
@@ -309,9 +309,9 @@ public class CompositeCodeChanged extends SuperComposite {
 		setWidth(4, 20, tableTemp);
 		tableTemp.addMouseListener(new MouseAdapter(){
 		     public void mouseClicked(MouseEvent e){
-		      if (e.getClickCount() > 1){ 
+		      if (e.getClickCount() > 1){
 		    	 final String fullURI = (String)listOfList.get(((JTable)e.getSource()).getSelectedRow()).get(7);
-		    	 
+
 		    	 PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
 		 			public void run() {
 		 				try {
@@ -320,29 +320,29 @@ public class CompositeCodeChanged extends SuperComposite {
 							shell.setImage(Images.imageRegistry.get(Images.BOOKMARK));
 							shell.setLayout(new FillLayout());
 							shell.setSize(510, 680);
-							
-							
+
+
 							DataInstance dataInstance = new DataInstance();//(DataInstance)itemSelected.getData("Data");
 							dataInstance.setInstanceFullName(fullURI);
-							
+
 							CompositeListPropertiesOfInstance compositeListProperties = new CompositeListPropertiesOfInstance(shell, SWT.NONE);
 							compositeListProperties.setInputData(dataInstance);
 							compositeListProperties.updateInterface();
 							shell.setVisible(true);
-							
+
 							shell.addListener(SWT.Close, new Listener() {
 								public void handleEvent(Event e) {
 									innitData(choseDicardedCodeToDisplay);
 								}
 							});
-							
+
 		 				} catch (Exception e) {
 		 					e.printStackTrace();
 		 				}
 		 			}
 		 		});
-		    	 
-		    	 
+
+
 		         }
 		      }
 		     } );
@@ -351,7 +351,7 @@ public class CompositeCodeChanged extends SuperComposite {
 //		setWidth(3, 5, tableTemp);
 		return tableTemp;
 	}
-	
+
 	/**
 	 * @param listOfLists
 	 * @return
@@ -369,12 +369,12 @@ public class CompositeCodeChanged extends SuperComposite {
 		for (int col = 0; col < columnNames.length; col++) {
 			model.addColumn(columnNames[col]);
 		}
-		
+
 
 		List listItems;
 		for (int loopIndex = 0; loopIndex < listOfLists.size(); loopIndex++) {
 			listItems = listOfLists.get(loopIndex);
-			
+
 			ToolParseDoc toolParse  = new ToolParseDoc();
 			content=toolParse.convertPlainText(listItems.get(1).toString());
 			model.addRow(new Object[] {  false, listItems.get(0).toString(),content, listItems.get(2).toString(),listItems.get(3).toString(), listItems.get(4).toString(), listItems.get(5).toString(),listItems.get(6).toString() });
@@ -382,7 +382,7 @@ public class CompositeCodeChanged extends SuperComposite {
 
 		return model;
 	}
-	
+
 	/**
 	 * @param vColIndex
 	 * @param vColWidth
@@ -393,7 +393,7 @@ public class CompositeCodeChanged extends SuperComposite {
 		TableColumn col = tableTemp.getColumnModel().getColumn(vColIndex);
 		col.setPreferredWidth(vColWidth);
 	}
-	
+
 	private void deleteCodeChange(){
 		for(int i=0;i<table.getRowCount();i++){
 			boolean choosenToDelete = Boolean.parseBoolean(table.getValueAt(i, 0).toString()) ;
@@ -405,7 +405,7 @@ public class CompositeCodeChanged extends SuperComposite {
 		innitData(choseDicardedCodeToDisplay);
 		MessageDialog.openInformation(new Shell(), "Notice", "Delete code Change(s) succesfully !");
 	}
-	
+
 	@Override
 	int updateInterface() {
 		// TODO Auto-generated method stub
