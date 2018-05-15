@@ -1,7 +1,9 @@
 package suggestTopic;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import ws.owl.ClassData;
 
@@ -20,6 +22,8 @@ public class CompareTopic {
 				arrayTopicData.add(subClassData.getClassName());
 			}
 		}
+		Set<String> setString = new HashSet<>(arrayTopicData);
+		arrayTopicData = new ArrayList<String>(setString);
 		System.out.println("HAHAHAHAHAHAHA: " + arrayTopicData);
 		return arrayTopicData;
 	}
