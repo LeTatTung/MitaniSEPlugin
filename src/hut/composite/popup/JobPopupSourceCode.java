@@ -76,7 +76,7 @@ public class JobPopupSourceCode extends JobSuper {
 			PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
 				public void run() {
 					try {
-						MessageDialog.openError(new Shell(PlatformUI.getWorkbench().getDisplay()), "Error", "You do not choose your working project yet! Login and choose one first");
+						MessageDialog.openError(null, "Error", "You do not choose your working project yet! Login and choose one first");
 					} catch (Exception e) {
 						e.printStackTrace();
 					}

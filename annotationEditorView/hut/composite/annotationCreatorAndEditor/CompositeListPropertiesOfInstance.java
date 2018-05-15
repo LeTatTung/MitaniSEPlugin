@@ -54,9 +54,9 @@ public class CompositeListPropertiesOfInstance extends
 	private String instanceFullName;
 	private String className;
 	private List<String> propertyList;
-	
-	
-	
+
+
+
 	public Table getTable() {
 		return table;
 	}
@@ -149,22 +149,22 @@ public class CompositeListPropertiesOfInstance extends
 				DataInstance dataInstanceInput = (DataInstance)getInputData();
 				isNewInstance = dataInstanceInput.isNewInstance();
 				if( isFullURI ){
-					instanceFullName = textID.getText(); 
+					instanceFullName = textID.getText();
 				}
 				else{
-					String temp = instanceFullName ; 
-					
+					String temp = instanceFullName ;
+
 					instanceFullName = temp.substring(0, temp.lastIndexOf("#")+1) + textID.getText();
 				}
-				
+
 				//-- If is new Instance -------------
 				if( isNewInstance && service.Service.webServiceDelegate.checkExistIndividual(null, instanceFullName))
 				{
-					MessageDialog.openInformation(new Shell(), "Notice", "One instance with this name is existed !");
-					// i want a break method here ! 
+					MessageDialog.openInformation(null, "Notice", "One instance with this name is existed !");
+					// i want a break method here !
 					return ;
 				}
-				
+
 				textID.setEditable(false);
 				String classFullName ;
 				if(dataInstanceInput.getClassData()!= null)
@@ -177,23 +177,23 @@ public class CompositeListPropertiesOfInstance extends
 				}
 				service.Service.webServiceDelegate.removeIndividual(null, CompositeListPropertiesOfInstance.this.instanceFullName);
 //				service.Service.webServiceDelegate.createInstance(null, CompositeListPropertiesOfInstance.this.instanceFullName, className);
-				
-			
-				
+
+
+
 				List<InstanceData> list= new java.util.ArrayList<InstanceData>();
 				InstanceData iData= new InstanceData();
 		        iData.setInstanceID(instanceFullName);
 		        iData.setClassName(classFullName);
 		        PropertyMapData pm;
-		        
+
 				for (TableItem item: table.getItems())
 				{
 					//--- check this -----------
 					CompositeRow compositeRow = (CompositeRow)item.getData("value");
-					
-					PropertyData propertyData = (PropertyData)item.getData("propertyData"); 
+
+					PropertyData propertyData = (PropertyData)item.getData("propertyData");
 					String propertyName = propertyData.getPropertURI();
-					
+
 					if (propertyData.isDatatypeProperty()){
 						//System.out.println(compositeRow.getValue().size());
 						for (Object value: compositeRow.getValue())
@@ -211,16 +211,16 @@ public class CompositeListPropertiesOfInstance extends
 						for (Object value: compositeRow.getValue())
 						{
 							if(value instanceof DataInstance){
-								
-								
+
+
 								DataInstance  dataInstance = (DataInstance)value;
-								
+
 //								String className = ((DataInstance)value).getClassData().getClassURI();
-								
+
 								pm= new PropertyMapData();
 								//-- Phai lay ra duoc className cua Object Property
-							    
-							    	System.out.println("check "+ " className :" + className); 
+
+							    	System.out.println("check "+ " className :" + className);
 							    //- tam thoi dang set className = null --
 								pm.setTypeClass(null);
 							    pm.setPropertyname(propertyName);
@@ -230,28 +230,27 @@ public class CompositeListPropertiesOfInstance extends
 //							service.Service.webServiceDelegate.addObjectProperty(null, propertyName, value, CompositeListPropertiesOfInstance.this.instanceFullName);
 						}
 					}
-							
+
 				}
-				
+
 				 list.add(iData);
-			       
+
 				 service.Service.webServiceDelegate.saveValuesOfIndividual(null, list, false);
-				
-				MessageDialog.openInformation(new Shell(), "Save successfully!", "This instance has been saved!");
-				
+
+				MessageDialog.openInformation(null, "Save successfully!", "This instance has been saved!");
 				// Neu la them 1 instance moi thi phai refresh lai Table List Instance
 				if(dataInstanceInput.isNewInstance() ){
 					if(getController() != null){
 						getController().updateChosenClass();
 					}
-					
+
 				}
 				((DataInstance)getInputData()).setNewInstance(false);
 			}
 		});
 		//-----------------------------------------------------------------------------------------------------------------------------------
 		//-----------------------------------------------------------------------------------------------------------------------------------
-		saveToolItem.setText("Save");		
+		saveToolItem.setText("Save");
 		saveToolItem.setImage(SWTResourceManager.getImage(CompositeListPropertiesOfInstance.class, "/ontology/images/save.gif"));
 
 		final Button fullUriButton;
@@ -265,16 +264,16 @@ public class CompositeListPropertiesOfInstance extends
 		fullUriButton.setLayoutData(fd_fullUriButton);
 		fullUriButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(final SelectionEvent e) {
-				
-				isFullURI = fullUriButton.getSelection(); 
-				
+
+				isFullURI = fullUriButton.getSelection();
+
 				if(!fullUriButton.getSelection()){
 					textID.setText(CompositeListPropertiesOfInstance.this.instanceFullName.substring(CompositeListPropertiesOfInstance.this.instanceFullName.indexOf("#")+1));
 				}
 				else{
 					textID.setText(CompositeListPropertiesOfInstance.this.instanceFullName);
 				}
-				
+
 			}
 		});
 		fullUriButton.setText("Full URI");
@@ -316,14 +315,14 @@ public class CompositeListPropertiesOfInstance extends
 		final Listener paintListener = new Listener() {
 			public void handleEvent(Event event) {
 		        switch (event.type) {
-		        case SWT.MeasureItem: 
+		        case SWT.MeasureItem:
 		        	event.width = 300;
 		        	event.height = 85;
 		        	break;
 		        }
 			}
 		};
-		
+
 		table.addListener(SWT.MeasureItem, paintListener);
 
 		final TableColumn propertyTableColumn = new TableColumn(table, SWT.NONE);
@@ -360,23 +359,23 @@ public class CompositeListPropertiesOfInstance extends
 				if(dataInstanceInput.getClassData().getClassName()!= null){
 					classLabel.setText("Class: "+dataInstanceInput.getClassData().getClassName());
 				}
-				
+
 			}
 			else{
 				String s = Service.webServiceDelegate.getClassOfIndividual(null, instanceFullName);
 				s = s.substring(s.indexOf("#") + 1);
 				classLabel.setText("Class: " + s);
 			}
-				
+
 		}
 		// if instance is new instance
 		else{
 			clearTable();
 			className = dataInstanceInput.getClassData().getClassName();
 			instanceFullName = dataInstanceInput.getInstanceFullName();
-			
+
 			System.out.println("classFullName"+ instanceFullName);
-			
+
 			if(!isFullURI){
 				textID.setText(this.instanceFullName.substring(this.instanceFullName.indexOf("#")+1));
 			}
@@ -384,7 +383,7 @@ public class CompositeListPropertiesOfInstance extends
 				textID.setText(this.instanceFullName);
 			}
 			textID.setEditable(true);
-			
+
 			//---  retrive All Properties of this Class --
 			List<PropertyData> listPropertyData = service.Service.webServiceDelegate.getAllClassProperties(null, dataInstanceInput.getClassData().getClassURI());
 			for(PropertyData propertyData : listPropertyData)
@@ -392,17 +391,17 @@ public class CompositeListPropertiesOfInstance extends
 				String propertyName = propertyData.getPropertyName();
 				System.out.println("propertyName: : : :"+ propertyName);
 				java.util.List<String> value = new java.util.ArrayList<String>();
-				
+
 				addRow(propertyName, propertyData, value);
 			}
 		}
-		
+
 		return 0;
 	}
 	//--------------------------------------------------------------------------------------------------------------
 	//--------------------------------------------------------------------------------------------------------------
-	
-	
+
+
 	//-------------- clearTable() method ---------------------------------------------------------------------------
 	//--------------------------------------------------------------------------------------------------------------
 	protected void clearTable() {
@@ -411,87 +410,87 @@ public class CompositeListPropertiesOfInstance extends
 			item.dispose();
 		}
 		table.removeAll();
-		
+
 		for (Control control : table.getChildren())
 		{
 			control.dispose();
 		}
-		
+
 	}
 	//--------------------------------------------------------------------------------------------------------------
 	//--------------------------------------------------------------------------------------------------------------
 
-	
+
 	//A-------------- bindDataToTable() method ----------------------------------------------------------------------
 	//--------------------------------------------------------------------------------------------------------------
 	public void bindDataToTable(){
-		
-		
+
+
 		IndividualData tmpIndividual = service.Service.webServiceDelegate.getIndividualByName(null, instanceFullName);
-		
+
 		{
 		//propertyList = delegate.getValuesOfIndividual(null, instanceFullName);
 			String tmp = instanceFullName;
 //			String prefix = tmp.substring(0, tmp.lastIndexOf("#"));
-			
+
 			List<BkIndividualProperty> listBkIndividualProperty = service.Service.webServiceDelegate.getValuesOfIndividual(null, instanceFullName);
-			
+
 			if(listBkIndividualProperty.size() > 0) {
 				for(BkIndividualProperty individualProperty : listBkIndividualProperty){
 					String propertyBkName = individualProperty.getProperty();
 					List<String> value = individualProperty.getListValue();
-					
+
 					PropertyData propertyData = service.Service.webServiceDelegate.getPropertyByName(null, propertyBkName);
 					String tmpPropertyName = propertyBkName;
 					String propertyPrefix = tmpPropertyName.substring(0, tmpPropertyName.lastIndexOf("#"));
-					
+
 					//if(!propertyPrefix.equals(prefix)) continue;
-					
+
 					addRow(propertyBkName,propertyData,value);
-					
+
 				}
 			}
-		
-		
-		
+
+
+
 		}
 	}
 	//--------------------------------------------------------------------------------------------------------------
 	//--------------------------------------------------------------------------------------------------------------
-	
-	
+
+
 	//-------------- addRow() method -------------------------------------------------------------------------------
 	//--------------------------------------------------------------------------------------------------------------
 	protected void addRow(String propertyName,PropertyData propertyData, List<String> value) {
 		TableItem item = new TableItem(table,SWT.NONE);
 		item.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
 		TableEditor editor = new TableEditor(table);
-		
-		
+
+
 		Text textProperty = new Text(table,SWT.NONE);
 		textProperty.setText(propertyName.substring(propertyName.indexOf("#") + 1));
 		editor.grabHorizontal = true;
 		editor.setEditor(textProperty, item, 0);
-		
+
 		CompositeRow compositeRow = new CompositeRow(table,SWT.NONE,instanceFullName,propertyData,value);
 		compositeRow.setController(this.getController());
 		if(propertyData.isObjectProperty()){
 			compositeRow.addUriToolBarItemForObjectProperty();
 		}
-		
+
 		editor = new TableEditor(table);
 		editor.grabHorizontal = true;
 		editor.setEditor(compositeRow, item, 1);
-		
+
 		DataInstance dataInstance = new DataInstance();
 		dataInstance.setInstanceFullName(instanceFullName);
-		
+
 		item.setData("propertyName", propertyName);
 		item.setData("propertyData", propertyData);
 		item.setData("value", compositeRow);
 		item.setData("Data", dataInstance);
-		
-		
+
+
 	}
 	//--------------------------------------------------------------------------------------------------------------
 	//--------------------------------------------------------------------------------------------------------------
