@@ -1,6 +1,7 @@
 package suggestTopic;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -24,71 +25,62 @@ public class CompareTopic {
 		}
 		Set<String> setString = new HashSet<>(arrayTopicData);
 		arrayTopicData = new ArrayList<String>(setString);
-		System.out.println("HAHAHAHAHAHAHA: " + arrayTopicData);
+		System.out.println("ARRAY LIST TOPIC: " + arrayTopicData);
 		return arrayTopicData;
 	}
 	
-//	private boolean hasChildren(ClassData parent) {
-//		List<ClassData> subClassList = service.Service.webServiceDelegate.getSubClasses(null, parent.getClassURI(), true);
-//		for (ClassData classData : subClassList){
-//			if (classData.getClassName().equals("Nothing")) return false;
-//		}
-//		return parent.isHasSubClass();
-//	}
+
 	
-	private int getSimilarity(String compOne, String compTwo) {
-		int length1 = compOne.length();
-		int length2 = compTwo.length();
-		int count  = 0;
-		char[] comp1 = compOne.toLowerCase().toCharArray();
-		char[] comp2 = compTwo.toLowerCase().toCharArray();
-		
-		for (int i = 0; i< length1; i++) {
-			for (int j = 0; j< length2; j++) {
-				if (comp1[i] == comp2[j]) {
-					count += 1; 
-					break;
-				}
-			}
-		}
-		return count;
-	}
-	// tim thang max trong mang so nguyen 
-	private int findMax(ArrayList<Integer> numbers) {
-		int max = 0;
-		for (int i =0; i< numbers.size(); i++) {
-			if (numbers.get(i) > max) {
-				max = numbers.get(i);
-			}
-		}
-		return max;
+	private int calculateLevenshteinDistance(String x, String y) {
+	    int[][] dp = new int[x.length() + 1][y.length() + 1];
+	 
+	    for (int i = 0; i <= x.length(); i++) {
+	        for (int j = 0; j <= y.length(); j++) {
+	            if (i == 0) {
+	                dp[i][j] = j;
+	            }
+	            else if (j == 0) {
+	                dp[i][j] = i;
+	            }
+	            else {
+	                dp[i][j] = min(dp[i - 1][j - 1] 
+	                 + costOfSubstitution(x.charAt(i - 1), y.charAt(j - 1)), 
+	                  dp[i - 1][j] + 1, 
+	                  dp[i][j - 1] + 1);
+	            }
+	        }
+	    }
+	 
+	    return dp[x.length()][y.length()];
 	}
 	
-	//nhan dau vao la 1 mang so nguyen, tra ve vi tri cua thang max
-//	private int getIndexMax(ArrayList<Integer> numbers) {
-//		int max = 0 ;
-//		for(int i = 0; i < numbers.size(); i ++) {
-//			if (numbers.get(i) > max) {
-//				max = numbers.get(i);
-//			}
-//		}
-//		
-//		for(int index = 0; index < numbers.size(); index ++) {
-//			if (numbers.get(index) == max) {
-//				return index;
-//			}
-//		}
-//		return -1;
-//	}
-	// nhan dau vao la gia tri max, tra ve cac vi tri trong mang co gia tri max
-	private ArrayList<Integer> getArrayIndexMax(int max, ArrayList<Integer> numbers){
-		ArrayList<Integer> arrayIndexMax = new ArrayList<>();
+	private int costOfSubstitution(char a, char b) {
+        return a == b ? 0 : 1;
+    }
+	
+	private int min(int... numbers) {
+        return Arrays.stream(numbers)
+          .min().orElse(Integer.MAX_VALUE);
+    }
+	// tim thang min trong mang so nguyen 
+	private int findMin(ArrayList<Integer> numbers) {
+		int min = numbers.get(0);
 		for (int i =0; i< numbers.size(); i++) {
-			if (numbers.get(i) == max) {
-				arrayIndexMax.add(i);
+			if (numbers.get(i) <= min) {
+				min = numbers.get(i);
+			}
+		}
+		return min;
+	}
+	// nhan dau vao la gia tri min, tra ve cac vi tri trong mang co gia tri min
+	private ArrayList<Integer> getArrayIndexMin(int min, ArrayList<Integer> numbers){
+		ArrayList<Integer> arrayIndexMin = new ArrayList<>();
+		for (int i =0; i< numbers.size(); i++) {
+			if (numbers.get(i) == min) {
+				arrayIndexMin.add(i);
 			} 
 		}
-		return arrayIndexMax;
+		return arrayIndexMin;
 	}
 	// nhan dau vao la 1 string, so sanh voi cac string trong 1 mang
 	// tra ve thang trong mang giong nhat voi thang nhap vao
@@ -108,12 +100,13 @@ public class CompareTopic {
 		ArrayList<Integer> numbers = new ArrayList<>();
 		ArrayList<String> result  = new ArrayList<>();
 		for (int i = 0; i < arrayConstantString.size(); i++) {
-			System.out.println("Similarity: " + getSimilarity(input, arrayConstantString.get(i)));
-			 numbers.add((Integer)getSimilarity(input, arrayConstantString.get(i)));
+			System.out.println("Dissimilarity: " + calculateLevenshteinDistance(input, arrayConstantString.get(i))
+			+ " Topic: [" + arrayConstantString.get(i)+ "]");
+			 numbers.add((Integer)calculateLevenshteinDistance(input, arrayConstantString.get(i)));
 		}
-		ArrayList<Integer> arrayIndexMax = getArrayIndexMax(findMax(numbers), numbers);
-		for (int i = 0; i< arrayIndexMax.size(); i++) {
-			result.add(arrayConstantString.get(arrayIndexMax.get(i)));
+		ArrayList<Integer> arrayIndexMin = getArrayIndexMin(findMin(numbers), numbers);
+		for (int i = 0; i< arrayIndexMin.size(); i++) {
+			result.add(arrayConstantString.get(arrayIndexMin.get(i)));
 		}
 		return result;
 	}
