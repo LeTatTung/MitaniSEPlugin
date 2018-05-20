@@ -72,6 +72,7 @@ public class ConsistentOntology {
 	public static final String INTERFACE = SEC_NAMESPACE + "Interface";
 	public static final String METHOD = SEC_NAMESPACE + "Method";
 	public static final String COMMENT = SEC_NAMESPACE + "Comment";
+	public static final String SEMANTIC_COMMENT = SEC_NAMESPACE + "SemanticComment";
 	public static final String TEST = SEC_NAMESPACE + "Test";
 	public static final String UNIT_TEST = SEC_NAMESPACE + "UnitTest";
 	public static final String INTERGRATION_TEST = SEC_NAMESPACE + "IntegrationTest";
@@ -130,9 +131,10 @@ public class ConsistentOntology {
 	public static final String PARAMS = SEC_NAMESPACE+"javadocParams";
 	public static final String RETURN = SEC_NAMESPACE+"javadocReturn";
 
- 	public static final String TOPIC = SEC_NAMESPACE+"javadocTopic";
- 	public static final String MODEL = SEC_NAMESPACE+"javadocModel";
- 	public static final String FUNCTION = SEC_NAMESPACE+"javadocFunction";
+	public static final String HAS_SEMANTIC_COMMENT = SEC_NAMESPACE + "hasSemanticComment";
+ 	public static final String TOPIC = SEC_NAMESPACE+"semanticdocTopic";
+ 	public static final String MODEL = SEC_NAMESPACE+"semanticdocModel";
+ 	public static final String FUNCTION = SEC_NAMESPACE+"semanticdocFunction";
 
 	public static final String HAS_TEXT_CONTENT = DOC_NAMESPACE + "hasTextContent";
 

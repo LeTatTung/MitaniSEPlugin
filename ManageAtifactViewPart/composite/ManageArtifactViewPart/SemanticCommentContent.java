@@ -152,7 +152,7 @@ public class SemanticCommentContent extends SemanticSuperComposite {
 		registerAction();
 
 		// Lay ra thuoc tinh string
-		for (PropertyData pd : Service.webServiceDelegate.getAllClassProperties(null, ConsistentOntology.COMMENT)) {
+		for (PropertyData pd : Service.webServiceDelegate.getAllClassProperties(null, ConsistentOntology.SEMANTIC_COMMENT)) {
 			String uri = pd.getPropertURI();
 			System.out.println("UUUUUUUUU" + uri);
 			String s = Service.webServiceDelegate.getPropertySpecificDataType(null, uri);
@@ -212,7 +212,7 @@ public class SemanticCommentContent extends SemanticSuperComposite {
 	 * property name do
 	 */
 	public void getListPropertyValue(String id) {
-		id = id + "_comment";
+		id = id + "_semantic_comment";
 		listMapProperty = Service.dataServiceDelegate.getValuePropertyIndividual(null, listPropertyName, id);
 
 	}
@@ -311,19 +311,19 @@ public class SemanticCommentContent extends SemanticSuperComposite {
 						sourceComponentInstance.setClassName(ConsistentOntology.METHOD);
 					}
 
-					String idComment = id + "_comment";
+					String idComment = id + "_semantic_comment";
 					sourceComponentInstance.setInstanceID(id);// id cua class to
 					sourceComponentInstance.setInstanceLabel(sourceComponentName);
 					InitInstance initSourceInstance = new InitInstance(sourceComponentInstance);
-					initSourceInstance.addObjectProperty(ConsistentOntology.HAS_COMMENT, idComment,
-							ConsistentOntology.COMMENT);
+					initSourceInstance.addObjectProperty(ConsistentOntology.HAS_SEMANTIC_COMMENT, idComment,
+							ConsistentOntology.SEMANTIC_COMMENT);
 
 					// Buoc 2:Luu cau truc annotation cho comment vao listAnnotation
 
 					InstanceData commentInstance = new InstanceData();
-					commentInstance.setClassName(ConsistentOntology.COMMENT);
+					commentInstance.setClassName(ConsistentOntology.SEMANTIC_COMMENT);
 					commentInstance.setInstanceID(idComment);
-					commentInstance.setInstanceLabel(sourceComponentName + "_comment");
+					commentInstance.setInstanceLabel(sourceComponentName + "_semantic_comment");
 					InitInstance initcommentInstance = new InitInstance(commentInstance);
 
 					for (TableItem item : table.getItems()) {
@@ -375,7 +375,7 @@ public class SemanticCommentContent extends SemanticSuperComposite {
 		});
 	}
 
-	private String writeRdf(String id_comment) {
+	private String writeRdf(String id_semantic_comment) {
 		String commentRdf = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" + "<!DOCTYPE rdf:RDF [\n"
 				+ "  <!ENTITY swrl  \"http://www.w3.org/2003/11/swrl#\" >\n"
 				+ "  <!ENTITY owl \"http://www.w3.org/2002/07/owl#\">\n"
@@ -391,14 +391,14 @@ public class SemanticCommentContent extends SemanticSuperComposite {
 				+ "  xmlns:rdfs=\"http://www.w3.org/2000/01/rdf-schema#\"\n"
 				+ "  xmlns:swrl=\"http://www.w3.org/2003/11/swrl#\"\n"
 				+ "  xmlns:ruleml=\"http://www.w3.org/2003/11/ruleml#\">\n" + "\n"
-				+ "  <swrl:Variable rdf:about=\"#javadocTopic\"/>\n"
-				+ "  <swrl:Variable rdf:about=\"#javadocModel\"/>\n"
-				+ "  <swrl:Variable rdf:about=\"#javadocFunction\"/>\n" + "\n"
+				+ "  <swrl:Variable rdf:about=\"#semanticdocTopic\"/>\n"
+				+ "  <swrl:Variable rdf:about=\"#semanticdocModel\"/>\n"
+				+ "  <swrl:Variable rdf:about=\"#semanticdocFunction\"/>\n" + "\n"
 				+ "  <swrl:Imp rdf:about=\"#semanticdoc\">\n" + "    <swrl:head rdf:parseType=\"Collection\">\n"
 				+ "      <swrl:IndividualPropertyAtom>\n" + "        <swrl:propertyPredicate rdf:resource=\"";
-		commentRdf = commentRdf + id_comment + "\"/>\n" + "        <swrl:argument1 rdf:resource=\"#javadocTopic\"/>\n"
-				+ "        <swrl:argument2 rdf:resource=\"#javadocModel\"/>\n"
-				+ "        <swrl:argument3 rdf:resource=\"#javadocFunction\"/>\n"
+		commentRdf = commentRdf + id_semantic_comment + "\"/>\n" + "        <swrl:argument1 rdf:resource=\"#semanticdocTopic\"/>\n"
+				+ "        <swrl:argument2 rdf:resource=\"#semanticdocModel\"/>\n"
+				+ "        <swrl:argument3 rdf:resource=\"#semanticdocFunction\"/>\n"
 				+ "      </swrl:IndividualPropertyAtom>\n" + "    </swrl:head>\n" + "\n"
 				+ "    <swrl:body rdf:parseType=\"Collection\">\n" + "      ";
 
@@ -445,10 +445,10 @@ public class SemanticCommentContent extends SemanticSuperComposite {
 	 * @return
 	 */
 	private String standardizeComment(String property, String value) {
-		// Chuan hoa thuoc tinh ontology thanh javadoc
+		// Chuan hoa thuoc tinh ontology thanh semanticdoc
 		String result = standardizeProperty(property);
 
-		// Tra ve javadoc
+		// Tra ve semanticdoc
 		if (result != "")
 			return "\n * @" + result + " " + value;
 		else
@@ -467,11 +467,11 @@ public class SemanticCommentContent extends SemanticSuperComposite {
 	private String standardizeProperty(String property) {
 		// Chuan hoa thuoc tinh ontology thanh semanticdoc
 		String result = property.toLowerCase();
-		if (result.contains("javadoctopic"))
+		if (result.contains("semanticdoctopic"))
 			return "topic";
-		if (result.contains("javadocmodel"))
+		if (result.contains("semanticdocmodel"))
 			return "model";
-		if (result.contains("javadocfunction"))
+		if (result.contains("semanticdocfunction"))
 			return "function";
 		return "";
 	}
