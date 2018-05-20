@@ -35,7 +35,10 @@ public class CodeComponentNaming {
 	private String idCommentMethodFull;
 	private String idCommentField;
 	private String idCommentFieldFull;
-	
+	private String idSemanticCommentClass;
+	private String idSemanticCommentClassFull;
+	private String idSemanticCommentMethod;
+	private String idSemanticCommentMethodFull;
 	/**
 	 * Dung khi add them code moi de quan ly
 	 * @return
@@ -59,6 +62,18 @@ public class CodeComponentNaming {
 	}
 	public String getIdCommentMethodFull() {
 		return idCommentMethodFull;
+	}
+	public String getIdSemanticCommentClass() {
+		return idSemanticCommentClass;
+	}
+	public String getIdSemanticCommentClassFull() {
+		return idSemanticCommentClassFull;
+	}
+	public String getIdSemanticCommentMethod() {
+		return idSemanticCommentMethod;
+	}
+	public String getIdSemanticCommentMethodFull() {
+		return idSemanticCommentMethodFull;
 	}
 	public String getIdCommentField() {
 		return idCommentField;
@@ -117,6 +132,9 @@ public class CodeComponentNaming {
 	public void setIdCommentClass() {
 		this.idCommentClassFull = this.idClassFull+"_comment";
 	}
+	public void setIdSemanticCommentClass() {
+		this.idSemanticCommentClassFull = this.idClassFull+"_semantic_comment";
+	}
 	public void setIdMetric() {
 		this.idMetric = this.idClass+"_Metric";
 		this.idMetricFull = this.idClassFull+"_Metric";
@@ -136,6 +154,9 @@ public class CodeComponentNaming {
 	}
 	public void setIdCommentMethod() {
 		this.idCommentMethodFull = this.idMethodFull+"_comment";
+	}
+	public void setIdSemanticCommentMethod() {
+		this.idSemanticCommentMethodFull = this.idMethodFull+"_semantic_comment";
 	}
 	public void setIdReturnType(String idReturnType) {
 		this.idReturnType = idReturnType;
@@ -206,8 +227,6 @@ public class CodeComponentNaming {
 	public String getIdVariableFull() {
 		return idVariableFull;
 	}
-	
-	
 	
 	
 }
