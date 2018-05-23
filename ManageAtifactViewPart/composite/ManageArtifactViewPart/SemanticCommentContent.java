@@ -361,9 +361,10 @@ public class SemanticCommentContent extends SemanticSuperComposite {
 			public void widgetSelected(final SelectionEvent e) {
 				logger.info("Call browser render RDF2HTML");
 				String input = generateRDFCommentFinal();
-				RDF2HTML rdfConvert = new RDF2HTML(input);
+				String outputFileName = "/home/tung/Data/result.html";
+				RDF2HTML rdfConvert = new RDF2HTML(input, outputFileName);
 				try {
-					rdfConvert.performTask(input);
+					rdfConvert.performTask();
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
