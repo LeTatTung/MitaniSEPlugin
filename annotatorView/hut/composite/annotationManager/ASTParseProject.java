@@ -30,7 +30,7 @@ import org.eclipse.jdt.core.dom.TypeDeclaration;
  * Dung cay project, den Method, Field de reparse,add moi
  * @author DatTT
  */
-class ASTParseProject extends ASTVisitor {
+public class ASTParseProject extends ASTVisitor {
 	public TreeParent Root = new TreeParent(null, null);
 	private String projectName;
 

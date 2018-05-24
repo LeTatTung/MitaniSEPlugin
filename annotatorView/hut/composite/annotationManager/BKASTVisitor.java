@@ -113,6 +113,34 @@ public class BKASTVisitor extends ASTVisitor {
 			e.printStackTrace();
 		}
 	}
+	
+	public void parseProject(IJavaProject javaProject) {
+		InstanceData projectInstance = new InstanceData();
+		projectInstance.setClassName(ConsistentOntology.PROJECT);
+		projectInstance.setInstanceID(codeComponentNaming.getIdProjectFull());
+		projectInstance.setInstanceLabel(codeComponentNaming.getIdProject());
+		InitInstance initPackageInstance = new InitInstance(projectInstance);
+		initPackageInstance.addDataProperty(ConsistentOntology.HAS_NAME, javaProject.getElementName());
+
+		try {
+			IPackageFragmentRoot[] roots = javaProject.getPackageFragmentRoots();
+			for (IPackageFragmentRoot root : roots) {
+				if ((!root.isArchive())) {
+					codeComponentNaming.setIdSourceFolder(root.getElementName());
+					initPackageInstance.addObjectProperty(ConsistentOntology.HAS_FOLDER_SOURCE,
+							codeComponentNaming.getIdSourceFolderFull(), ConsistentOntology.FOLDERSOURCECODE);
+					parseSourceFolder(root);
+
+				}
+			}
+
+			listofAnnotation.add(initPackageInstance.getPackageField());
+
+		} catch (JavaModelException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	/*
 	 * Phan tich cac source folder

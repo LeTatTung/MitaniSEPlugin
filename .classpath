@@ -17,6 +17,7 @@
 	<classpathentry kind="src" path="login"/>
 	<classpathentry kind="src" path="projectTotalView"/>
 	<classpathentry kind="src" path="suggestTopic"/>
+	<classpathentry kind="src" path="reparse"/>
 	<classpathentry exported="true" kind="lib" path="lib/Redefer.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/com.ibm.icu_3.4.4.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/xerces-2.7.1.jar"/>

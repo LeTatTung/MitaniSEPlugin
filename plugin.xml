@@ -170,4 +170,42 @@
             commandId="suggestTopic.suggestTopicCommand"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
    </extension>
+   
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            categoryId="MitaniSEPlugin.commands.category"
+            id="MitaniSEPlugin.commands.reparse"
+            name="Reparse">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="popupmenu.handlers.ReparseHandler"
+            commandId="MitaniSEPlugin.commands.reparse">
+      </handler>
+   </extension>
+ 
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="popup:org.eclipse.jdt.ui.PackageExplorer">
+            <command
+                  commandId="MitaniSEPlugin.commands.reparse"
+                  id="MitaniSEPlugin.menus.reparse"
+                  mnemonic="S">
+ 
+                    <visibleWhen>
+				           <with variable="activeMenuSelection">
+				            <iterate
+				                 ifEmpty="false">
+				             <adapt type="org.eclipse.core.resources.IResource">
+				             </adapt>
+				            </iterate>
+				           </with>
+         			</visibleWhen>
+            </command>
+      </menuContribution>
+   </extension>
 </plugin>
