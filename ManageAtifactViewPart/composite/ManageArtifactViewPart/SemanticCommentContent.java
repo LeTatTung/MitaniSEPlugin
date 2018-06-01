@@ -1,5 +1,6 @@
 package composite.ManageArtifactViewPart;
 
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -353,6 +354,9 @@ public class SemanticCommentContent extends SemanticSuperComposite {
 		saveCommentRdfItem.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(final SelectionEvent e) {
 				logger.info("Ghi comment ra RDF file");
+				String rdfContent = generateRDFCommentFinal();
+				String rdfFileName = "/home/tung/Data/resultRDF.xml";
+				writeFile(rdfFileName, rdfContent);
 				RDFComment rdfComment = new RDFComment(generateRDFCommentFinal());
 			}
 		});
@@ -376,6 +380,17 @@ public class SemanticCommentContent extends SemanticSuperComposite {
 		});
 	}
 
+	private void writeFile(String fileName, String content) {
+	       try {
+	            FileWriter fw = new FileWriter(fileName);
+	            fw.write(content);
+	            fw.close();
+	        } catch (Exception e) {
+	            System.out.println(e);
+	        }
+	        System.out.println("Success...");
+	    }
+	
 	private String writeRdf(String id_semantic_comment) {
 		String commentRdf = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" + "<!DOCTYPE rdf:RDF [\n"
 				+ "  <!ENTITY swrl  \"http://www.w3.org/2003/11/swrl#\" >\n"
