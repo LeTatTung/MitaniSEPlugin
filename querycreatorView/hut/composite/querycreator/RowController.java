@@ -18,16 +18,15 @@ public class RowController {
 	private ComboboxObjectData comboboxObject;
 	private ComboboxPredicateData comboboxPredicate;
 	private ComboboxSubjectData comboboxSubject;
-	
+
 	public void predicateChange(){
-		
+
 		this.getComboboxObject().setDataInput((ObjectComboInputData)this.getComboboxPredicate().getDataOutput());
 		String propertyName = ((ObjectComboInputData)this.getComboboxObject().getDataInput()).getPropertyName();
 		PropertyData property = Service.webServiceDelegate.getPropertyByShortName(null, propertyName);
 		if (property.isDatatypeProperty())
 		{
 			String type = Service.webServiceDelegate.getPropertySpecificDataType(null, property.getPropertURI());
-			System.out.println(type);
 			if (type.equals("string"))
 			{
 			ArrayList<String> tmpList = new ArrayList<String>();
@@ -37,7 +36,7 @@ public class RowController {
 			tmpList.add("Ends with");
 			this.getComboboxObject().setListItem(tmpList);
 			}
-			
+
 			if (type.equals("date"))
 			{
 			ArrayList<String> tmpList = new ArrayList<String>();
@@ -46,7 +45,7 @@ public class RowController {
 			tmpList.add("Date =");
 			this.getComboboxObject().setListItem(tmpList);
 			}
-			
+
 			if (type.equals("dateTime"))
 			{
 			ArrayList<String> tmpList = new ArrayList<String>();
@@ -55,7 +54,7 @@ public class RowController {
 			tmpList.add("Date Time =");
 			this.getComboboxObject().setListItem(tmpList);
 			}
-			
+
 			if (type.equals("nonNegativeInteger"))
 			{
 			ArrayList<String> tmpList = new ArrayList<String>();
@@ -64,7 +63,7 @@ public class RowController {
 			tmpList.add("=");
 			this.getComboboxObject().setListItem(tmpList);
 			}
-			
+
 			if (type.equals("boolean"))
 			{
 			ArrayList<String> tmpList = new ArrayList<String>();
@@ -72,21 +71,22 @@ public class RowController {
 			tmpList.add("false");
 			this.getComboboxObject().setListItem(tmpList);
 			}
-		}	
-		
+		}
+
 		if (property.isObjectProperty())
 		{
 			this.getComboboxObject().setIsNewVariable(true);
-			
+
 			List<String> rangeList = new ArrayList<String>();
-			List<String> classList = Service.webServiceDelegate.getObjectPropertyRanges(null, property.getPropertURI());			
+			List<String> classList = Service.webServiceDelegate.getObjectPropertyRanges(null, property.getPropertURI());
 			for (String strClass:classList)
 			{
-				for (ClassData cd:Service.webServiceDelegate.getSubClasses(null, strClass, false))
+				for (ClassData cd:Service.webServiceDelegate.getSubClasses(null, strClass, false)) {
 					rangeList.add(cd.getClassURI());
+				}
 			}
 			rangeList.addAll(classList);
-			
+
 			// Create a HashSet which allows no duplicates
 			HashSet hashSet = new HashSet(rangeList);
 			// Assign the HashSet to a new ArrayList
@@ -94,11 +94,11 @@ public class RowController {
 			// Ensure correct order, since HashSet doesn't
 			Collections.sort(rangeList);
 			System.out.println("lay ra duoc range cua property trong predicate");
-			
+
 			if (!((ObjectComboInputData)this.getComboboxObject().getDataInput()).isNeedNewVariable())
 			{
 				this.getComboboxObject().setIsNewVariable(false);
-								
+
 				for (String tmp : rangeList) System.out.println(tmp);
 				Map<String, String> variableMap = ((ObjectComboInputData)this.getComboboxObject().getDataInput()).getVariableMap();
 				ArrayList<String> tmpList = new ArrayList<String>();
@@ -112,16 +112,16 @@ public class RowController {
 						}
 					}
 				}
-				
+
 				this.comboboxObject.setListItem(tmpList);
-					
+
 			}
 			else
-			{	
+			{
 				this.getComboboxObject().setIsNewVariable(true);
 				System.out.println("can co object moi");
-				Map<String, String> variableMap = ((ObjectComboInputData)this.getComboboxObject().getDataInput()).getVariableMap();			
-								
+				Map<String, String> variableMap = ((ObjectComboInputData)this.getComboboxObject().getDataInput()).getVariableMap();
+
 				ArrayList<String> tmpList = new ArrayList<String>();
 				List<String> tmpRangeList = new ArrayList<String>();
 				for (String tmp : rangeList){
@@ -135,15 +135,15 @@ public class RowController {
 				this.getComboboxObject().setListItem(tmpList);
 			}
 		}
-			
+
 	}
-	
+
 	public void subjectChange(){
 		this.getComboboxPredicate().setDataInput(this.getComboboxSubject().getDataOutput());
 		String className = (String)this.getComboboxPredicate().getDataInput();
 
 		String classFullName = Service.webServiceDelegate.getClassByShortName(null, className).getClassURI();
-		
+
 		List<PropertyData> propertyList = Service.webServiceDelegate.getAllClassProperties(null, classFullName);
 		ArrayList<String> tmpList = new ArrayList<String>();
 		for (int i = 0; i < propertyList.size(); i++)
@@ -152,9 +152,9 @@ public class RowController {
 		}
 		this.getComboboxPredicate().setListItem(tmpList);
 	}
-	
+
 	public void objectChange(){
-		
+
 	}
 
 	public ComboboxObjectData getComboboxObject() {
@@ -180,6 +180,6 @@ public class RowController {
 	public void setComboboxSubject(ComboboxSubjectData comboboxSubject) {
 		this.comboboxSubject = comboboxSubject;
 	}
-	
-	
+
+
 }
