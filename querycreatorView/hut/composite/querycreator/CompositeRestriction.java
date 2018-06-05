@@ -52,11 +52,11 @@ public class CompositeRestriction extends CompositeQuerySuper {
 	private ComboboxSubjectData comboboxSubjectData = new ComboboxSubjectData();
 	private ComboboxObjectData comboboxObjectData = new ComboboxObjectData();
 	private ComboboxPredicateData comboboxPredicateData = new ComboboxPredicateData();
-	
+
 	private RowController rowController = new RowController();
-	
+
 	public Map<String, String> variableMap = new HashMap<String, String>();
-		
+
 	private Table table;
 	private final FormToolkit toolkit = new FormToolkit(Display.getCurrent());
 	@Override
@@ -72,15 +72,15 @@ public class CompositeRestriction extends CompositeQuerySuper {
 		setLayout(new FormLayout());
 		toolkit.adapt(this);
 		toolkit.paintBordersFor(this);
-		
+
 		comboboxSubjectData.setRowController(rowController);
 		comboboxObjectData.setRowController(rowController);
 		comboboxPredicateData.setRowController(rowController);
-		
+
 		rowController.setComboboxObject(comboboxObjectData);
 		rowController.setComboboxPredicate(comboboxPredicateData);
 		rowController.setComboboxSubject(comboboxSubjectData);
-		
+
 		if ((Map<String,String>)this.getInputData()!=null)
 		{
 			variableMap = (Map<String, String>)this.getInputData();
@@ -138,7 +138,7 @@ public class CompositeRestriction extends CompositeQuerySuper {
 		resetToolItem.addSelectionListener(new SelectionAdapter(){
 			public void widgetSelected(final SelectionEvent e){
 				resetTableRestriction();
-			} 
+			}
 		});
 
 		final ToolItem arrangeToolItem = new ToolItem(toolBar, SWT.PUSH);
@@ -151,52 +151,52 @@ public class CompositeRestriction extends CompositeQuerySuper {
 				addRestrictionRow("", "", "", "");
 			}
 		});
-		
-		
+
+
 	}
-	
+
 
 	public void addRestrictionRow(String subject, String predicate, String objectFilter, String filterValue){
-		
+
 		TableItem item = new TableItem(table, SWT.NONE);
 		TableEditor editor = new TableEditor(table);
-				
+
 		final Button btnCheckOptional = new Button(table,SWT.CHECK);
 		editor.grabHorizontal = true;
 		editor.setEditor(btnCheckOptional,item,5);
-		
+
 		editor = new TableEditor(table);
 		final CCombo comboSubject = new CCombo(table,SWT.NONE);
 		editor.grabHorizontal = true;
 		editor.setEditor(comboSubject,item,1);
-		
+
 		editor = new TableEditor(table);
 		final CCombo comboPredicate = new CCombo(table,SWT.NONE);
 		editor.grabHorizontal = true;
 		editor.setEditor(comboPredicate,item,2);
-		
+
 		editor = new TableEditor(table);
 		final Button btnCheckNewObject = new Button(table,SWT.CHECK);
 		editor.grabHorizontal = true;
 		editor.setEditor(btnCheckNewObject,item,0);
-		
+
 		editor = new TableEditor(table);
 		final CCombo comboObjectFilter = new CCombo(table,SWT.NONE);
 		editor.grabHorizontal = true;
 		editor.setEditor(comboObjectFilter,item,3);
-		
+
 		editor = new TableEditor(table);
 		final Text textFilterValue = new Text(table,SWT.NONE);
 		editor.grabHorizontal = true;
 		editor.setEditor(textFilterValue,item,4);
-		
+
 		editor = new TableEditor(table);
 		final Button btnDeleteRow = new Button(table,SWT.IMAGE_GIF);
 		Image deleteImage = Images.imageRegistry.get(Images.DELETE);
-		btnDeleteRow.setImage(deleteImage); 
+		btnDeleteRow.setImage(deleteImage);
 		editor.grabHorizontal = true;
 		editor.setEditor(btnDeleteRow,item,6);
-				
+
 		comboSubject.setText(subject);
 		comboPredicate.setText(predicate);
 		comboObjectFilter.setText(objectFilter);
@@ -204,11 +204,11 @@ public class CompositeRestriction extends CompositeQuerySuper {
 		comboSubject.setData(comboboxSubjectData);
 		comboPredicate.setData(comboboxPredicateData);
 		comboObjectFilter.setData(comboboxObjectData);
-		
+
 		addDataComboSubject(comboSubject);
 		addDataComboPredicate(comboPredicate);
 		addDataComboObjectFilter(comboObjectFilter);
-				
+
 		item.setData("checkOptional",btnCheckOptional);
 		item.setData("comboSubject",comboSubject);
 		item.setData("comboPredicate",comboPredicate);
@@ -217,20 +217,20 @@ public class CompositeRestriction extends CompositeQuerySuper {
 		item.setData("textFilterValue",textFilterValue);
 		item.setData("btnDelete",btnDeleteRow);
 		btnDeleteRow.setData(item);
-		
+
 		//Modify the subject combo create a new row
 		comboSubject.addModifyListener(new ModifyListener(){
 
 			public void modifyText(ModifyEvent event) {
-				if (needToCreateNewRestriction()) addRestrictionRow("", "", "", "");			
+				if (needToCreateNewRestriction()) addRestrictionRow("", "", "", "");
 			}
 		});
-		
+
 		//Click the delete button will delete this row
 		Listener deleteEventListener = new Listener(){
 			public void handleEvent(Event event) {
 				Button button = (Button)event.widget;
-				TableItem item = (TableItem)button.getData(); 
+				TableItem item = (TableItem)button.getData();
 				((Button)item.getData("checkOptional")).dispose();
 				((CCombo)item.getData("comboSubject")).dispose();
 				((CCombo)item.getData("comboPredicate")).dispose();
@@ -240,21 +240,21 @@ public class CompositeRestriction extends CompositeQuerySuper {
 				((Button)item.getData("btnDelete")).dispose();
 				item.dispose();
 				}
-				   		
+
     	};
     	btnDeleteRow.addListener(SWT.Selection, deleteEventListener);
-		
-    	//set output data for ComboSubjectData when subject combobox lost focus  	
+
+    	//set output data for ComboSubjectData when subject combobox lost focus
     	comboSubject.addFocusListener(new FocusListener(){
 			public void focusGained(FocusEvent arg0) {
-		
+
 			}
 			public void focusLost(FocusEvent event) {
-			
+
 			}
     	});
-    	
-    	//set output data for ComboPredicateData when predicate combobox lost focus  
+
+    	//set output data for ComboPredicateData when predicate combobox lost focus
     	comboPredicate.addFocusListener(new FocusListener(){
 			public void focusGained(FocusEvent arg0) {
 				String txt = comboPredicate.getText();
@@ -268,12 +268,12 @@ public class CompositeRestriction extends CompositeQuerySuper {
 				comboPredicate.setText(txt);
 			}
 			public void focusLost(FocusEvent event) {
-				
+
 			}
-    		
+
     	});
-    	
-    	//set output data for ComboObjectData when object combo lost focus 
+
+    	//set output data for ComboObjectData when object combo lost focus
     	comboObjectFilter.addFocusListener(new FocusListener(){
 
 			public void focusGained(FocusEvent arg0) {
@@ -282,7 +282,7 @@ public class CompositeRestriction extends CompositeQuerySuper {
 				comboboxPredicateData.setDataOutput(new ObjectComboInputData(btnCheckNewObject.getSelection(),variableMap,tmp));
 				comboboxPredicateData.getRowController().predicateChange();
 				addDataComboObjectFilter(comboObjectFilter);
-				comboObjectFilter.setText(txt);			
+				comboObjectFilter.setText(txt);
 			}
 
 			public void focusLost(FocusEvent arg0) {
@@ -295,10 +295,10 @@ public class CompositeRestriction extends CompositeQuerySuper {
 				addNewVariable();
 				comboObjectFilter.setText(tmp);
 			}
-    		
+
     	});
-    	
-    	
+
+
     	textFilterValue.addMouseListener(new MouseAdapter() {
     		public void mouseDown(final MouseEvent e) {
     			String propertyName = comboPredicate.getText();
@@ -313,7 +313,7 @@ public class CompositeRestriction extends CompositeQuerySuper {
 							if(type.equals("date"))
 								textFilterValue.setText(dialog.SYear + "-" + dialog.SMonth	+ "-" + dialog.SDay);
 							else if(type.equals("dateTime"))
-								textFilterValue.setText(dialog.SYear + "-" + dialog.SMonth	+ "-" + dialog.SDay + "T" + dialog.SHour + ":"+dialog.SMinute+":"+dialog.SSecond);							
+								textFilterValue.setText(dialog.SYear + "-" + dialog.SMonth	+ "-" + dialog.SDay + "T" + dialog.SHour + ":"+dialog.SMinute+":"+dialog.SSecond);
 						}
 					}
 				}
@@ -323,18 +323,18 @@ public class CompositeRestriction extends CompositeQuerySuper {
 
 	protected void updateRowData() {
 		this.getQueryController().updateRowData();
-		
+
 	}
 	private boolean needToCreateNewRestriction(){
 		TableItem[] items = table.getItems();
 		for (int i = 0; i < items.length; i++) {
-			
+
 			if (((CCombo)items[i].getData("comboSubject")).getText().equals(""))
 				return false;
 		}
 		return true;
 	}
-	
+
 	private void addDataComboSubject(CCombo comboSubject){
 		if (((ComboboxSubjectData)comboSubject.getData()).getListItem()!=null)
 		{
@@ -348,7 +348,7 @@ public class CompositeRestriction extends CompositeQuerySuper {
 		comboSubject.setText(tmp);
 	}
 	}
-	
+
 	private void addDataComboPredicate(CCombo comboPredicate){
 		if (((ComboboxPredicateData)comboPredicate.getData()).getListItem()!= null)
 		{
@@ -360,7 +360,7 @@ public class CompositeRestriction extends CompositeQuerySuper {
 			}
 		}
 	}
-	
+
 	private void addDataComboObjectFilter(CCombo comboObjectFilter){
 		if (((ComboboxObjectData)comboObjectFilter.getData()).getListItem()!= null)
 		{
@@ -370,11 +370,11 @@ public class CompositeRestriction extends CompositeQuerySuper {
 			{
 				comboObjectFilter.add(tmpList.get(i));
 			}
-		}		
+		}
 	}
-	
-	
-	
+
+
+
 	public void updateComboboxSubjectData(){
 		variableMap = (Map<String, String>)this.getInputData();
 		if (variableMap != null)
@@ -388,14 +388,14 @@ public class CompositeRestriction extends CompositeQuerySuper {
 			comboboxSubjectData.setListItem(tmpList);
 		}
 	}
-	
+
 	public void updateComboboxPredicateData(){
 		String className = (String)comboboxPredicateData.getDataInput();
 		List<PropertyData> propertyList = Service.webServiceDelegate.getAllClassProperties(null, className);
 		ArrayList<String> tmpList = new ArrayList<String>();
-		
+
 	}
-	
+
 	private void resetTableRestriction()
 	{
 		table.removeAll();
@@ -406,19 +406,19 @@ public class CompositeRestriction extends CompositeQuerySuper {
 		System.out.println(variableMap.keySet().toString());
 		addRestrictionRow("","","", "");
 	}
-	
+
 	public void addNewVariable(){
 		System.out.println("Da vao den addNewVariable");
 		RestrictionOuputData outputData = new RestrictionOuputData();
 		if (comboboxObjectData.getDataOutput() != null)
 		{
-			
+
 			outputData.setHasNewVariable(((ObjectComboOutputData)comboboxObjectData.getDataOutput()).isNewVariable());
 			if (((ObjectComboOutputData)comboboxObjectData.getDataOutput()).isNewVariable())
 				variableMap.put(((ObjectComboOutputData)comboboxObjectData.getDataOutput()).getObjectChosen(), ((ObjectComboOutputData)comboboxObjectData.getDataOutput()).getObjectType());
-		
+
 		}
-		
+
 		System.out.println("da set xong variable map");
 		ArrayList<RowData> rowList = new ArrayList<RowData>();
 		TableItem[] items = table.getItems();
@@ -427,36 +427,36 @@ public class CompositeRestriction extends CompositeQuerySuper {
 		{
 			System.out.println(i);
 			boolean optional = ((Button)items[i].getData("checkOptional")).getSelection();
-			
+
 			String subject = (((CCombo)items[i].getData("comboSubject")).getText());
-			
+
 			String predicate = (((CCombo)items[i].getData("comboPredicate")).getText());
-			
+
 			String object = (((CCombo)items[i].getData("comboObjectFilter")).getText());
-			
+
 			String filterValue = ((Text)items[i].getData("textFilterValue")).getText();
 			if ((subject == "") || (subject == null)) continue;
-			
+
 			System.out.println(optional);
 			System.out.println(subject);
 			System.out.println(predicate);
 			System.out.println(object);
 			System.out.println(filterValue);
-			
+
 			RowData rowData = new RowData(optional,subject,predicate,object,filterValue);
 			rowList.add(rowData);
 			int x = subject.indexOf("(");
 			int y = subject.indexOf(")");
-			
+
 			String variableName = subject.substring(0,x);
 			String variableType = subject.substring(x + 1, y);
-			
+
 			if (!variableMap.containsKey(variableName))
 				variableMap.put(variableName, variableType);
 		}
 		outputData.setVariableMap(variableMap);
 		outputData.setRowList(rowList);
-		
+
 		System.out.println("Noi dung cua variablelist truyen di");
 		for (String s : outputData.getVariableMap().keySet())
 		{
@@ -467,7 +467,7 @@ public class CompositeRestriction extends CompositeQuerySuper {
 		this.setOutputData(outputData);
 		this.getQueryController().AddVariable();
 	}
-	
-	
-	
+
+
+
 }

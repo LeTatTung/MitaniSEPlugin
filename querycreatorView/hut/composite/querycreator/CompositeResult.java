@@ -105,7 +105,7 @@ public class CompositeResult extends CompositeQuerySuper implements IObjectExecu
 		final ToolBar toolBar = new ToolBar(this, SWT.NONE);
 		final FormData fd_toolBar = new FormData();
 		fd_toolBar.bottom = new FormAttachment(100, -3);
-		fd_toolBar.right = new FormAttachment(0, 95);
+		fd_toolBar.right = new FormAttachment(0,200);
 		fd_toolBar.left = new FormAttachment(0, 0);
 		fd_toolBar.top = new FormAttachment(100, -28);
 		toolBar.setLayoutData(fd_toolBar);
@@ -459,7 +459,7 @@ public class CompositeResult extends CompositeQuerySuper implements IObjectExecu
 	 * @return
 	 */
 	protected String generateQuery() {
-		if (listCaredVariable.size() == 0)
+		if (listCaredVariable.isEmpty())
 			{
 			updateVariableChosenTree();
 			return "";
@@ -657,7 +657,7 @@ public class CompositeResult extends CompositeQuerySuper implements IObjectExecu
 
 	protected void updateVariableChosenTree() {
 
-		variableChosenTableTree.removeAll();
+		variableChosenTableTree.removeAll();;
 		for (String parentText : declaredVariableList) {
 			TableTreeItem parent = new TableTreeItem(variableChosenTableTree,SWT.NONE);
 			parent.setText(0, parentText);
