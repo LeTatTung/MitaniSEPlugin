@@ -69,12 +69,14 @@ public class CompositeVariable extends CompositeQuerySuper {
 		setLayout(new FormLayout());
 		toolkit.adapt(this);
 		toolkit.paintBordersFor(this);
+		
+		
 
-//		List<ClassData> tmpList = Service.webServiceDelegate.listClasses(null);
-//		for (int i = 0; i < tmpList.size(); i++)
-//		{
-//			listClass.add(tmpList.get(i).getClassName());
-//		}
+		List<ClassData> tmpList = Service.webServiceDelegate.listClasses(null);
+		for (int i = 0; i < tmpList.size(); i++)
+		{
+			listClass.add(tmpList.get(i).getClassName());
+		}
 		
 		final TableViewer tableViewer = new TableViewer(this, SWT.NONE);
 		table = tableViewer.getTable();
