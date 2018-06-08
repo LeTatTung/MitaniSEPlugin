@@ -23,6 +23,7 @@ import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.swt.widgets.Display;
 
+import ws.owl.PropertyMapData;
 import ws.owl.InstanceData;
 
 public class BKASTVisitor extends ASTVisitor {
@@ -422,7 +423,7 @@ public class BKASTVisitor extends ASTVisitor {
 				codeComponentNaming.setIdSemanticCommentClass();
 				initClassInstance.addObjectProperty(ConsistentOntology.HAS_SEMANTIC_COMMENT,
 						codeComponentNaming.getIdSemanticCommentClassFull(), ConsistentOntology.SEMANTIC_COMMENT);
-				visitSemanticComment(type.getJavadoc(), codeComponentNaming.getIdSemanticCommentClassFull());
+				visitSemanticComment(type.getJavadoc(), codeComponentNaming.getIdSemanticCommentClassFull(), 0);
 			}
 
 			// Ghe tham nhung class ben trong class nay
@@ -505,7 +506,7 @@ public class BKASTVisitor extends ASTVisitor {
 			codeComponentNaming.setIdSemanticCommentMethod();
 			initMethodInstance.addObjectProperty(ConsistentOntology.HAS_SEMANTIC_COMMENT,
 					codeComponentNaming.getIdSemanticCommentMethodFull(), ConsistentOntology.SEMANTIC_COMMENT);
-			visitSemanticComment(method.getJavadoc(), codeComponentNaming.getIdSemanticCommentMethodFull());
+			visitSemanticComment(method.getJavadoc(), codeComponentNaming.getIdSemanticCommentMethodFull(), 1);
 		}
 		if (method.resolveBinding().getReturnType() != null) {
 
@@ -803,10 +804,11 @@ public class BKASTVisitor extends ASTVisitor {
 		return true;
 	}
 
-	public boolean visitSemanticComment(Javadoc javadoc, String idComment) {
+	public boolean visitSemanticComment(Javadoc javadoc, String idComment, int checkType) {
 		InstanceData instanceComment = new InstanceData();
 		instanceComment.setClassName(ConsistentOntology.SEMANTIC_COMMENT);
 		instanceComment.setInstanceID(idComment);
+		System.out.println("ID COMMENT: " + idComment);
 		instanceComment.setInstanceLabel("SemanticComment");
 		InitInstance initCommentInstance = new InitInstance(instanceComment);
 		String description = removeAllTagInComment(javadoc.toString());
@@ -826,6 +828,7 @@ public class BKASTVisitor extends ASTVisitor {
 					List array_tags = newtags.fragments();
 					// check ?
 					for (int j = 0; j < array_tags.size(); j++) {
+						addTopicToSemanticComment(idComment, array_tags.get(j).toString().trim(), checkType);
 						initCommentInstance.addDataProperty(ConsistentOntology.TOPIC, array_tags.get(j).toString());
 					}
 				}
@@ -849,7 +852,47 @@ public class BKASTVisitor extends ASTVisitor {
 		listofAnnotation.add(initCommentInstance.getPackageField());
 		return true;
 	}
+	
+	public void addTopicToSemanticComment(String idComment, String topicContent, int checkType) {
+		// add topic cho semantic comment
+		System.out.println("TOPIC CONTENT: " +topicContent);
+		List<InstanceData> listSC= new java.util.ArrayList<InstanceData>();
+		InstanceData instanceDataSC = new InstanceData();
+		instanceDataSC.setInstanceID(idComment);
+		instanceDataSC.setClassName("http://hut.edu.vn/ontology/sourcecode#SemanticComment");
+		PropertyMapData pmSC = new PropertyMapData();
+		pmSC.setTypeClass(null);
+		pmSC.setPropertyname("http://hut.edu.vn/ontology/document#hasTopic");
+		String pmValue = "http://hut.edu.vn/ontology/document#"+topicContent + "_Instance";
+		System.out.println("----------VALUE--------: "+ pmValue);
+		pmSC.setValue(pmValue);
+		instanceDataSC.getObjectPropertyList().add(pmSC);
+		listSC.add(instanceDataSC);
+		service.Service.webServiceDelegate.saveValuesOfIndividual(null, listSC, false);
+		
+		// add topic cho class hoac method
+		// class thi checkType = 0, method thi checkType =1
 
+		List<InstanceData> listCM = new java.util.ArrayList<InstanceData>();
+		InstanceData instanceDataCM = new InstanceData();
+		String idComments[] = idComment.split("_");
+		String instanceIdCM = idComments[0];  
+		instanceDataCM.setInstanceID(instanceIdCM);
+		if (checkType == 0) {
+			instanceDataCM.setClassName("http://hut.edu.vn/ontology/sourcecode#Class");
+		}
+		if (checkType == 1){
+			instanceDataCM.setClassName("http://hut.edu.vn/ontology/sourcecode#Method");
+		}
+		PropertyMapData pmCM = new PropertyMapData();
+		pmCM.setTypeClass(null);
+		pmCM.setPropertyname("http://hut.edu.vn/ontology/document#hasTopic");
+		pmCM.setValue(pmValue);
+		instanceDataCM.getObjectPropertyList().add(pmCM);
+		listCM.add(instanceDataCM);
+		service.Service.webServiceDelegate.saveValuesOfIndividual(null, listCM, false);
+	}
+	
 	public String removeAllTagInComment(String comment) {
 		Matcher match = replaceCommentPattern.matcher(comment);
 		return match.replaceAll("");
