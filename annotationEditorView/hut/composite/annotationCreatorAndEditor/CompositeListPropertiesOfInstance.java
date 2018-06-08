@@ -184,6 +184,8 @@ public class CompositeListPropertiesOfInstance extends
 				InstanceData iData= new InstanceData();
 		        iData.setInstanceID(instanceFullName);
 		        iData.setClassName(classFullName);
+		        System.out.println("INSTANE FULL NAME: " +instanceFullName+ "|"
+		        		+ " CLASS FULLNAME: " + classFullName);
 		        PropertyMapData pm;
 
 				for (TableItem item: table.getItems())
@@ -226,7 +228,12 @@ public class CompositeListPropertiesOfInstance extends
 							    pm.setPropertyname(propertyName);
 							    pm.setValue(((DataInstance)value).getInstanceFullName());
 							    iData.getObjectPropertyList().add(pm);
+//							    System.out.println("PROPERTY NAME " +propertyName+ "|"
+//						        		+ " PROPERTY VALUE: " + ((DataInstance)value).getInstanceFullName());
 							}
+							System.out.println("PROPERTY NAME " +propertyName+ "|"
+					        		+ " PROPERTY VALUE: " + ((DataInstance)value).getInstanceFullName()+
+					        		"|INSTANCE FULLNAME: " +CompositeListPropertiesOfInstance.this.instanceFullName);
 //							service.Service.webServiceDelegate.addObjectProperty(null, propertyName, value, CompositeListPropertiesOfInstance.this.instanceFullName);
 						}
 					}
