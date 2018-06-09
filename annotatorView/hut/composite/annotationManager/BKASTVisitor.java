@@ -9,6 +9,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import mintani.valueconst.ConsistentOntology;
+import service.Service;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspaceRoot;
@@ -828,7 +829,7 @@ public class BKASTVisitor extends ASTVisitor {
 					List array_tags = newtags.fragments();
 					// check ?
 					for (int j = 0; j < array_tags.size(); j++) {
-						addTopicToSemanticComment(idComment, array_tags.get(j).toString().trim(), checkType);
+						addTopicToSoftwareComponent(idComment, array_tags.get(j).toString().trim(), checkType);
 						initCommentInstance.addDataProperty(ConsistentOntology.TOPIC, array_tags.get(j).toString());
 					}
 				}
@@ -853,17 +854,17 @@ public class BKASTVisitor extends ASTVisitor {
 		return true;
 	}
 	
-	public void addTopicToSemanticComment(String idComment, String topicContent, int checkType) {
+	private void addTopicToSoftwareComponent(String idComment, String topicContent, int checkType) {
 		// add topic cho semantic comment
 		System.out.println("TOPIC CONTENT: " +topicContent);
 		List<InstanceData> listSC= new java.util.ArrayList<InstanceData>();
 		InstanceData instanceDataSC = new InstanceData();
 		instanceDataSC.setInstanceID(idComment);
-		instanceDataSC.setClassName("http://hut.edu.vn/ontology/sourcecode#SemanticComment");
+		instanceDataSC.setClassName(ConsistentOntology.SEMANTIC_COMMENT);
 		PropertyMapData pmSC = new PropertyMapData();
 		pmSC.setTypeClass(null);
-		pmSC.setPropertyname("http://hut.edu.vn/ontology/document#hasTopic");
-		String pmValue = "http://hut.edu.vn/ontology/document#"+topicContent + "_Instance";
+		pmSC.setPropertyname(ConsistentOntology.HAS_TOPIC);
+		String pmValue = ConsistentOntology.DOC_NAMESPACE + topicContent + "_Instance";
 		System.out.println("----------VALUE--------: "+ pmValue);
 		pmSC.setValue(pmValue);
 		instanceDataSC.getObjectPropertyList().add(pmSC);
@@ -879,14 +880,14 @@ public class BKASTVisitor extends ASTVisitor {
 		String instanceIdCM = idComments[0];  
 		instanceDataCM.setInstanceID(instanceIdCM);
 		if (checkType == 0) {
-			instanceDataCM.setClassName("http://hut.edu.vn/ontology/sourcecode#Class");
+			instanceDataCM.setClassName(ConsistentOntology.CLASS);
 		}
 		if (checkType == 1){
-			instanceDataCM.setClassName("http://hut.edu.vn/ontology/sourcecode#Method");
+			instanceDataCM.setClassName(ConsistentOntology.METHOD);
 		}
 		PropertyMapData pmCM = new PropertyMapData();
 		pmCM.setTypeClass(null);
-		pmCM.setPropertyname("http://hut.edu.vn/ontology/document#hasTopic");
+		pmCM.setPropertyname(ConsistentOntology.HAS_TOPIC);
 		pmCM.setValue(pmValue);
 		instanceDataCM.getObjectPropertyList().add(pmCM);
 		listCM.add(instanceDataCM);

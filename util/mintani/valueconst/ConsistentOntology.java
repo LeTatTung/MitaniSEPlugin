@@ -137,7 +137,7 @@ public class ConsistentOntology {
  	public static final String FUNCTION = SEC_NAMESPACE+"semanticdocFunction";
 
 	public static final String HAS_TEXT_CONTENT = DOC_NAMESPACE + "hasTextContent";
-
+	public static final String HAS_TOPIC = DOC_NAMESPACE + "hasTopic";
 
 	public static final String IN_PAGE = DOC_NAMESPACE+"elementInPage";
 	public static final String HAS_RELATION_SOURCE = DOC_NAMESPACE+"docRelatedToCode";
