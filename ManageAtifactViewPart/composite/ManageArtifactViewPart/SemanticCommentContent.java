@@ -44,6 +44,7 @@ import ws.owl.InstanceData;
 import ws.data.NodeType;
 import ws.data.MapData;
 import ws.owl.PropertyData;
+import ws.owl.PropertyMapData;
 import hut.annotation.InitInstance;
 import hut.composite.assistant.MyComposite;
 
@@ -344,7 +345,9 @@ public class SemanticCommentContent extends SemanticSuperComposite {
 
 					Service.webServiceDelegate.removeIndividual(null, idComment);
 					Service.webServiceDelegate.saveValuesOfIndividual(null, listofAnnotation, false);
-
+					
+					// add topic to SoftwareComponent
+					addTopicToSoftwareComponent();
 					System.out.println("hehe");
 				}
 
@@ -380,6 +383,58 @@ public class SemanticCommentContent extends SemanticSuperComposite {
 		});
 	}
 
+	private void addTopicToSoftwareComponent() {
+		// add topic cho semantic comment
+		List<InstanceData> listSC= new java.util.ArrayList<InstanceData>();
+		InstanceData instanceDataSC = new InstanceData();
+		String idComment = id + "_semantic_comment";
+		instanceDataSC.setInstanceID(idComment);
+		instanceDataSC.setClassName(ConsistentOntology.SEMANTIC_COMMENT);
+		PropertyMapData pmSC = new PropertyMapData();
+		pmSC.setTypeClass(null);
+		pmSC.setPropertyname(ConsistentOntology.HAS_TOPIC);
+		for (TableItem item : table.getItems()) {
+			MyComposite myComposite = (MyComposite) item.getData();
+			for (String value : myComposite.getListDataValue()) {
+				String pmValue = ConsistentOntology.DOC_NAMESPACE + value.trim() + "_Instance";
+				System.out.println("----------VALUE--------: "+ pmValue);
+				pmSC.setValue(pmValue);
+			}
+
+		}		
+		instanceDataSC.getObjectPropertyList().add(pmSC);
+		listSC.add(instanceDataSC);
+		Service.webServiceDelegate.saveValuesOfIndividual(null, listSC, false);
+		
+		// add topic cho class hoac method
+
+		List<InstanceData> listCM = new java.util.ArrayList<InstanceData>();
+		InstanceData instanceDataCM = new InstanceData();
+		String idComments[] = idComment.split("_");
+		String instanceIdCM = idComments[0];  
+		instanceDataCM.setInstanceID(instanceIdCM);
+		if (typeSource.equals(NodeType.CLASS.name())) {
+			instanceDataCM.setClassName(ConsistentOntology.CLASS);
+		}
+		if (typeSource.equals(NodeType.METHOD.name())) {
+			instanceDataCM.setClassName(ConsistentOntology.METHOD);
+		}
+		PropertyMapData pmCM = new PropertyMapData();
+		pmCM.setTypeClass(null);
+		pmCM.setPropertyname(ConsistentOntology.HAS_TOPIC);
+		for (TableItem item : table.getItems()) {
+			MyComposite myComposite = (MyComposite) item.getData();
+			for (String value : myComposite.getListDataValue()) {
+				String pmValue = ConsistentOntology.DOC_NAMESPACE + value.trim() + "_Instance";
+				System.out.println("----------VALUE--------: "+ pmValue);
+				pmCM.setValue(pmValue);
+			}
+
+		}	
+		instanceDataCM.getObjectPropertyList().add(pmCM);
+		listCM.add(instanceDataCM);
+		Service.webServiceDelegate.saveValuesOfIndividual(null, listCM, false);
+	}
 	private void writeFile(String fileName, String content) {
 	       try {
 	            FileWriter fw = new FileWriter(fileName);
